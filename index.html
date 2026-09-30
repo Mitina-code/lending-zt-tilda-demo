@@ -1,40 +1,386 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ZT — сайт и кабинет родственника</title>
+<title>Новый кабинет ZT</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&display=swap">
 <style>
-  :root { color-scheme: light dark; }
-  body {
-    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
-    display: grid; place-items: center; min-height: 100vh; margin: 0;
-    background: #fbfbfc; color: #1a1a1a; padding: 24px;
-  }
-  @media (prefers-color-scheme: dark) {
-    body { background: #16181c; color: #e8e8ea; }
-    .card { background: #1e2127; border-color: #32363f; }
-    .muted { color: #9aa0ab; }
-  }
-  .card {
-    max-width: 480px; padding: 32px 36px; border-radius: 12px;
-    background: #fff; border: 1px solid #e3e5e9; text-align: center;
-  }
-  h1 { font-size: 22px; margin: 0 0 8px; }
-  .muted { color: #6b7280; font-size: 15px; line-height: 1.5; margin: 0; }
-  .tag {
-    display: inline-block; margin-top: 18px; padding: 5px 12px;
-    border-radius: 99px; background: #f0f2f5; color: #6b7280;
-    font-size: 13px; letter-spacing: 0.02em;
-  }
-  @media (prefers-color-scheme: dark) { .tag { background: #2a2e36; color: #9aa0ab; } }
+/* Layout: page chrome with three views; the prototype is a 390px phone column, full-width on phones. Single light look by choice (brand UI mockup). */
+:root{
+  --purple:#683DCC;--purple-d:#5E32BE;--purple-l:#EEE5FF;--purple-m:#8E6ED9;
+  --green:#00BF7F;--green-d:#05A660;--green-l:#E3FFF1;
+  --orange:#FF8800;--orange-l:#FFF8E5;--orange-d:#B35F00;
+  --red:#E53535;--red-l:#FFE5E5;--blue-l:#E5F0FF;
+  --ink:#1C1C28;--text:#28293D;--muted:#555770;--faint:#8F90A6;--line:#E4E4EB;--line2:#EBEBF0;
+  --bg:#F2F2F5;--card:#FFFFFF;--soft:#FAFAFC;
+  --font:'Golos Text',-apple-system,'Segoe UI',sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:15px;line-height:1.4}
+a{color:var(--purple)}
+button{font-family:inherit}
+:focus-visible{outline:3px solid var(--purple-m);outline-offset:2px}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--card);border-bottom:1px solid var(--line2);padding:10px 16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.top h1{margin:0;font-size:17px;font-weight:700;color:var(--ink);flex:1 1 auto}
+.seg{display:flex;gap:4px;background:var(--bg);padding:4px;border-radius:12px}
+.seg button{border:0;background:transparent;padding:8px 12px;border-radius:9px;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer;min-height:36px}
+.seg button[aria-selected="true"]{background:var(--card);color:var(--purple);box-shadow:0 1px 2px rgba(28,28,40,.08)}
+.wrap{padding-inline:16px;padding-block:20px 40px;max-width:1200px;margin:0 auto}
+.upd{font-size:12px;color:var(--faint);text-align:center;margin-bottom:12px}
+
+/* phone */
+.stage{display:flex;gap:24px;justify-content:center;align-items:flex-start;flex-wrap:wrap}
+.phone{width:390px;max-width:100%;background:var(--bg);border-radius:32px;border:1px solid var(--line);overflow:hidden;position:relative;box-shadow:0 12px 40px rgba(28,28,40,.08)}
+.side{max-width:340px;min-width:0;display:flex;flex-direction:column;gap:12px}
+.side h2{margin:0;font-size:20px;color:var(--ink)}
+.side p{margin:0;color:var(--muted)}
+.jump{display:flex;flex-direction:column;gap:6px}
+.jump button{text-align:left;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:10px 12px;font-size:14px;font-weight:500;color:var(--text);cursor:pointer}
+.jump button[aria-current="true"]{border-color:var(--purple);color:var(--purple);background:var(--purple-l)}
+@media (max-width:760px){.side{display:none}.phone{border-radius:0;border:0;box-shadow:none;width:100%}.wrap{padding-inline:0;padding-block:0 0}.upd{padding:8px 16px 0}}
+.screen{min-height:760px;display:flex;flex-direction:column;position:relative}
+.scroll{flex:1;padding:16px 16px 100px;display:flex;flex-direction:column;gap:14px}
+.white{background:var(--card)}
+.bar{height:60px;padding:0 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line2);background:var(--card)}
+.btn{min-height:52px;display:flex;align-items:center;justify-content:center;gap:8px;border-radius:14px;background:var(--purple);color:#fff;font-size:17px;font-weight:600;text-decoration:none;border:0;cursor:pointer;padding:0 18px;width:100%}
+.btn.sm{min-height:44px;font-size:15px;width:auto;border-radius:12px}
+.btn.ghost{background:var(--purple-l);color:var(--purple-d)}
+.btn.line{background:var(--card);color:var(--ink);border:1px solid #C7C9D9}
+.btn.white{background:#fff;color:var(--ink)}
+.iconbtn{width:44px;height:44px;border-radius:12px;background:var(--bg);border:0;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.card{background:var(--card);border-radius:20px;padding:16px}
+.h1{margin:0;font-size:30px;line-height:1.2;font-weight:700;color:var(--ink);text-wrap:balance}
+.h2{margin:0;font-size:21px;line-height:1.25;font-weight:700;color:var(--ink)}
+.muted{color:var(--muted)}.faint{color:var(--faint);font-size:13px}
+.row{display:flex;align-items:center;gap:12px}
+.avatar{width:52px;height:52px;border-radius:26px;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;flex-shrink:0}
+.avatar.sm{width:40px;height:40px;font-size:14px}
+.avatar.l{background:var(--purple-l);color:var(--purple-d)}
+.pill{font-size:12px;font-weight:600;padding:4px 8px;border-radius:8px;white-space:nowrap}
+.ok{background:var(--green-l);color:var(--green-d)}.wait{background:var(--orange-l);color:var(--orange-d)}.new{background:var(--purple-l);color:var(--purple-d)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.intent{min-height:118px;padding:16px;border-radius:20px;background:var(--card);border:0;display:flex;flex-direction:column;justify-content:space-between;text-align:left;cursor:pointer;color:var(--ink)}
+.intent b{font-size:18px}.intent span{font-size:13px;color:var(--faint)}
+.intent.main{background:var(--purple);color:#fff}.intent.main span{color:var(--purple-l)}
+.list a,.list .li{min-height:54px;display:flex;justify-content:space-between;align-items:center;gap:12px;text-decoration:none;color:var(--text);border-bottom:1px solid var(--bg)}
+.list > :last-child{border-bottom:0}
+.tabs{position:absolute;left:0;right:0;bottom:0;height:76px;background:var(--card);border-top:1px solid var(--line2);display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.tabs button{border:0;background:transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:11px;font-weight:500;color:var(--faint);cursor:pointer}
+.tabs button[aria-current="true"]{color:var(--purple)}
+.dark{background:var(--ink);border-radius:20px;padding:16px;display:flex;align-items:center;gap:12px;color:#fff}
+.chip{min-height:60px;padding:12px 14px;border-radius:16px;border:1px solid var(--line);background:var(--card);display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer;text-align:left;width:100%;color:var(--text)}
+.chip b{display:block;font-size:16px;color:var(--ink)}.chip small{color:var(--faint);font-size:13px}
+.step{display:flex;gap:12px;align-items:flex-start}
+.num{width:32px;height:32px;border-radius:16px;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0}
+details{background:var(--card);border-radius:16px;padding:14px 16px}
+details summary{font-weight:600;color:var(--ink);cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:10px;min-height:28px;align-items:center}
+details summary::after{content:"+";color:var(--purple);font-size:20px}
+details[open] summary::after{content:"−"}
+details p{margin:8px 0 0;color:var(--muted)}
+input[type=tel],input[type=text],textarea{width:100%;min-height:54px;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:var(--soft);font-family:inherit;font-size:17px;color:var(--ink)}
+textarea{min-height:140px;resize:vertical;font-size:16px}
+label.lbl{font-size:14px;font-weight:500;color:var(--text);display:block;margin-bottom:6px}
+.amounts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.amounts button{min-height:52px;border-radius:14px;border:1px solid var(--line);background:var(--card);font-size:17px;font-weight:600;color:var(--text);cursor:pointer}
+.amounts button[aria-pressed="true"]{border:2px solid var(--purple);background:var(--purple-l);color:var(--purple-d)}
+.toggle{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:54px}
+.toggle input{width:24px;height:24px;accent-color:var(--purple)}
+.msg{max-width:82%;padding:12px 14px;border-radius:18px;display:flex;flex-direction:column;gap:6px}
+.msg.me{align-self:flex-end;background:var(--purple);color:#fff}.msg.me small{color:var(--purple-l)}
+.msg.him{align-self:flex-start;background:var(--card)}.msg.him small{color:var(--faint)}
+.note{font-size:12px;color:var(--faint)}
+.proto-note{font-size:12px;background:var(--orange-l);color:var(--orange-d);padding:8px 12px;border-radius:10px}
+
+/* audit & schema */
+.section-h{margin:0 0 6px;font-size:26px;color:var(--ink);text-wrap:balance}
+.lead{margin:0 0 18px;color:var(--muted);max-width:70ch}
+.principle{background:var(--purple);color:#fff;border-radius:20px;padding:18px 20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:16px}
+.principle div{font-size:16px;line-height:1.4}
+.audit{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px}
+.aitem{background:var(--card);border-radius:18px;padding:16px;display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px}
+.aitem .n{width:28px;height:28px;border-radius:14px;background:var(--red-l);color:var(--red);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
+.lab{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.lab.now{color:var(--red)}.lab.fix{color:var(--green-d)}
+.aitem p{margin:2px 0 10px}
+.aitem p:last-child{margin-bottom:0}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:22px}
+.col{background:var(--card);border-radius:20px;padding:18px;border-top:5px solid var(--c);display:flex;flex-direction:column;gap:8px}
+.col h3{margin:0;font-size:20px;color:var(--ink)}
+.col ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--c)}
+@media (prefers-reduced-motion:no-preference){.screen{animation:in .18s ease-out}@keyframes in{from{opacity:.4}to{opacity:1}}}
 </style>
-</head>
-<body>
-  <div class="card">
-    <h1>ZT — сайт и кабинет родственника</h1>
-    <p class="muted">Новый сайт zt.ru и личный кабинет родственника: написать, поговорить, помочь деньгами, порадовать близкого</p>
-    <span class="tag">В работе</span>
+
+<header class="top">
+  <h1>Новый кабинет ZT</h1>
+  <div class="seg" role="tablist" aria-label="Разделы">
+    <button role="tab" id="tab-proto" aria-selected="true" data-view="proto">Прототип</button>
+    <button role="tab" id="tab-audit" aria-selected="false" data-view="audit">Разбор</button>
+    <button role="tab" id="tab-schema" aria-selected="false" data-view="schema">Логика</button>
   </div>
-</body>
-</html>
+</header>
+
+<main class="wrap">
+<div class="upd">Черновик · обновлено 30.09.2026 · всё в [скобках] — заглушки</div>
+
+<!-- ===== PROTOTYPE ===== -->
+<section id="view-proto">
+<div class="stage">
+<aside class="side">
+  <h2>Мобильная версия</h2>
+  <p>Нажимайте кнопки внутри телефона — всё кликается. Или прыгайте по экранам:</p>
+  <div class="jump" id="jump"></div>
+  <p class="note">На телефоне эта страница сразу показывает прототип во весь экран.</p>
+</aside>
+
+<div class="phone" id="phone">
+
+<!-- Landing -->
+<div class="screen white" data-screen="landing" data-name="1. Сайт zt.ru (без входа)">
+  <div class="bar">
+    <svg width="72" height="24" viewBox="0 0 60 20" aria-label="ZT"><circle cx="7" cy="10" r="6" fill="#00BF7F"/><circle cx="16" cy="10" r="6" fill="#673DCC" opacity=".9"/><text x="31" y="16" font-family="Golos Text,sans-serif" font-weight="700" font-size="15" fill="#000">ZT</text></svg>
+    <button class="btn sm ghost" data-go="login">Войти</button>
+  </div>
+  <div style="padding:28px 20px;display:flex;flex-direction:column;gap:14px;background:var(--soft)">
+    <div style="color:var(--purple);font-weight:500">Если близкий под следствием или в заключении</div>
+    <h2 class="h1">Вы можете быть рядом. Мы подскажем как.</h2>
+    <button class="btn" data-go="login">Начать — нужен только телефон</button>
+    <button class="chip" data-go="login"><span><b>Хотите увидеть близкого?</b><small>Видеозвонки — в приложении ZT</small></span><span aria-hidden="true">›</span></button>
+  </div>
+  <div style="padding:24px 20px;display:flex;flex-direction:column;gap:10px">
+    <h3 class="h2">Что сейчас происходит?</h3>
+    <button class="chip" data-toast="Откроется короткая памятка для этого этапа"><span><b>Только что задержали</b><small>Не знаю, где он</small></span><span aria-hidden="true">›</span></button>
+    <button class="chip" data-toast="Откроется короткая памятка для этого этапа"><span><b>Он в СИЗО</b><small>Письма, деньги, передачи</small></span><span aria-hidden="true">›</span></button>
+    <button class="chip" data-toast="Откроется короткая памятка для этого этапа"><span><b>Он в колонии</b><small>Звонки, видео, переводы</small></span><span aria-hidden="true">›</span></button>
+  </div>
+  <div style="padding:24px 20px;display:flex;flex-direction:column;gap:14px;background:var(--bg)">
+    <h3 class="h2">Три шага</h3>
+    <div class="step"><div class="num">1</div><div><b>Войдите по номеру телефона</b></div></div>
+    <div class="step"><div class="num">2</div><div><b>Добавьте близкого</b><div class="faint">ФИО и учреждение — один раз</div></div></div>
+    <div class="step"><div class="num">3</div><div><b>Напишите, помогите, позвоните</b><div class="faint">Видно, что всё дошло</div></div></div>
+  </div>
+  <div style="padding:24px 20px;display:flex;flex-direction:column;gap:8px">
+    <h3 class="h2" style="margin-bottom:6px">Частые вопросы</h3>
+    <details open><summary>Как узнать, где находится близкий?</summary><p>[Короткий ответ: куда обратиться и что понадобится.]</p></details>
+    <details><summary>Дойдёт ли письмо и когда?</summary><p>[Ответ]</p></details>
+    <details><summary>Сколько это стоит?</summary><p>Письмо — [цена] ₽. Звонок — от [цена] ₽ за минуту. Перевод — комиссия [цена].</p></details>
+    <details><summary>Кто видит мои письма?</summary><p>[Ответ]</p></details>
+  </div>
+  <div style="margin:0 20px 24px;padding:18px;border-radius:20px;background:var(--purple);color:#fff;display:flex;flex-direction:column;gap:10px">
+    <b style="font-size:18px">Звонки и видео — только в приложении ZT</b>
+    <button class="btn white" data-toast="Откроется магазин приложений">Скачать приложение</button>
+  </div>
+  <div style="padding:20px;background:var(--ink);color:#C7C9D9;font-size:13px">Поддержка: [номер] · О компании · Документы</div>
+</div>
+
+<!-- Login -->
+<div class="screen white" data-screen="login" data-name="2. Вход" hidden>
+  <div style="padding:16px 20px 32px;display:flex;flex-direction:column;gap:20px;flex:1">
+    <button class="iconbtn" data-go="landing" aria-label="Назад"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+    <h2 class="h1" style="font-size:28px">Вход</h2>
+    <div class="muted">Впервые? Кабинет создастся сам. Пароль не нужен.</div>
+    <div><label class="lbl" for="ph">Номер телефона</label><input id="ph" type="tel" placeholder="+7 900 000-00-00" inputmode="tel"></div>
+    <button class="btn" data-go="home">Получить код</button>
+    <button class="btn line" data-go="home">Войти через Госуслуги</button>
+    <div class="proto-note">Больше не выходим: вход запоминается на этом телефоне.</div>
+  </div>
+</div>
+
+<!-- Home -->
+<div class="screen" data-screen="home" data-name="3. Главная: близкий и 4 действия" hidden>
+  <div class="scroll">
+    <div class="card" style="display:flex;flex-direction:column;gap:12px">
+      <div class="row"><div class="avatar">ИП</div><div style="flex:1;min-width:0"><div style="font-size:20px;font-weight:700;color:var(--ink)">[Иван Петров]</div><div class="faint">[ИК-0, город]</div></div>
+      <button class="iconbtn" aria-label="Другой близкий" data-toast="Если близких несколько — здесь переключатель"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button></div>
+      <button class="chip" style="min-height:44px;background:var(--green-l);border:0" data-go="letters"><span style="font-size:14px;font-weight:500;color:var(--ink)">✓ Письмо доставлено · вчера</span><span aria-hidden="true">›</span></button>
+    </div>
+    <div style="font-weight:700;color:var(--ink);padding:4px 4px 0">Что хотите сделать?</div>
+    <div class="grid2">
+      <button class="intent main" data-go="write"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 7l9 6 9-6M5 5h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/></svg><div><b>Написать</b><br><span>письмо, фото, ответ</span></div></button>
+      <button class="intent" data-go="talk"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M15 10l5-3v10l-5-3M4 6h11v12H4z"/></svg><div><b>Поговорить</b><br><span>звонок и видео</span></div></button>
+      <button class="intent" data-go="money"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 10h18M16 14h2M5 6h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"/></svg><div><b>Помочь деньгами</b><br><span>на счёт или на звонки</span></div></button>
+      <button class="intent" data-toast="Фото, судоку, кроссворды — следующий этап"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M20 12v8H4v-8M2 7h20v5H2zM12 20V7"/></svg><div><b>Порадовать</b><br><span>фото, судоку, кроссворды</span></div></button>
+    </div>
+    <div class="card list" style="padding:2px 16px">
+      <a href="#" data-toast="История пополнений и списаний"><span class="muted">Мой счёт</span><b style="color:var(--ink)">[0] ₽</b></a>
+      <a href="#" data-go="topup"><span class="muted">Моя карта для звонков Ивану</span><b style="color:var(--ink)">[0] ₽ ›</b></a>
+    </div>
+    <div class="dark"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00BF7F" stroke-width="2" stroke-linejoin="round" style="flex-shrink:0"><path d="M15 10l5-3v10l-5-3M4 6h11v12H4z"/></svg><b style="flex:1;font-size:15px">Увидеть Ивана по видео — в приложении</b><button class="btn sm white" data-go="talk">Скачать</button></div>
+    <div class="note">Тёмная плашка — только в веб-кабинете.</div>
+  </div>
+  <nav class="tabs" data-tabs="home"></nav>
+</div>
+
+<!-- Write letter -->
+<div class="screen white" data-screen="write" data-name="4. Написать письмо (3 шага)" hidden>
+  <div style="padding:16px 20px 28px;display:flex;flex-direction:column;gap:16px;flex:1">
+    <div class="row"><button class="iconbtn" data-go="home" aria-label="Назад"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button><div><b style="font-size:18px;color:var(--ink)">Письмо Ивану</b><div class="faint">[ИК-0]</div></div></div>
+    <div><label class="lbl" for="lt">Текст</label><textarea id="lt" placeholder="Напишите, как дела…"></textarea></div>
+    <button class="chip" style="min-height:52px" data-toast="Выбор фото из галереи"><span><b style="font-size:15px">+ Добавить фото</b></span><span class="faint">[цена] ₽</span></button>
+    <div class="card" style="background:var(--soft);border:1px solid var(--line2);padding:4px 16px">
+      <label class="toggle" for="reply"><span><b style="color:var(--ink)">Хочу получить ответ</b><br><span class="faint">Приложим бланк — Иван ответит на нём</span></span><input id="reply" type="checkbox" checked></label>
+    </div>
+    <div style="margin-top:auto;display:flex;flex-direction:column;gap:8px">
+      <div class="row" style="justify-content:space-between"><span class="muted">Итого, с моего счёта</span><b style="font-size:20px;color:var(--ink)" id="total">[цена] ₽</b></div>
+      <button class="btn" data-go="letters" data-sent="1">Отправить</button>
+      <div class="faint" style="text-align:center">Судоку и кроссворды — «Порадовать» на главной</div>
+    </div>
+  </div>
+</div>
+
+<!-- Letters -->
+<div class="screen" data-screen="letters" data-name="5. Переписка со статусами" hidden>
+  <div class="bar" style="height:68px;justify-content:flex-start;gap:12px"><div class="avatar sm l">ИП</div><div><b style="color:var(--ink)">[Иван Петров]</b><div class="faint">письма проходят проверку учреждения</div></div></div>
+  <div class="scroll" style="gap:12px">
+    <div class="faint" style="align-self:center">[дата]</div>
+    <div class="msg me">[Ваше письмо]<small>✓✓ Доставлено в учреждение</small></div>
+    <div class="msg him">[Ответ Ивана — скан бланка]<small>Получено · [время]</small></div>
+    <div class="msg me" id="newmsg" hidden>[Новое письмо]<small>✓ Отправлено · ждёт проверки</small></div>
+    <button class="btn" data-go="write" style="margin-top:8px">Написать ещё</button>
+  </div>
+  <nav class="tabs" data-tabs="letters"></nav>
+</div>
+
+<!-- Talk -->
+<div class="screen white" data-screen="talk" data-name="6. Поговорить → приложение" hidden>
+  <div style="padding:16px 20px 28px;display:flex;flex-direction:column;gap:16px;flex:1">
+    <button class="iconbtn" data-go="home" aria-label="Назад"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+    <div style="height:180px;border-radius:24px;background:var(--purple);display:flex;align-items:center;justify-content:center"><svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"><path d="M15 10l5-3v10l-5-3M4 6h11v12H4z"/></svg></div>
+    <h2 class="h1" style="font-size:26px">Слышать и видеть Ивана — в приложении ZT</h2>
+    <div class="muted">Иван звонит вам сам. Вход тот же — ничего вводить заново.</div>
+    <div style="margin-top:auto;display:flex;flex-direction:column;gap:10px">
+      <button class="btn" data-toast="Откроется магазин приложений (RuStore, App Store, Google Play…)">Установить приложение</button>
+      <button class="btn line" data-go="topup">Пополнить карту для звонков</button>
+    </div>
+  </div>
+</div>
+
+<!-- Money -->
+<div class="screen white" data-screen="money" data-name="7. Помочь деньгами" hidden>
+  <div style="padding:16px 20px 28px;display:flex;flex-direction:column;gap:14px;flex:1">
+    <div class="row"><button class="iconbtn" data-go="home" aria-label="Назад"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button><b style="font-size:18px;color:var(--ink)">Помочь Ивану деньгами</b></div>
+    <button class="chip" data-toast="Перевод на лицевой счёт — следующий этап"><span><b>На его счёт в учреждении</b><small>на магазин, передачи · комиссия [цена]</small></span><span aria-hidden="true">›</span></button>
+    <button class="chip" data-go="topup"><span><b>На звонки</b><small>моя карта для звонков Ивану · [0] ₽</small></span><span aria-hidden="true">›</span></button>
+    <div class="faint">Нужно подтверждение через Госуслуги — один раз.</div>
+  </div>
+</div>
+
+<!-- TopUp -->
+<div class="screen white" data-screen="topup" data-name="8. Пополнить карту для звонков" hidden>
+  <div style="padding:16px 20px 28px;display:flex;flex-direction:column;gap:18px;flex:1">
+    <div class="row"><button class="iconbtn" data-go="money" aria-label="Назад"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button><b style="font-size:18px;color:var(--ink)">Карта для звонков Ивану</b></div>
+    <div class="card" style="background:var(--soft);border:1px solid var(--line2)"><div class="faint">Сейчас на карте</div><b style="font-size:26px;color:var(--ink)">[0] ₽</b><div class="faint">последний звонок по ней: [дата]</div></div>
+    <div><div class="lbl">Сколько положить</div><div class="amounts" id="amounts"><button aria-pressed="false">300 ₽</button><button aria-pressed="true">500 ₽</button><button aria-pressed="false">1000 ₽</button></div></div>
+    <div class="faint">Эту карту видите и пополняете только вы.</div>
+    <button class="btn" style="margin-top:auto" data-go="home" id="paybtn">Пополнить на 500 ₽</button>
+  </div>
+</div>
+
+<!-- Profile -->
+<div class="screen" data-screen="profile" data-name="9. Профиль" hidden>
+  <div class="scroll">
+    <h2 class="h1" style="font-size:26px;margin-top:6px">Профиль</h2>
+    <div class="card row"><div class="avatar l">АП</div><div><b style="font-size:17px;color:var(--ink)">[Анна Петрова]</b><div><span class="pill ok">Госуслуги ✓</span></div></div></div>
+    <div class="card list" style="padding:4px 16px">
+      <div class="li"><b style="color:var(--ink)">Мои близкие</b></div>
+      <div class="li"><span>[Иван Петров] · [ИК-0]</span><a href="#" data-toast="Смена учреждения — обновится у всех родственников" style="border:0;min-height:0">изменить</a></div>
+      <a href="#" data-toast="Добавить близкого: ФИО, дата рождения, учреждение" style="color:var(--purple);font-weight:600">+ Добавить близкого</a>
+    </div>
+    <div class="card list" style="padding:4px 16px">
+      <div class="li"><b style="color:var(--ink)">Мои телефоны</b></div>
+      <div class="li"><span>+7 [900] ***-**-01</span><span class="pill new">Основной</span></div>
+      <div class="li"><span>+7 [900] ***-**-02</span><span class="pill ok">Подтверждён</span></div>
+      <a href="#" data-toast="Новый номер подтверждается кодом из СМС" style="color:var(--purple);font-weight:600">+ Добавить номер</a>
+    </div>
+    <div class="card" style="padding:4px 16px">
+      <label class="toggle" for="stay"><span>Не выходить на этом устройстве</span><input id="stay" type="checkbox" checked></label>
+      <label class="toggle" for="payconf" style="border-top:1px solid var(--bg)"><span>Оплата — по отпечатку или коду</span><input id="payconf" type="checkbox" checked></label>
+    </div>
+  </div>
+  <nav class="tabs" data-tabs="profile"></nav>
+</div>
+
+<div id="toast" role="status" aria-live="polite" hidden style="position:absolute;left:16px;right:16px;bottom:92px;background:var(--ink);color:#fff;padding:12px 14px;border-radius:12px;font-size:14px;z-index:3"></div>
+</div>
+</div>
+</section>
+
+<!-- ===== AUDIT ===== -->
+<section id="view-audit" hidden>
+  <h2 class="section-h">Кабинет сейчас построен от продуктов, а не от человека</h2>
+  <p class="lead">Разбор lk.zt.ru, мобильная версия, 30.09.2026.</p>
+  <div class="principle">
+    <div><b>1. Кому?</b> Сначала близкий — всё вокруг него.</div>
+    <div><b>2. Что хочу?</b> Написать, поговорить, помочь деньгами, порадовать.</div>
+    <div><b>3. Дошло?</b> Статус виден сразу. До цели — 2–3 нажатия.</div>
+  </div>
+  <div class="audit" id="audit"></div>
+</section>
+
+<!-- ===== SCHEMA ===== -->
+<section id="view-schema" hidden>
+  <h2 class="section-h">Две части: сайт и кабинет</h2>
+  <p class="lead">Сайт отвечает на вопросы и ведёт ко входу. Всё, что стоит денег или требует адресата, — в кабинете.</p>
+  <div class="cols">
+    <div class="col" style="--c:#05A660"><div class="eyebrow">Без входа</div><h3>Сайт zt.ru</h3><ul><li>Что делать сейчас — по этапу</li><li>Коротко об услугах и ценах</li><li>Вопросы и поддержка</li><li>Скачать приложение</li></ul></div>
+    <div class="col" style="--c:#E57A00"><div class="eyebrow">Одна дверь</div><h3>Вход</h3><ul><li>Телефон + код — письма, вопросы</li><li>Госуслуги — для денег, один человек = один аккаунт</li><li>Не выходим месяцами; оплата — по отпечатку или коду</li></ul></div>
+    <div class="col" style="--c:#683DCC"><div class="eyebrow">После входа</div><h3>Кабинет: lk.zt.ru и приложение</h3><ul><li>Главная — близкий и 4 действия</li><li>Переписка со статусами</li><li>Звонки и видео — только в приложении</li><li>История, профиль</li></ul></div>
+  </div>
+  <h2 class="section-h" style="font-size:22px">Кто есть кто</h2>
+  <div class="cols">
+    <div class="col" style="--c:#683DCC"><h3>Родственник</h3><ul><li>Один человек = один аккаунт (через Госуслуги)</li><li>Несколько телефонов; один номер — только у одного аккаунта</li><li>Мой счёт — единый кошелёк</li></ul></div>
+    <div class="col" style="--c:#683DCC"><h3>Близкий</h3><ul><li>Есть в системе один раз</li><li>Обычно у родственника один близкий, можно несколько</li><li>У близкого много родственников</li><li>Перевели — адрес меняется у всех сразу</li></ul></div>
+    <div class="col" style="--c:#683DCC"><h3>Карты для звонков</h3><ul><li>Родственник видит и пополняет только те, что купил сам</li><li>Бумажные карты, купленные самим близким, не видны</li><li>На карте видно, когда по ней звонили последний раз</li></ul></div>
+  </div>
+</section>
+</main>
+
+<script>
+(function(){
+  var screens=[].slice.call(document.querySelectorAll('[data-screen]'));
+  var tabsDef=[['home','Главная','M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z'],['letters','Переписка','M4 5h16v11H9l-5 4z'],['hist','История','M12 7v5l3 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z'],['profile','Профиль','M16 8a4 4 0 1 1-8 0 4 4 0 0 1 8 0zM4 21c1.5-4 4.5-6 8-6s6.5 2 8 6']];
+  document.querySelectorAll('nav.tabs').forEach(function(nav){
+    var cur=nav.getAttribute('data-tabs');
+    nav.innerHTML=tabsDef.map(function(t){return '<button '+(t[0]==='hist'?'data-toast="История пополнений и списаний"':'data-go="'+t[0]+'"')+' aria-current="'+(t[0]===cur)+'"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="'+t[2]+'"/></svg>'+t[1]+'</button>';}).join('');
+  });
+  var jump=document.getElementById('jump');
+  jump.innerHTML=screens.map(function(s){return '<button data-go="'+s.dataset.screen+'">'+s.dataset.name+'</button>';}).join('');
+  var toast=document.getElementById('toast'),tt;
+  function say(t){toast.textContent=t;toast.hidden=false;clearTimeout(tt);tt=setTimeout(function(){toast.hidden=true;},2200);}
+  function go(id){
+    screens.forEach(function(s){s.hidden=s.dataset.screen!==id;});
+    jump.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-current',b.dataset.go===id);});
+    var ph=document.getElementById('phone'); if(ph.getBoundingClientRect().top<0) ph.scrollIntoView({block:'start'});
+    try{localStorage.setItem('zt-screen',id)}catch(e){}
+  }
+  document.addEventListener('click',function(e){
+    var el=e.target.closest('[data-go],[data-toast]'); if(!el) return;
+    e.preventDefault();
+    if(el.dataset.sent){document.getElementById('newmsg').hidden=false;}
+    if(el.dataset.toast) say(el.dataset.toast);
+    if(el.dataset.go) go(el.dataset.go);
+  });
+  var am=document.getElementById('amounts');
+  am.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;am.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b)});document.getElementById('paybtn').textContent='Пополнить на '+b.textContent;});
+  // views
+  var views={proto:'view-proto',audit:'view-audit',schema:'view-schema'};
+  function view(v){Object.keys(views).forEach(function(k){document.getElementById(views[k]).hidden=k!==v;document.getElementById('tab-'+k).setAttribute('aria-selected',k===v);});}
+  document.querySelectorAll('[data-view]').forEach(function(b){b.addEventListener('click',function(){view(b.dataset.view);});});
+  var h=(location.hash||'').slice(1); if(views[h]) view(h);
+  // audit
+  var items=[
+    ['Главная начинается с моего телефона и баланса, потом два рекламных баннера. Близкий — в середине экрана.','Первое — близкий: имя, учреждение и последний статус («письмо доставлено вчера»).'],
+    ['Карты переговоров — номерами (63995203…): непонятно, чья карта.','Карта всегда «для кого»: «Моя карта для звонков Ивану».'],
+    ['Деньги в трёх местах: «Мои финансы», «Карты переговоров», плитка «Деньги».','Одна кнопка «Помочь деньгами» → на счёт или на звонки.'],
+    ['8 одинаковых плиток. «Фотокарточки» и «Изображения» — в чём разница?','4 действия-глагола. Фото и документы — внутри письма.'],
+    ['Ответ на письмо — платная добавка «Бланк ответа», спрятанная среди допов.','«Хочу получить ответ» — включено сразу, цена видна в итоге.'],
+    ['В форме письма — 8 развлекательных предложений до того, как человек что-то написал.','Сначала текст. Судоку и кроссворды — в «Порадовать».'],
+    ['Вкладка «Переговоры» в вебе пустая. Ни слова о том, что звонки в приложении.','«Поговорить» = установить приложение в одно нажатие.'],
+    ['Помощь разложена по продуктам. Есть «вернуться к старой версии» — два кабинета.','Помощь — вопросами человека. Одна версия кабинета.']
+  ];
+  document.getElementById('audit').innerHTML=items.map(function(it,i){return '<div class="aitem"><div class="n">'+(i+1)+'</div><div><div class="lab now">Сейчас</div><p>'+it[0]+'</p><div class="lab fix">Делаем</div><p>'+it[1]+'</p></div></div>';}).join('');
+  var start='landing'; try{var s=localStorage.getItem('zt-screen'); if(s&&document.querySelector('[data-screen="'+s+'"]')) start=s;}catch(e){}
+  go(start);
+})();
+</script>
