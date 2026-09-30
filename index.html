@@ -186,6 +186,83 @@ details p{margin:0;padding:0 16px 16px;color:var(--muted)}
 .bul li{display:flex;gap:10px}
 .bul li::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--purple);margin-top:8px;flex-shrink:0}
 
+/* лендинг: прогрев холодного посетителя */
+.land em{font-style:italic;color:var(--purple)}
+.eyebrow2{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--purple)}
+.eyebrow2.light{color:#B9A3F0}
+.pulse{width:10px;height:10px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(0,191,127,.5)}
+@media (prefers-reduced-motion:no-preference){.pulse{animation:pulse 2s infinite}@keyframes pulse{70%{box-shadow:0 0 0 10px rgba(0,191,127,0)}100%{box-shadow:0 0 0 0 rgba(0,191,127,0)}}}
+.hero2{padding:28px 20px 0;background:radial-gradient(120% 70% at 100% 100%,#E6DBFF 0%,rgba(230,219,255,0) 60%),radial-gradient(90% 50% at 0% 100%,#D8F7EA 0%,rgba(216,247,234,0) 60%),#FBFAFF;display:flex;flex-direction:column;gap:18px;overflow:hidden}
+.big{margin:0;font-size:40px;line-height:1.08;font-weight:700;color:var(--ink);letter-spacing:-.02em}
+.big em{color:var(--purple)}
+.lead2{margin:0;font-size:18px;line-height:1.5;color:var(--muted)}
+.hero-ctas{display:flex;flex-direction:column;gap:10px}
+.hero-ctas .btn{box-shadow:0 10px 24px rgba(104,61,204,.28)}
+.hero-ctas .btn.line{box-shadow:none;background:transparent}
+.stage-phone{position:relative;height:330px;margin-top:6px}
+.mock{position:absolute;left:50%;transform:translateX(-50%);top:0;width:250px;height:420px;border-radius:38px;background:#1C1C28;padding:10px;box-shadow:0 30px 60px rgba(40,20,90,.28)}
+.mock-scr{width:100%;height:100%;border-radius:30px;background:var(--bg);padding:26px 12px 12px;display:flex;flex-direction:column;gap:8px;overflow:hidden;font-size:12px}
+.m-top{display:flex;gap:8px;align-items:center;background:#fff;border-radius:14px;padding:8px}
+.m-top b{display:block;color:var(--ink);font-size:13px}
+.m-top small{color:var(--faint);font-size:10px}
+.m-av{width:30px;height:30px;border-radius:50%;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;flex-shrink:0}
+.m-st{border-radius:10px;padding:7px 9px;font-weight:600;font-size:11px}
+.m-st.ok{background:var(--green-l);color:var(--green-d)}
+.m-paper{background:#FFFDF7;border:1px solid #F0E9D8;border-radius:12px;padding:9px;color:var(--ink);line-height:1.4}
+.m-paper small{display:block;color:var(--purple-d);font-weight:600;font-size:10px;margin-bottom:3px}
+.m-photo{display:flex;gap:6px}
+.m-photo span{flex:1;height:54px;border-radius:10px;background:linear-gradient(135deg,#9BD8B8,#5FB38A)}
+.m-photo span+span{background:linear-gradient(135deg,#F7C98B,#E6955A)}
+.m-btn{margin-top:auto;background:var(--purple);color:#fff;border-radius:10px;text-align:center;padding:9px;font-weight:600}
+.float{position:absolute;background:#fff;border-radius:14px;padding:9px 12px;font-size:13px;font-weight:600;color:var(--ink);box-shadow:0 10px 30px rgba(28,28,40,.14);display:flex;align-items:center;gap:8px;white-space:nowrap}
+.fdot{width:8px;height:8px;border-radius:50%}
+.f1{top:250px;left:0}
+.f2{top:96px;right:0}
+@media (prefers-reduced-motion:no-preference){.float{animation:bob 4s ease-in-out infinite}.f2{animation-delay:-2s}@keyframes bob{50%{transform:translateY(-8px)}}}
+.dark2{background:linear-gradient(160deg,#2B1B5C 0%,#1C1C28 100%);color:#fff;padding:44px 20px;display:flex;flex-direction:column;gap:18px}
+.big2{margin:0;font-size:30px;line-height:1.15;font-weight:700;letter-spacing:-.01em;text-wrap:balance}
+.big2.ink{color:var(--ink)}
+.dark2 .big2 em{color:#7CF0C3}
+.pains{display:flex;flex-direction:column;gap:10px}
+.pain{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);border-radius:18px;padding:16px}
+.pain b{display:block;font-size:17px;margin-bottom:4px}
+.pain span{color:#C9C3E0;font-size:15px}
+.after{margin:4px 0 0;font-size:17px;line-height:1.5;color:#fff}
+.band2{scroll-margin-top:60px;padding:44px 20px;display:flex;flex-direction:column;gap:14px}
+.band2.soft2{background:var(--bg)}
+.feats{display:flex;flex-direction:column;gap:12px;margin-top:4px}
+.feat{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line2);border-radius:20px;padding:16px}
+.fic{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.fic svg{width:26px;height:26px}
+.feat b{display:block;font-size:18px;color:var(--ink);margin-bottom:2px}
+.feat span{color:var(--muted);font-size:15px}
+.tlcard{padding:20px;margin-top:4px}
+.prices{background:var(--card);border:1px solid var(--line2);border-radius:20px;overflow:hidden}
+.price{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--bg)}
+.price:last-child{border-bottom:0}
+.price b{display:block;color:var(--ink);font-weight:600}
+.price small{color:var(--faint);font-size:14px}
+.price > span{font-size:20px;font-weight:700;color:var(--purple)}
+.trust{display:flex;flex-direction:column;gap:18px}
+.trust > div{display:grid;grid-template-columns:44px minmax(0,1fr);column-gap:14px}
+.trust > div > span{grid-row:span 2;width:44px;height:44px;border-radius:14px;background:rgba(124,240,195,.14);color:#7CF0C3;display:flex;align-items:center;justify-content:center}
+.trust svg{width:22px;height:22px}
+.trust b{font-size:17px}
+.trust small{color:#C9C3E0;font-size:15px;line-height:1.45}
+.final{padding:48px 20px;background:linear-gradient(160deg,#7B4FE0 0%,#5E32BE 100%);color:#fff;display:flex;flex-direction:column;gap:14px;text-align:center}
+.final em{color:#B8FFE2}
+.final p{margin:0 0 6px;font-size:18px;color:#E6DCFF}
+.btn.ghostw{background:transparent;border:1px solid rgba(255,255,255,.5);color:#fff}
+.stickycta{position:fixed;z-index:30;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;padding:12px 16px calc(12px + var(--sb));background:rgba(255,255,255,.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line2)}
+.reveal{opacity:1}
+@media (prefers-reduced-motion:no-preference){
+  .js .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+  .js .reveal.in{opacity:1;transform:none}
+  .js .tlcard .ts{opacity:.25;transition:opacity .4s ease var(--d)}
+  .js .in .tlcard .ts{opacity:1}
+}
+@media (min-width:420px){.big{font-size:44px}}
+
 /* всплывающее окно снизу */
 .sheet-bg{position:fixed;inset:0;z-index:50;background:rgba(28,28,40,.45);display:flex;align-items:flex-end;justify-content:center}
 .sheet{width:100%;max-width:480px;background:#fff;border-radius:24px 24px 0 0;padding:10px 20px calc(20px + var(--sb));display:flex;flex-direction:column;gap:14px;max-height:90vh;overflow:auto}
@@ -203,6 +280,7 @@ details p{margin:0;padding:0 16px 16px;color:var(--muted)}
 <script>
 (function(){
 'use strict';
+document.documentElement.classList.add('js');
 
 /* ---------- иконки ---------- */
 var P={
@@ -302,28 +380,92 @@ var STAGES={
     cta:'Начать'}
 };
 function pgLanding(){
-  return '<div class="page white">'+siteHdr()+
-  '<section class="hero"><div class="eyebrow">Если близкий под следствием или в заключении</div>'+
-  '<h1 class="h1">Вы можете быть рядом. Мы подскажем как.</h1>'+
-  '<p class="muted" style="margin:0">Письма, звонки, видео и переводы — в одном месте. Видно, что всё дошло.</p>'+
-  '<a class="btn" href="#/login">Начать — нужен только телефон</a></section>'+
-  '<section class="band"><h2 class="h2">Что сейчас происходит?</h2>'+
-  Object.keys(STAGES).map(function(k){var s=STAGES[k];return '<a class="item bordered" href="#/stage/'+k+'"><div class="grow"><b>'+s.t+'</b><small>'+{zaderzhan:'Не знаю, где он',sizo:'Письма, деньги, передачи',kolonia:'Звонки, видео, переводы'}[k]+'</small></div>'+ic('chev')+'</a>'}).join('')+
-  '</section>'+
-  '<section class="band grey"><h2 class="h2">Три шага</h2>'+
-  '<div class="step"><div class="num">1</div><div><b style="color:var(--ink)">Войдите по номеру телефона</b><div class="faint">Без пароля — придёт код в СМС</div></div></div>'+
+  var phone=
+  '<div class="mock" aria-hidden="true"><div class="mock-scr">'+
+    '<div class="m-top"><span class="m-av">ИП</span><div><b>Иван Петров</b><small>ИК-2 · Тульская обл.</small></div></div>'+
+    '<div class="m-st ok">✓ Письмо передано Ивану</div>'+
+    '<div class="m-paper"><small>Ответ от Ивана · 10:12</small>Мама, здравствуй! Письмо и фотографии получил, спасибо. Повесил над кроватью…</div>'+
+    '<div class="m-photo"><span></span><span></span></div>'+
+    '<div class="m-btn">Ответить</div>'+
+  '</div></div>'+
+  '<div class="float f1" aria-hidden="true"><span class="fdot" style="background:var(--green)"></span>Ответ пришёл</div>'+
+  '<div class="float f2" aria-hidden="true">📷 2 фото доставлены</div>';
+
+  var pains=[
+    ['Не знаешь, где он','Задержали — и тишина. Куда писать, что можно передать, кому звонить.'],
+    ['Письма идут неделями','Отправила — и не понимаешь, дошло или потерялось по дороге.'],
+    ['Деньги — это поездки','Очереди, бланки, реквизиты. А помочь хочется сегодня.'],
+    ['Ему важно знать, что помнят','Одно письмо с фото может держать человека неделями.']
+  ];
+  var feats=[
+    ['mail','Написать','Письмо с фото дойдёт за дни, а не за недели. Бланк для ответа — в комплекте.','var(--purple-l)','var(--purple-d)'],
+    ['video','Поговорить','Он звонит вам сам — голосом или по видео. Из приложения ZT.','var(--green-l)','var(--green-d)'],
+    ['wallet','Помочь деньгами','На магазин в учреждении или на звонки — за минуту, с телефона.','var(--orange-l)','var(--orange-d)'],
+    ['gift','Порадовать','Фотографии, судоку, кроссворды, открытка к празднику.','var(--blue-l)','#0052CC']
+  ];
+  var steps=[['Отправлено','сегодня, 19:40'],['Проверено учреждением','обычно до 3 дней'],['Передано Ивану','вы получите уведомление'],['Ответ получен','скан письма — в кабинете']];
+
+  return '<div class="page white land">'+siteHdr()+
+
+  /* 1. Первый экран */
+  '<section class="hero2"><div class="eyebrow2"><span class="pulse"></span>Если близкий в СИЗО или колонии</div>'+
+  '<h1 class="big">Вы можете быть <em>рядом</em>.<br>Мы подскажем как.</h1>'+
+  '<p class="lead2">Письма, звонки, видео и деньги — с вашего телефона. И всегда видно, что всё дошло.</p>'+
+  '<div class="hero-ctas"><a class="btn" href="#/login" id="herocta">Начать — нужен только телефон</a><button class="btn line" data-act="scroll" data-to="how">Как это работает</button></div>'+
+  '<div class="stage-phone">'+phone+'</div></section>'+
+
+  /* 2. Узнавание */
+  '<section class="dark2 reveal"><div class="eyebrow2 light">Мы понимаем</div>'+
+  '<h2 class="big2">Когда близкий там, связь рвётся <em>первой</em></h2>'+
+  '<div class="pains">'+pains.map(function(p){return '<div class="pain"><b>'+p[0]+'</b><span>'+p[1]+'</span></div>'}).join('')+'</div>'+
+  '<p class="after">ZT убирает это расстояние. Всё — с телефона, в удобное время и по правилам учреждения.</p></section>'+
+
+  /* 3. Что можно */
+  '<section class="band2 reveal" id="how"><div class="eyebrow2">Что вы сможете</div><h2 class="big2 ink">Быть рядом — четырьмя способами</h2>'+
+  '<div class="feats">'+feats.map(function(f){return '<div class="feat"><div class="fic" style="background:'+f[3]+';color:'+f[4]+'">'+ic(f[0])+'</div><div><b>'+f[1]+'</b><span>'+f[2]+'</span></div></div>'}).join('')+'</div></section>'+
+
+  /* 4. Дошло? */
+  '<section class="band2 soft2 reveal"><div class="eyebrow2">Главное — спокойствие</div><h2 class="big2 ink">Вы всегда знаете, <em>где письмо</em></h2>'+
+  '<p class="lead2" style="margin:0">Больше не нужно гадать, дошло ли. Каждый шаг видно в кабинете, о каждом — уведомление.</p>'+
+  '<div class="card tlcard"><div class="tl">'+steps.map(function(s,i){return '<div class="ts '+(i<3?'done':'cur')+'" style="--d:'+(i*0.35)+'s"><div class="c">'+(i<3?ic('check',3):'')+'</div><div><b>'+s[0]+'</b><span class="faint">'+s[1]+'</span></div></div>'}).join('')+'</div></div></section>'+
+
+  /* 5. Где сейчас близкий */
+  '<section class="band2 reveal"><div class="eyebrow2">С чего начать</div><h2 class="big2 ink">Где сейчас ваш близкий?</h2><p class="lead2" style="margin:0">Подскажем, что делать именно на вашем этапе. Коротко и по шагам.</p>'+
+  Object.keys(STAGES).map(function(k){var s=STAGES[k];return '<a class="item bordered" href="#/stage/'+k+'"><div class="grow"><b>'+s.t+'</b><small>'+{zaderzhan:'Не знаю, где он и что делать',sizo:'Письма, деньги, передачи',kolonia:'Звонки, видео, переводы'}[k]+'</small></div>'+ic('chev')+'</a>'}).join('')+'</section>'+
+
+  /* 6. Три шага */
+  '<section class="band2 soft2 reveal"><div class="eyebrow2">Это просто</div><h2 class="big2 ink">Первое письмо — через 5 минут</h2>'+
+  '<div class="step"><div class="num">1</div><div><b style="color:var(--ink)">Войдите по номеру телефона</b><div class="faint">Пароль не нужен — придёт код в СМС</div></div></div>'+
   '<div class="step"><div class="num">2</div><div><b style="color:var(--ink)">Добавьте близкого</b><div class="faint">ФИО и учреждение — один раз</div></div></div>'+
-  '<div class="step"><div class="num">3</div><div><b style="color:var(--ink)">Пишите, помогайте, звоните</b><div class="faint">У каждого письма виден статус</div></div></div>'+
-  '<a class="btn" href="#/login" style="margin-top:6px">Начать</a></section>'+
-  '<section class="band"><h2 class="h2">Частые вопросы</h2>'+
-  '<details><summary>Как узнать, где находится близкий?</summary><p>Спросите у следователя или адвоката. Если он уже в СИЗО или колонии — найдите учреждение при добавлении близкого, мы подскажем.</p></details>'+
-  '<details><summary>Когда дойдёт письмо?</summary><p>Письмо приходит в учреждение сразу. Там его проверяют — обычно до 3 дней, потом передают близкому. Статус вы увидите в кабинете.</p></details>'+
-  '<details><summary>Сколько это стоит?</summary><p>Письмо — '+PRICE.letter+' ₽, каждое фото — '+PRICE.photo+' ₽, бланк для ответа — '+PRICE.reply+' ₽. Звонок — от 12 ₽ за минуту.</p></details>'+
+  '<div class="step"><div class="num">3</div><div><b style="color:var(--ink)">Напишите, помогите, позвоните</b><div class="faint">И следите, что всё дошло</div></div></div></section>'+
+
+  /* 7. Цены */
+  '<section class="band2 reveal"><div class="eyebrow2">Честные цены</div><h2 class="big2 ink">Сколько это стоит</h2>'+
+  '<div class="prices">'+
+  [['Письмо','до 2 страниц',PRICE.letter],['Фото к письму','за каждое',PRICE.photo],['Бланк для ответа','он ответит от руки',PRICE.reply],['Звонок','за минуту, от',12]].map(function(p){return '<div class="price"><div class="grow"><b>'+p[0]+'</b><small>'+p[1]+'</small></div><span>'+p[2]+' ₽</span></div>'}).join('')+
+  '</div><p class="faint" style="margin:0">Если учреждение не пропустит письмо — деньги вернутся на ваш счёт.</p></section>'+
+
+  /* 8. Доверие */
+  '<section class="dark2 reveal"><div class="eyebrow2 light">Почему ZT</div><h2 class="big2">Мы на связи с учреждениями <em>15 лет</em></h2>'+
+  '<div class="trust">'+
+  '<div><span>'+ic('shield')+'</span><b>Безопасные платежи</b><small>Деньги вносятся только в кабинете. Мы никогда не просим переводить на чужие карты или номера.</small></div>'+
+  '<div><span>'+ic('check')+'</span><b>Всё видно</b><small>Статус каждого письма и каждого платежа — в одном месте.</small></div>'+
+  '<div><span>'+ic('phone')+'</span><b>Живая поддержка</b><small>Круглосуточно, по телефону и в чате. Объясним по шагам.</small></div>'+
+  '</div></section>'+
+
+  /* 9. Вопросы */
+  '<section class="band2 reveal"><h2 class="big2 ink">Частые вопросы</h2>'+
   '<details><summary>Кто читает мои письма?</summary><p>Письма проверяет сотрудник учреждения — так положено по закону. Кроме него и адресата письмо не видит никто.</p></details>'+
+  '<details><summary>Когда дойдёт письмо?</summary><p>В учреждение — сразу. Проверка обычно занимает до 3 дней, потом письмо передают близкому. Статус видно в кабинете.</p></details>'+
+  '<details><summary>Как узнать, где находится близкий?</summary><p>Спросите у следователя или адвоката. Если он уже в СИЗО или колонии — выберите учреждение при добавлении близкого.</p></details>'+
   '<details><summary>Что если письмо не пропустят?</summary><p>Вы увидите причину, а деньги за письмо вернутся на ваш счёт.</p></details>'+
   '</section>'+
-  '<section class="band" style="padding-top:0"><div class="promo" style="flex-direction:column;align-items:stretch;background:var(--purple)"><div class="row">'+ic('video')+'<b style="font-size:18px;line-height:1.3">Звонки и видео — в приложении ZT</b></div><a class="btn white" href="#/app">Скачать приложение</a></div></section>'+
-  '<footer class="foot"><div class="row" style="gap:16px;flex-wrap:wrap"><a href="tel:88000000000">8 800 000-00-00</a><span>Поддержка круглосуточно</span></div><div class="row" style="gap:16px;flex-wrap:wrap"><a href="#/">О компании</a><a href="#/">Документы</a><a href="#/">Тарифы</a></div><div class="small">© ZT, 2026</div></footer>'+
+
+  /* 10. Финал */
+  '<section class="final reveal"><h2 class="big2">Напишите ему <em>сегодня</em></h2><p>Одно письмо — и он знает, что его ждут.</p><a class="btn white" href="#/login">Начать — нужен только телефон</a><a class="btn ghostw" href="#/app">Скачать приложение ZT</a></section>'+
+
+  '<footer class="foot"><div class="row" style="gap:16px;flex-wrap:wrap"><a href="tel:88000000000">8 800 000-00-00</a><span>Поддержка круглосуточно</span></div><div class="row" style="gap:16px;flex-wrap:wrap"><a href="#/">О компании</a><a href="#/">Документы</a><a href="#/">Тарифы</a></div><div class="small">© ZT, 2010–2026</div></footer>'+
+  '<div class="stickycta" id="stickycta" hidden><a class="btn" href="#/login">Начать — нужен только телефон</a></div>'+
   '</div>';
 }
 function pgStage(k){
@@ -594,6 +736,18 @@ function route(){
   document.title=parts[0]==='lk'?'Кабинет ZT':'ZT — связь с близким';
   if(!keepScroll) window.scrollTo(0,0); keepScroll=false;
   var c=document.getElementById('code'); if(c) setTimeout(function(){c.focus()},200);
+  initLanding();
+}
+var io1,io2;
+function initLanding(){
+  if(io1)io1.disconnect(); if(io2)io2.disconnect();
+  var rs=document.querySelectorAll(".reveal"); if(!rs.length) return;
+  if(!("IntersectionObserver" in window)){rs.forEach(function(r){r.classList.add("in")});return}
+  io1=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io1.unobserve(e.target)}})},{threshold:.15});
+  rs.forEach(function(r){io1.observe(r)});
+  var hc=document.getElementById("herocta"),sc=document.getElementById("stickycta");
+  var fin=document.querySelector(".final"),st={hero:true,fin:false};
+  if(hc&&sc){io2=new IntersectionObserver(function(es){es.forEach(function(e){if(e.target===hc)st.hero=e.isIntersecting||e.boundingClientRect.top>0;else st.fin=e.isIntersecting||e.boundingClientRect.top<0});sc.hidden=st.hero||st.fin});io2.observe(hc);if(fin)io2.observe(fin)}
 }
 var keepScroll=false;
 function rerender(){keepScroll=true;route()}
@@ -605,7 +759,8 @@ document.addEventListener('click',function(e){
   var a=t.dataset.act;
   if(t.dataset.toast){e.preventDefault();toast(t.dataset.toast);return}
   if(a==='closesheet'){if(e.target===t||t.tagName==='BUTTON')closeSheet();return}
-  if(a==='getcode'){go('/code')}
+  if(a==='scroll'){var el=document.getElementById(t.dataset.to);if(el)el.scrollIntoView({behavior:'smooth',block:'start'})}
+  else if(a==='getcode'){go('/code')}
   else if(a==='gosu'){toast('Вход через Госуслуги');login()}
   else if(a==='switch'){sheet('<h2 class="h2">Кому</h2><div class="list" style="border:1px solid var(--line)"><button class="item" data-act="closesheet"><div class="avatar sm">'+S.relative.ini+'</div><div class="grow"><b>'+S.relative.name+'</b><small>'+S.relative.place+'</small></div><span style="color:var(--purple);display:flex">'+ic('check')+'</span></button><button class="item" data-toast="Добавление: ФИО, дата рождения, учреждение"><div class="ic" style="background:var(--purple-l);color:var(--purple-d)">'+ic('plus')+'</div><div class="grow"><b style="color:var(--purple)">Добавить близкого</b></div></button></div>')}
   else if(a==='amt'){var k=t.parentNode.dataset.key;amt[k]=+t.dataset.v;rerender()}
