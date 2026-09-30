@@ -1,386 +1,638 @@
 <!DOCTYPE html>
 <html lang="ru">
+<head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Новый кабинет ZT</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFFFFF">
+<title>ZT — связь с близким</title>
+<link rel="icon" href="https://cdn.zt.ru/images/logos/ZT.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&display=swap">
 <style>
-/* Layout: page chrome with three views; the prototype is a 390px phone column, full-width on phones. Single light look by choice (brand UI mockup). */
+/* Мобильный сайт zt.ru и кабинет lk.zt.ru так, как их видит родственник в браузере телефона.
+   На широком экране — та же колонка по центру. Светлая тема — фирменный стиль ZT. */
 :root{
-  --purple:#683DCC;--purple-d:#5E32BE;--purple-l:#EEE5FF;--purple-m:#8E6ED9;
+  --purple:#683DCC;--purple-d:#5E32BE;--purple-l:#EEE5FF;
   --green:#00BF7F;--green-d:#05A660;--green-l:#E3FFF1;
-  --orange:#FF8800;--orange-l:#FFF8E5;--orange-d:#B35F00;
+  --orange-d:#B35F00;--orange-l:#FFF8E5;
   --red:#E53535;--red-l:#FFE5E5;--blue-l:#E5F0FF;
   --ink:#1C1C28;--text:#28293D;--muted:#555770;--faint:#8F90A6;--line:#E4E4EB;--line2:#EBEBF0;
   --bg:#F2F2F5;--card:#FFFFFF;--soft:#FAFAFC;
-  --font:'Golos Text',-apple-system,'Segoe UI',sans-serif;
+  --font:'Golos Text',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  --sb:env(safe-area-inset-bottom,0px);
   color-scheme:light;
 }
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:15px;line-height:1.4}
-a{color:var(--purple)}
-button{font-family:inherit}
-:focus-visible{outline:3px solid var(--purple-m);outline-offset:2px}
-.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--card);border-bottom:1px solid var(--line2);padding:10px 16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-.top h1{margin:0;font-size:17px;font-weight:700;color:var(--ink);flex:1 1 auto}
-.seg{display:flex;gap:4px;background:var(--bg);padding:4px;border-radius:12px}
-.seg button{border:0;background:transparent;padding:8px 12px;border-radius:9px;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer;min-height:36px}
-.seg button[aria-selected="true"]{background:var(--card);color:var(--purple);box-shadow:0 1px 2px rgba(28,28,40,.08)}
-.wrap{padding-inline:16px;padding-block:20px 40px;max-width:1200px;margin:0 auto}
-.upd{font-size:12px;color:var(--faint);text-align:center;margin-bottom:12px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+html{background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.45;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%}
+button,input,textarea{font-family:inherit;font-size:inherit;color:inherit}
+button{cursor:pointer}
+a{color:var(--purple);text-decoration:none}
+:focus-visible{outline:3px solid #8E6ED9;outline-offset:2px}
+#app{max-width:480px;margin:0 auto;min-height:100vh;min-height:100dvh;background:var(--bg);position:relative}
+.page{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column}
+.page.white{background:var(--card)}
+.page.tabbed{padding-bottom:calc(84px + var(--sb))}
 
-/* phone */
-.stage{display:flex;gap:24px;justify-content:center;align-items:flex-start;flex-wrap:wrap}
-.phone{width:390px;max-width:100%;background:var(--bg);border-radius:32px;border:1px solid var(--line);overflow:hidden;position:relative;box-shadow:0 12px 40px rgba(28,28,40,.08)}
-.side{max-width:340px;min-width:0;display:flex;flex-direction:column;gap:12px}
-.side h2{margin:0;font-size:20px;color:var(--ink)}
-.side p{margin:0;color:var(--muted)}
-.jump{display:flex;flex-direction:column;gap:6px}
-.jump button{text-align:left;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:10px 12px;font-size:14px;font-weight:500;color:var(--text);cursor:pointer}
-.jump button[aria-current="true"]{border-color:var(--purple);color:var(--purple);background:var(--purple-l)}
-@media (max-width:760px){.side{display:none}.phone{border-radius:0;border:0;box-shadow:none;width:100%}.wrap{padding-inline:0;padding-block:0 0}.upd{padding:8px 16px 0}}
-.screen{min-height:760px;display:flex;flex-direction:column;position:relative}
-.scroll{flex:1;padding:16px 16px 100px;display:flex;flex-direction:column;gap:14px}
-.white{background:var(--card)}
-.bar{height:60px;padding:0 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line2);background:var(--card)}
-.btn{min-height:52px;display:flex;align-items:center;justify-content:center;gap:8px;border-radius:14px;background:var(--purple);color:#fff;font-size:17px;font-weight:600;text-decoration:none;border:0;cursor:pointer;padding:0 18px;width:100%}
-.btn.sm{min-height:44px;font-size:15px;width:auto;border-radius:12px}
-.btn.ghost{background:var(--purple-l);color:var(--purple-d)}
+/* шапки */
+.hdr{position:sticky;top:0;z-index:20;height:60px;display:flex;align-items:center;gap:8px;padding:0 12px 0 16px;background:rgba(255,255,255,.96);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--line2)}
+.hdr .logo{display:block;height:22px;width:auto}
+.hdr .title{flex:1;min-width:0;font-weight:600;font-size:17px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hdr.back{padding-left:4px}
+.sp{flex:1}
+.ib{width:44px;height:44px;border:0;border-radius:12px;background:transparent;display:flex;align-items:center;justify-content:center;color:var(--ink);flex-shrink:0}
+.ib:active{background:var(--bg)}
+.ib svg{width:24px;height:24px}
+
+/* нижнее меню */
+.tabbar{position:fixed;z-index:30;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line2);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));padding-bottom:var(--sb)}
+.tabbar a{height:64px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:11px;font-weight:500;color:var(--faint);position:relative}
+.tabbar a svg{width:24px;height:24px}
+.tabbar a.on{color:var(--purple)}
+.tabbar .dot{position:absolute;top:10px;left:calc(50% + 7px);width:9px;height:9px;border-radius:50%;background:var(--red);border:2px solid #fff}
+
+/* общие элементы */
+.wrap{padding:16px;display:flex;flex-direction:column;gap:12px}
+.wrap.loose{padding:20px 16px;gap:16px}
+.card{background:var(--card);border-radius:20px;padding:16px}
+.card.flat{background:var(--soft);border:1px solid var(--line2)}
+.h1{margin:0;font-size:30px;line-height:1.15;font-weight:700;color:var(--ink);letter-spacing:-.01em;text-wrap:balance}
+.h2{margin:0;font-size:22px;line-height:1.25;font-weight:700;color:var(--ink);text-wrap:balance}
+.h3{margin:0;font-size:17px;font-weight:600;color:var(--ink)}
+.sec{font-size:15px;font-weight:700;color:var(--ink);margin:8px 4px 0}
+.muted{color:var(--muted)}.faint{color:var(--faint);font-size:14px}
+.small{font-size:13px}
+.row{display:flex;align-items:center;gap:12px}
+.between{justify-content:space-between}
+.grow{flex:1;min-width:0}
+.btn{min-height:54px;width:100%;display:flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:14px;background:var(--purple);color:#fff;font-size:17px;font-weight:600;padding:0 20px;text-align:center}
+.btn:active{background:var(--purple-d)}
+.btn[disabled]{background:#C7C9D9;color:#fff}
+.btn.sm{min-height:44px;width:auto;font-size:15px;border-radius:12px;padding:0 16px}
+.btn.soft{background:var(--purple-l);color:var(--purple-d)}
 .btn.line{background:var(--card);color:var(--ink);border:1px solid #C7C9D9}
 .btn.white{background:#fff;color:var(--ink)}
-.iconbtn{width:44px;height:44px;border-radius:12px;background:var(--bg);border:0;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
-.card{background:var(--card);border-radius:20px;padding:16px}
-.h1{margin:0;font-size:30px;line-height:1.2;font-weight:700;color:var(--ink);text-wrap:balance}
-.h2{margin:0;font-size:21px;line-height:1.25;font-weight:700;color:var(--ink)}
-.muted{color:var(--muted)}.faint{color:var(--faint);font-size:13px}
-.row{display:flex;align-items:center;gap:12px}
-.avatar{width:52px;height:52px;border-radius:26px;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;flex-shrink:0}
+.btn.dark{background:var(--ink)}
+.link{background:none;border:0;color:var(--purple);font-weight:600;padding:10px 0;font-size:16px}
+.avatar{width:52px;height:52px;border-radius:50%;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;flex-shrink:0}
 .avatar.sm{width:40px;height:40px;font-size:14px}
-.avatar.l{background:var(--purple-l);color:var(--purple-d)}
-.pill{font-size:12px;font-weight:600;padding:4px 8px;border-radius:8px;white-space:nowrap}
-.ok{background:var(--green-l);color:var(--green-d)}.wait{background:var(--orange-l);color:var(--orange-d)}.new{background:var(--purple-l);color:var(--purple-d)}
+.avatar.soft{background:var(--purple-l);color:var(--purple-d)}
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:4px 8px;border-radius:8px;white-space:nowrap}
+.s-ok{background:var(--green-l);color:var(--green-d)}.s-wait{background:var(--orange-l);color:var(--orange-d)}.s-new{background:var(--purple-l);color:var(--purple-d)}.s-err{background:var(--red-l);color:var(--red)}
+.chev{color:#C7C9D9;flex-shrink:0;width:20px;height:20px}
+.item{min-height:64px;width:100%;display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--card);border:0;border-radius:16px;text-align:left;color:var(--text)}
+.item:active{background:var(--soft)}
+.item b{display:block;color:var(--ink);font-size:16px;font-weight:600}
+.item small{display:block;color:var(--faint);font-size:14px;margin-top:1px}
+.item.bordered{border:1px solid var(--line)}
+.list{background:var(--card);border-radius:20px;overflow:hidden}
+.list > .item{border-radius:0;border-bottom:1px solid var(--bg)}
+.list > .item:last-child{border-bottom:0}
+.ic{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ic svg{width:20px;height:20px}
 .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.intent{min-height:118px;padding:16px;border-radius:20px;background:var(--card);border:0;display:flex;flex-direction:column;justify-content:space-between;text-align:left;cursor:pointer;color:var(--ink)}
-.intent b{font-size:18px}.intent span{font-size:13px;color:var(--faint)}
-.intent.main{background:var(--purple);color:#fff}.intent.main span{color:var(--purple-l)}
-.list a,.list .li{min-height:54px;display:flex;justify-content:space-between;align-items:center;gap:12px;text-decoration:none;color:var(--text);border-bottom:1px solid var(--bg)}
-.list > :last-child{border-bottom:0}
-.tabs{position:absolute;left:0;right:0;bottom:0;height:76px;background:var(--card);border-top:1px solid var(--line2);display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
-.tabs button{border:0;background:transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:11px;font-weight:500;color:var(--faint);cursor:pointer}
-.tabs button[aria-current="true"]{color:var(--purple)}
-.dark{background:var(--ink);border-radius:20px;padding:16px;display:flex;align-items:center;gap:12px;color:#fff}
-.chip{min-height:60px;padding:12px 14px;border-radius:16px;border:1px solid var(--line);background:var(--card);display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer;text-align:left;width:100%;color:var(--text)}
-.chip b{display:block;font-size:16px;color:var(--ink)}.chip small{color:var(--faint);font-size:13px}
-.step{display:flex;gap:12px;align-items:flex-start}
-.num{width:32px;height:32px;border-radius:16px;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0}
-details{background:var(--card);border-radius:16px;padding:14px 16px}
-details summary{font-weight:600;color:var(--ink);cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:10px;min-height:28px;align-items:center}
-details summary::after{content:"+";color:var(--purple);font-size:20px}
-details[open] summary::after{content:"−"}
-details p{margin:8px 0 0;color:var(--muted)}
-input[type=tel],input[type=text],textarea{width:100%;min-height:54px;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:var(--soft);font-family:inherit;font-size:17px;color:var(--ink)}
-textarea{min-height:140px;resize:vertical;font-size:16px}
-label.lbl{font-size:14px;font-weight:500;color:var(--text);display:block;margin-bottom:6px}
-.amounts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-.amounts button{min-height:52px;border-radius:14px;border:1px solid var(--line);background:var(--card);font-size:17px;font-weight:600;color:var(--text);cursor:pointer}
-.amounts button[aria-pressed="true"]{border:2px solid var(--purple);background:var(--purple-l);color:var(--purple-d)}
-.toggle{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:54px}
-.toggle input{width:24px;height:24px;accent-color:var(--purple)}
-.msg{max-width:82%;padding:12px 14px;border-radius:18px;display:flex;flex-direction:column;gap:6px}
-.msg.me{align-self:flex-end;background:var(--purple);color:#fff}.msg.me small{color:var(--purple-l)}
-.msg.him{align-self:flex-start;background:var(--card)}.msg.him small{color:var(--faint)}
-.note{font-size:12px;color:var(--faint)}
-.proto-note{font-size:12px;background:var(--orange-l);color:var(--orange-d);padding:8px 12px;border-radius:10px}
+.act{min-height:116px;padding:16px;border-radius:20px;background:var(--card);border:0;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;text-align:left;color:var(--ink)}
+.act:active{transform:scale(.98)}
+.act svg{width:28px;height:28px;color:var(--purple)}
+.act b{display:block;font-size:17px;font-weight:600}
+.act span{display:block;font-size:13px;color:var(--faint);margin-top:2px}
+.act.main{background:var(--purple);color:#fff}.act.main svg{color:#fff}.act.main span{color:#D9CCF7}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:14px;font-weight:500;color:var(--muted)}
+.inp{width:100%;min-height:56px;padding:14px 16px;border-radius:14px;border:1px solid var(--line);background:var(--soft);font-size:18px;color:var(--ink);outline:none}
+.inp:focus{border-color:var(--purple);background:#fff}
+textarea.inp{min-height:180px;resize:none;font-size:17px;line-height:1.5}
+.code{letter-spacing:.6em;text-align:center;font-size:28px;font-weight:600;padding-left:.6em}
+.choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.choices button{min-height:54px;border-radius:14px;border:1px solid var(--line);background:var(--card);font-size:17px;font-weight:600;color:var(--ink)}
+.choices button.on{border:2px solid var(--purple);background:var(--purple-l);color:var(--purple-d)}
+.sw{position:relative;width:52px;height:32px;flex-shrink:0}
+.sw input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer;z-index:1}
+.sw i{position:absolute;inset:0;border-radius:16px;background:#C7C9D9;transition:background .15s}
+.sw i::after{content:"";position:absolute;top:3px;left:3px;width:26px;height:26px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:transform .15s}
+.sw input:checked + i{background:var(--purple)}
+.sw input:checked + i::after{transform:translateX(20px)}
+.opt{display:flex;align-items:center;gap:12px;min-height:60px;padding:8px 0}
+.opt + .opt{border-top:1px solid var(--bg)}
+.sum{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.sum b{font-size:22px;color:var(--ink)}
+.stick{position:sticky;bottom:0;background:linear-gradient(to top,var(--card) 80%,rgba(255,255,255,0));padding:16px 16px calc(16px + var(--sb));display:flex;flex-direction:column;gap:10px;margin-top:auto}
+.stick.grey{background:linear-gradient(to top,var(--bg) 80%,rgba(242,242,245,0))}
+.thumbs{display:flex;gap:8px;flex-wrap:wrap}
+.thumb{position:relative;width:76px;height:76px;border-radius:12px;overflow:hidden;background:var(--bg)}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.thumb button{position:absolute;top:4px;right:4px;width:24px;height:24px;border-radius:50%;border:0;background:rgba(28,28,40,.7);color:#fff;font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center}
+.addph{width:76px;height:76px;border-radius:12px;border:1.5px dashed #C7C9D9;background:var(--soft);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:var(--purple);font-size:12px;font-weight:600}
+.addph svg{width:24px;height:24px}
+.extra{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:var(--green-l);color:var(--green-d);font-weight:600;font-size:14px}
+.extra button{margin-left:auto;border:0;background:none;color:var(--green-d);font-size:18px;width:32px;height:32px}
+.tl{display:flex;flex-direction:column}
+.ts{display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px;position:relative;padding-bottom:18px}
+.ts:last-child{padding-bottom:0}
+.ts::before{content:"";position:absolute;left:13px;top:30px;bottom:2px;width:2px;background:var(--line)}
+.ts:last-child::before{display:none}
+.ts .c{width:28px;height:28px;border-radius:50%;background:var(--card);border:2px solid var(--line);display:flex;align-items:center;justify-content:center}
+.ts .c svg{width:16px;height:16px}
+.ts.done .c{background:var(--green-d);border-color:var(--green-d);color:#fff}.ts.done::before{background:var(--green-d)}
+.ts.cur .c{border-color:var(--orange-d);background:var(--orange-l)}
+.ts.cur .c::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--orange-d)}
+.ts b{display:block;color:var(--ink);font-weight:600}
+.ts.todo b{color:var(--faint);font-weight:500}
+.paper{background:#FFFDF7;border:1px solid #F0E9D8;border-radius:16px;padding:18px;white-space:pre-line;color:var(--ink);font-size:17px;line-height:1.55}
+.bubble{background:var(--purple-l);border-radius:16px;padding:14px 16px;white-space:pre-line;color:var(--ink)}
+.filters{display:flex;gap:8px;overflow-x:auto;padding:0 16px;margin:0 -16px;scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.filters button{min-height:40px;padding:0 16px;border-radius:20px;border:1px solid var(--line);background:var(--card);font-size:15px;font-weight:500;white-space:nowrap}
+.filters button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.op{display:flex;align-items:center;gap:12px;min-height:64px;padding:10px 16px;border-bottom:1px solid var(--bg)}
+.op:last-child{border-bottom:0}
+.op b{display:block;color:var(--ink);font-weight:600;font-size:15px}
+.op .amt{font-weight:600;color:var(--ink);white-space:nowrap}
+.op .amt.plus{color:var(--green-d)}
+.day{font-size:13px;font-weight:600;color:var(--faint);padding:14px 16px 4px;text-transform:uppercase;letter-spacing:.04em}
+.balance{background:var(--purple);color:#fff;border-radius:20px;padding:18px}
+.balance .v{font-size:32px;font-weight:700;line-height:1.1;margin:4px 0 14px}
+.balance small{color:#D9CCF7;font-size:14px}
+.promo{background:var(--ink);color:#fff;border-radius:20px;padding:16px;display:flex;align-items:center;gap:12px}
+.promo svg{width:28px;height:28px;color:var(--green);flex-shrink:0}
+.statusline{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:14px;border:0;width:100%;text-align:left;font-size:15px;font-weight:500}
+.center{text-align:center;align-items:center}
+.done-ic{width:88px;height:88px;border-radius:50%;background:var(--green-l);color:var(--green-d);display:flex;align-items:center;justify-content:center}
+.done-ic svg{width:44px;height:44px}
+.stores{display:flex;flex-direction:column;gap:10px}
+.tile{min-height:132px;border-radius:20px;padding:16px;border:0;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;text-align:left;color:var(--ink)}
+.tile b{font-size:17px;font-weight:600}
+.tile span{font-size:14px;color:var(--muted)}
+.tile .em{font-size:30px;line-height:1}
 
-/* audit & schema */
-.section-h{margin:0 0 6px;font-size:26px;color:var(--ink);text-wrap:balance}
-.lead{margin:0 0 18px;color:var(--muted);max-width:70ch}
-.principle{background:var(--purple);color:#fff;border-radius:20px;padding:18px 20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:16px}
-.principle div{font-size:16px;line-height:1.4}
-.audit{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px}
-.aitem{background:var(--card);border-radius:18px;padding:16px;display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px}
-.aitem .n{width:28px;height:28px;border-radius:14px;background:var(--red-l);color:var(--red);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
-.lab{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
-.lab.now{color:var(--red)}.lab.fix{color:var(--green-d)}
-.aitem p{margin:2px 0 10px}
-.aitem p:last-child{margin-bottom:0}
-.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:22px}
-.col{background:var(--card);border-radius:20px;padding:18px;border-top:5px solid var(--c);display:flex;flex-direction:column;gap:8px}
-.col h3{margin:0;font-size:20px;color:var(--ink)}
-.col ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px}
-.eyebrow{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--c)}
-@media (prefers-reduced-motion:no-preference){.screen{animation:in .18s ease-out}@keyframes in{from{opacity:.4}to{opacity:1}}}
+/* сайт */
+.hero{padding:28px 20px 28px;background:linear-gradient(180deg,#F6F1FF 0%,#FFFFFF 100%);display:flex;flex-direction:column;gap:16px}
+.eyebrow{color:var(--purple);font-weight:600;font-size:15px}
+.band{padding:28px 20px;display:flex;flex-direction:column;gap:12px}
+.band.grey{background:var(--bg)}
+.step{display:flex;gap:14px;align-items:flex-start}
+.num{width:34px;height:34px;border-radius:50%;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0}
+details{background:var(--card);border-radius:16px;border:1px solid var(--line2)}
+details summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px;font-weight:600;color:var(--ink);min-height:56px}
+details summary::-webkit-details-marker{display:none}
+details summary::after{content:"";width:10px;height:10px;border-right:2px solid var(--purple);border-bottom:2px solid var(--purple);transform:rotate(45deg);margin-top:-4px;flex-shrink:0;transition:transform .15s}
+details[open] summary::after{transform:rotate(-135deg);margin-top:4px}
+details p{margin:0;padding:0 16px 16px;color:var(--muted)}
+.foot{padding:24px 20px calc(28px + var(--sb));background:var(--ink);color:#A9ABBD;font-size:14px;display:flex;flex-direction:column;gap:10px}
+.foot a{color:#fff}
+.bul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.bul li{display:flex;gap:10px}
+.bul li::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--purple);margin-top:8px;flex-shrink:0}
+
+/* всплывающее окно снизу */
+.sheet-bg{position:fixed;inset:0;z-index:50;background:rgba(28,28,40,.45);display:flex;align-items:flex-end;justify-content:center}
+.sheet{width:100%;max-width:480px;background:#fff;border-radius:24px 24px 0 0;padding:10px 20px calc(20px + var(--sb));display:flex;flex-direction:column;gap:14px;max-height:90vh;overflow:auto}
+.sheet .grab{width:40px;height:5px;border-radius:3px;background:var(--line);align-self:center;margin-bottom:6px}
+@media (prefers-reduced-motion:no-preference){.sheet{animation:up .22s ease-out}@keyframes up{from{transform:translateY(40px);opacity:.6}to{transform:none;opacity:1}}}
+
+.toast{position:fixed;z-index:60;left:50%;transform:translateX(-50%);bottom:calc(92px + var(--sb));width:calc(100% - 32px);max-width:448px;background:var(--ink);color:#fff;padding:14px 16px;border-radius:14px;font-size:15px;box-shadow:0 8px 24px rgba(0,0,0,.2)}
 </style>
-
-<header class="top">
-  <h1>Новый кабинет ZT</h1>
-  <div class="seg" role="tablist" aria-label="Разделы">
-    <button role="tab" id="tab-proto" aria-selected="true" data-view="proto">Прототип</button>
-    <button role="tab" id="tab-audit" aria-selected="false" data-view="audit">Разбор</button>
-    <button role="tab" id="tab-schema" aria-selected="false" data-view="schema">Логика</button>
-  </div>
-</header>
-
-<main class="wrap">
-<div class="upd">Черновик · обновлено 30.09.2026 · всё в [скобках] — заглушки</div>
-
-<!-- ===== PROTOTYPE ===== -->
-<section id="view-proto">
-<div class="stage">
-<aside class="side">
-  <h2>Мобильная версия</h2>
-  <p>Нажимайте кнопки внутри телефона — всё кликается. Или прыгайте по экранам:</p>
-  <div class="jump" id="jump"></div>
-  <p class="note">На телефоне эта страница сразу показывает прототип во весь экран.</p>
-</aside>
-
-<div class="phone" id="phone">
-
-<!-- Landing -->
-<div class="screen white" data-screen="landing" data-name="1. Сайт zt.ru (без входа)">
-  <div class="bar">
-    <svg width="72" height="24" viewBox="0 0 60 20" aria-label="ZT"><circle cx="7" cy="10" r="6" fill="#00BF7F"/><circle cx="16" cy="10" r="6" fill="#673DCC" opacity=".9"/><text x="31" y="16" font-family="Golos Text,sans-serif" font-weight="700" font-size="15" fill="#000">ZT</text></svg>
-    <button class="btn sm ghost" data-go="login">Войти</button>
-  </div>
-  <div style="padding:28px 20px;display:flex;flex-direction:column;gap:14px;background:var(--soft)">
-    <div style="color:var(--purple);font-weight:500">Если близкий под следствием или в заключении</div>
-    <h2 class="h1">Вы можете быть рядом. Мы подскажем как.</h2>
-    <button class="btn" data-go="login">Начать — нужен только телефон</button>
-    <button class="chip" data-go="login"><span><b>Хотите увидеть близкого?</b><small>Видеозвонки — в приложении ZT</small></span><span aria-hidden="true">›</span></button>
-  </div>
-  <div style="padding:24px 20px;display:flex;flex-direction:column;gap:10px">
-    <h3 class="h2">Что сейчас происходит?</h3>
-    <button class="chip" data-toast="Откроется короткая памятка для этого этапа"><span><b>Только что задержали</b><small>Не знаю, где он</small></span><span aria-hidden="true">›</span></button>
-    <button class="chip" data-toast="Откроется короткая памятка для этого этапа"><span><b>Он в СИЗО</b><small>Письма, деньги, передачи</small></span><span aria-hidden="true">›</span></button>
-    <button class="chip" data-toast="Откроется короткая памятка для этого этапа"><span><b>Он в колонии</b><small>Звонки, видео, переводы</small></span><span aria-hidden="true">›</span></button>
-  </div>
-  <div style="padding:24px 20px;display:flex;flex-direction:column;gap:14px;background:var(--bg)">
-    <h3 class="h2">Три шага</h3>
-    <div class="step"><div class="num">1</div><div><b>Войдите по номеру телефона</b></div></div>
-    <div class="step"><div class="num">2</div><div><b>Добавьте близкого</b><div class="faint">ФИО и учреждение — один раз</div></div></div>
-    <div class="step"><div class="num">3</div><div><b>Напишите, помогите, позвоните</b><div class="faint">Видно, что всё дошло</div></div></div>
-  </div>
-  <div style="padding:24px 20px;display:flex;flex-direction:column;gap:8px">
-    <h3 class="h2" style="margin-bottom:6px">Частые вопросы</h3>
-    <details open><summary>Как узнать, где находится близкий?</summary><p>[Короткий ответ: куда обратиться и что понадобится.]</p></details>
-    <details><summary>Дойдёт ли письмо и когда?</summary><p>[Ответ]</p></details>
-    <details><summary>Сколько это стоит?</summary><p>Письмо — [цена] ₽. Звонок — от [цена] ₽ за минуту. Перевод — комиссия [цена].</p></details>
-    <details><summary>Кто видит мои письма?</summary><p>[Ответ]</p></details>
-  </div>
-  <div style="margin:0 20px 24px;padding:18px;border-radius:20px;background:var(--purple);color:#fff;display:flex;flex-direction:column;gap:10px">
-    <b style="font-size:18px">Звонки и видео — только в приложении ZT</b>
-    <button class="btn white" data-toast="Откроется магазин приложений">Скачать приложение</button>
-  </div>
-  <div style="padding:20px;background:var(--ink);color:#C7C9D9;font-size:13px">Поддержка: [номер] · О компании · Документы</div>
-</div>
-
-<!-- Login -->
-<div class="screen white" data-screen="login" data-name="2. Вход" hidden>
-  <div style="padding:16px 20px 32px;display:flex;flex-direction:column;gap:20px;flex:1">
-    <button class="iconbtn" data-go="landing" aria-label="Назад"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button>
-    <h2 class="h1" style="font-size:28px">Вход</h2>
-    <div class="muted">Впервые? Кабинет создастся сам. Пароль не нужен.</div>
-    <div><label class="lbl" for="ph">Номер телефона</label><input id="ph" type="tel" placeholder="+7 900 000-00-00" inputmode="tel"></div>
-    <button class="btn" data-go="home">Получить код</button>
-    <button class="btn line" data-go="home">Войти через Госуслуги</button>
-    <div class="proto-note">Больше не выходим: вход запоминается на этом телефоне.</div>
-  </div>
-</div>
-
-<!-- Home -->
-<div class="screen" data-screen="home" data-name="3. Главная: близкий и 4 действия" hidden>
-  <div class="scroll">
-    <div class="card" style="display:flex;flex-direction:column;gap:12px">
-      <div class="row"><div class="avatar">ИП</div><div style="flex:1;min-width:0"><div style="font-size:20px;font-weight:700;color:var(--ink)">[Иван Петров]</div><div class="faint">[ИК-0, город]</div></div>
-      <button class="iconbtn" aria-label="Другой близкий" data-toast="Если близких несколько — здесь переключатель"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button></div>
-      <button class="chip" style="min-height:44px;background:var(--green-l);border:0" data-go="letters"><span style="font-size:14px;font-weight:500;color:var(--ink)">✓ Письмо доставлено · вчера</span><span aria-hidden="true">›</span></button>
-    </div>
-    <div style="font-weight:700;color:var(--ink);padding:4px 4px 0">Что хотите сделать?</div>
-    <div class="grid2">
-      <button class="intent main" data-go="write"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 7l9 6 9-6M5 5h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/></svg><div><b>Написать</b><br><span>письмо, фото, ответ</span></div></button>
-      <button class="intent" data-go="talk"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M15 10l5-3v10l-5-3M4 6h11v12H4z"/></svg><div><b>Поговорить</b><br><span>звонок и видео</span></div></button>
-      <button class="intent" data-go="money"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 10h18M16 14h2M5 6h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"/></svg><div><b>Помочь деньгами</b><br><span>на счёт или на звонки</span></div></button>
-      <button class="intent" data-toast="Фото, судоку, кроссворды — следующий этап"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M20 12v8H4v-8M2 7h20v5H2zM12 20V7"/></svg><div><b>Порадовать</b><br><span>фото, судоку, кроссворды</span></div></button>
-    </div>
-    <div class="card list" style="padding:2px 16px">
-      <a href="#" data-toast="История пополнений и списаний"><span class="muted">Мой счёт</span><b style="color:var(--ink)">[0] ₽</b></a>
-      <a href="#" data-go="topup"><span class="muted">Моя карта для звонков Ивану</span><b style="color:var(--ink)">[0] ₽ ›</b></a>
-    </div>
-    <div class="dark"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00BF7F" stroke-width="2" stroke-linejoin="round" style="flex-shrink:0"><path d="M15 10l5-3v10l-5-3M4 6h11v12H4z"/></svg><b style="flex:1;font-size:15px">Увидеть Ивана по видео — в приложении</b><button class="btn sm white" data-go="talk">Скачать</button></div>
-    <div class="note">Тёмная плашка — только в веб-кабинете.</div>
-  </div>
-  <nav class="tabs" data-tabs="home"></nav>
-</div>
-
-<!-- Write letter -->
-<div class="screen white" data-screen="write" data-name="4. Написать письмо (3 шага)" hidden>
-  <div style="padding:16px 20px 28px;display:flex;flex-direction:column;gap:16px;flex:1">
-    <div class="row"><button class="iconbtn" data-go="home" aria-label="Назад"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button><div><b style="font-size:18px;color:var(--ink)">Письмо Ивану</b><div class="faint">[ИК-0]</div></div></div>
-    <div><label class="lbl" for="lt">Текст</label><textarea id="lt" placeholder="Напишите, как дела…"></textarea></div>
-    <button class="chip" style="min-height:52px" data-toast="Выбор фото из галереи"><span><b style="font-size:15px">+ Добавить фото</b></span><span class="faint">[цена] ₽</span></button>
-    <div class="card" style="background:var(--soft);border:1px solid var(--line2);padding:4px 16px">
-      <label class="toggle" for="reply"><span><b style="color:var(--ink)">Хочу получить ответ</b><br><span class="faint">Приложим бланк — Иван ответит на нём</span></span><input id="reply" type="checkbox" checked></label>
-    </div>
-    <div style="margin-top:auto;display:flex;flex-direction:column;gap:8px">
-      <div class="row" style="justify-content:space-between"><span class="muted">Итого, с моего счёта</span><b style="font-size:20px;color:var(--ink)" id="total">[цена] ₽</b></div>
-      <button class="btn" data-go="letters" data-sent="1">Отправить</button>
-      <div class="faint" style="text-align:center">Судоку и кроссворды — «Порадовать» на главной</div>
-    </div>
-  </div>
-</div>
-
-<!-- Letters -->
-<div class="screen" data-screen="letters" data-name="5. Переписка со статусами" hidden>
-  <div class="bar" style="height:68px;justify-content:flex-start;gap:12px"><div class="avatar sm l">ИП</div><div><b style="color:var(--ink)">[Иван Петров]</b><div class="faint">письма проходят проверку учреждения</div></div></div>
-  <div class="scroll" style="gap:12px">
-    <div class="faint" style="align-self:center">[дата]</div>
-    <div class="msg me">[Ваше письмо]<small>✓✓ Доставлено в учреждение</small></div>
-    <div class="msg him">[Ответ Ивана — скан бланка]<small>Получено · [время]</small></div>
-    <div class="msg me" id="newmsg" hidden>[Новое письмо]<small>✓ Отправлено · ждёт проверки</small></div>
-    <button class="btn" data-go="write" style="margin-top:8px">Написать ещё</button>
-  </div>
-  <nav class="tabs" data-tabs="letters"></nav>
-</div>
-
-<!-- Talk -->
-<div class="screen white" data-screen="talk" data-name="6. Поговорить → приложение" hidden>
-  <div style="padding:16px 20px 28px;display:flex;flex-direction:column;gap:16px;flex:1">
-    <button class="iconbtn" data-go="home" aria-label="Назад"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button>
-    <div style="height:180px;border-radius:24px;background:var(--purple);display:flex;align-items:center;justify-content:center"><svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"><path d="M15 10l5-3v10l-5-3M4 6h11v12H4z"/></svg></div>
-    <h2 class="h1" style="font-size:26px">Слышать и видеть Ивана — в приложении ZT</h2>
-    <div class="muted">Иван звонит вам сам. Вход тот же — ничего вводить заново.</div>
-    <div style="margin-top:auto;display:flex;flex-direction:column;gap:10px">
-      <button class="btn" data-toast="Откроется магазин приложений (RuStore, App Store, Google Play…)">Установить приложение</button>
-      <button class="btn line" data-go="topup">Пополнить карту для звонков</button>
-    </div>
-  </div>
-</div>
-
-<!-- Money -->
-<div class="screen white" data-screen="money" data-name="7. Помочь деньгами" hidden>
-  <div style="padding:16px 20px 28px;display:flex;flex-direction:column;gap:14px;flex:1">
-    <div class="row"><button class="iconbtn" data-go="home" aria-label="Назад"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button><b style="font-size:18px;color:var(--ink)">Помочь Ивану деньгами</b></div>
-    <button class="chip" data-toast="Перевод на лицевой счёт — следующий этап"><span><b>На его счёт в учреждении</b><small>на магазин, передачи · комиссия [цена]</small></span><span aria-hidden="true">›</span></button>
-    <button class="chip" data-go="topup"><span><b>На звонки</b><small>моя карта для звонков Ивану · [0] ₽</small></span><span aria-hidden="true">›</span></button>
-    <div class="faint">Нужно подтверждение через Госуслуги — один раз.</div>
-  </div>
-</div>
-
-<!-- TopUp -->
-<div class="screen white" data-screen="topup" data-name="8. Пополнить карту для звонков" hidden>
-  <div style="padding:16px 20px 28px;display:flex;flex-direction:column;gap:18px;flex:1">
-    <div class="row"><button class="iconbtn" data-go="money" aria-label="Назад"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button><b style="font-size:18px;color:var(--ink)">Карта для звонков Ивану</b></div>
-    <div class="card" style="background:var(--soft);border:1px solid var(--line2)"><div class="faint">Сейчас на карте</div><b style="font-size:26px;color:var(--ink)">[0] ₽</b><div class="faint">последний звонок по ней: [дата]</div></div>
-    <div><div class="lbl">Сколько положить</div><div class="amounts" id="amounts"><button aria-pressed="false">300 ₽</button><button aria-pressed="true">500 ₽</button><button aria-pressed="false">1000 ₽</button></div></div>
-    <div class="faint">Эту карту видите и пополняете только вы.</div>
-    <button class="btn" style="margin-top:auto" data-go="home" id="paybtn">Пополнить на 500 ₽</button>
-  </div>
-</div>
-
-<!-- Profile -->
-<div class="screen" data-screen="profile" data-name="9. Профиль" hidden>
-  <div class="scroll">
-    <h2 class="h1" style="font-size:26px;margin-top:6px">Профиль</h2>
-    <div class="card row"><div class="avatar l">АП</div><div><b style="font-size:17px;color:var(--ink)">[Анна Петрова]</b><div><span class="pill ok">Госуслуги ✓</span></div></div></div>
-    <div class="card list" style="padding:4px 16px">
-      <div class="li"><b style="color:var(--ink)">Мои близкие</b></div>
-      <div class="li"><span>[Иван Петров] · [ИК-0]</span><a href="#" data-toast="Смена учреждения — обновится у всех родственников" style="border:0;min-height:0">изменить</a></div>
-      <a href="#" data-toast="Добавить близкого: ФИО, дата рождения, учреждение" style="color:var(--purple);font-weight:600">+ Добавить близкого</a>
-    </div>
-    <div class="card list" style="padding:4px 16px">
-      <div class="li"><b style="color:var(--ink)">Мои телефоны</b></div>
-      <div class="li"><span>+7 [900] ***-**-01</span><span class="pill new">Основной</span></div>
-      <div class="li"><span>+7 [900] ***-**-02</span><span class="pill ok">Подтверждён</span></div>
-      <a href="#" data-toast="Новый номер подтверждается кодом из СМС" style="color:var(--purple);font-weight:600">+ Добавить номер</a>
-    </div>
-    <div class="card" style="padding:4px 16px">
-      <label class="toggle" for="stay"><span>Не выходить на этом устройстве</span><input id="stay" type="checkbox" checked></label>
-      <label class="toggle" for="payconf" style="border-top:1px solid var(--bg)"><span>Оплата — по отпечатку или коду</span><input id="payconf" type="checkbox" checked></label>
-    </div>
-  </div>
-  <nav class="tabs" data-tabs="profile"></nav>
-</div>
-
-<div id="toast" role="status" aria-live="polite" hidden style="position:absolute;left:16px;right:16px;bottom:92px;background:var(--ink);color:#fff;padding:12px 14px;border-radius:12px;font-size:14px;z-index:3"></div>
-</div>
-</div>
-</section>
-
-<!-- ===== AUDIT ===== -->
-<section id="view-audit" hidden>
-  <h2 class="section-h">Кабинет сейчас построен от продуктов, а не от человека</h2>
-  <p class="lead">Разбор lk.zt.ru, мобильная версия, 30.09.2026.</p>
-  <div class="principle">
-    <div><b>1. Кому?</b> Сначала близкий — всё вокруг него.</div>
-    <div><b>2. Что хочу?</b> Написать, поговорить, помочь деньгами, порадовать.</div>
-    <div><b>3. Дошло?</b> Статус виден сразу. До цели — 2–3 нажатия.</div>
-  </div>
-  <div class="audit" id="audit"></div>
-</section>
-
-<!-- ===== SCHEMA ===== -->
-<section id="view-schema" hidden>
-  <h2 class="section-h">Две части: сайт и кабинет</h2>
-  <p class="lead">Сайт отвечает на вопросы и ведёт ко входу. Всё, что стоит денег или требует адресата, — в кабинете.</p>
-  <div class="cols">
-    <div class="col" style="--c:#05A660"><div class="eyebrow">Без входа</div><h3>Сайт zt.ru</h3><ul><li>Что делать сейчас — по этапу</li><li>Коротко об услугах и ценах</li><li>Вопросы и поддержка</li><li>Скачать приложение</li></ul></div>
-    <div class="col" style="--c:#E57A00"><div class="eyebrow">Одна дверь</div><h3>Вход</h3><ul><li>Телефон + код — письма, вопросы</li><li>Госуслуги — для денег, один человек = один аккаунт</li><li>Не выходим месяцами; оплата — по отпечатку или коду</li></ul></div>
-    <div class="col" style="--c:#683DCC"><div class="eyebrow">После входа</div><h3>Кабинет: lk.zt.ru и приложение</h3><ul><li>Главная — близкий и 4 действия</li><li>Переписка со статусами</li><li>Звонки и видео — только в приложении</li><li>История, профиль</li></ul></div>
-  </div>
-  <h2 class="section-h" style="font-size:22px">Кто есть кто</h2>
-  <div class="cols">
-    <div class="col" style="--c:#683DCC"><h3>Родственник</h3><ul><li>Один человек = один аккаунт (через Госуслуги)</li><li>Несколько телефонов; один номер — только у одного аккаунта</li><li>Мой счёт — единый кошелёк</li></ul></div>
-    <div class="col" style="--c:#683DCC"><h3>Близкий</h3><ul><li>Есть в системе один раз</li><li>Обычно у родственника один близкий, можно несколько</li><li>У близкого много родственников</li><li>Перевели — адрес меняется у всех сразу</li></ul></div>
-    <div class="col" style="--c:#683DCC"><h3>Карты для звонков</h3><ul><li>Родственник видит и пополняет только те, что купил сам</li><li>Бумажные карты, купленные самим близким, не видны</li><li>На карте видно, когда по ней звонили последний раз</li></ul></div>
-  </div>
-</section>
-</main>
+</head>
+<body>
+<div id="app"></div>
+<div id="sheet"></div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
 <script>
 (function(){
-  var screens=[].slice.call(document.querySelectorAll('[data-screen]'));
-  var tabsDef=[['home','Главная','M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z'],['letters','Переписка','M4 5h16v11H9l-5 4z'],['hist','История','M12 7v5l3 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z'],['profile','Профиль','M16 8a4 4 0 1 1-8 0 4 4 0 0 1 8 0zM4 21c1.5-4 4.5-6 8-6s6.5 2 8 6']];
-  document.querySelectorAll('nav.tabs').forEach(function(nav){
-    var cur=nav.getAttribute('data-tabs');
-    nav.innerHTML=tabsDef.map(function(t){return '<button '+(t[0]==='hist'?'data-toast="История пополнений и списаний"':'data-go="'+t[0]+'"')+' aria-current="'+(t[0]===cur)+'"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="'+t[2]+'"/></svg>'+t[1]+'</button>';}).join('');
-  });
-  var jump=document.getElementById('jump');
-  jump.innerHTML=screens.map(function(s){return '<button data-go="'+s.dataset.screen+'">'+s.dataset.name+'</button>';}).join('');
-  var toast=document.getElementById('toast'),tt;
-  function say(t){toast.textContent=t;toast.hidden=false;clearTimeout(tt);tt=setTimeout(function(){toast.hidden=true;},2200);}
-  function go(id){
-    screens.forEach(function(s){s.hidden=s.dataset.screen!==id;});
-    jump.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-current',b.dataset.go===id);});
-    var ph=document.getElementById('phone'); if(ph.getBoundingClientRect().top<0) ph.scrollIntoView({block:'start'});
-    try{localStorage.setItem('zt-screen',id)}catch(e){}
+'use strict';
+
+/* ---------- иконки ---------- */
+var P={
+  back:'M15 5l-7 7 7 7',
+  chev:'M9 6l6 6-6 6',
+  close:'M6 6l12 12M18 6L6 18',
+  home:'M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z',
+  mail:'M3 7l9 6 9-6M5 5h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z',
+  chat:'M4 5h16v11H9l-5 4z',
+  clock:'M12 7v5l3 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z',
+  user:'M16 8a4 4 0 1 1-8 0 4 4 0 0 1 8 0zM4 21c1.5-4 4.5-6 8-6s6.5 2 8 6',
+  video:'M15 10l5-3v10l-5-3M4 6h11v12H4z',
+  wallet:'M3 10h18M16 14h2M5 6h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z',
+  gift:'M20 12v8H4v-8M2 7h20v5H2zM12 20V7M12 7c-1-3-5-4-5-1 0 1.5 2 1 5 1zm0 0c1-3 5-4 5-1 0 1.5-2 1-5 1z',
+  check:'M5 12l5 5L20 7',
+  in:'M17 7L7 17M7 9v8h8',
+  out:'M7 17L17 7M9 7h8v8',
+  x:'M8 8l8 8M16 8l-8 8',
+  photo:'M4 7h3l2-2h6l2 2h3v12H4zM12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z',
+  plus:'M12 5v14M5 12h14',
+  down:'M6 9l6 6 6-6',
+  phone:'M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2',
+  card:'M3 8h18M5 5h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zM7 15h4',
+  bank:'M3 10l9-6 9 6M5 10v8M19 10v8M9 10v8M15 10v8M3 20h18',
+  help:'M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.7v.5M12 17h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z',
+  bell:'M6 16V11a6 6 0 1 1 12 0v5l2 2H4zM10 21h4',
+  shield:'M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z',
+  logout:'M15 12H4M8 8l-4 4 4 4M13 4h6v16h-6'
+};
+function ic(n,sw){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="'+(sw||2)+'" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="'+P[n]+'"/></svg>';}
+var LOGO='<img class="logo" src="https://cdn.zt.ru/images/logos/ZT.svg" alt="ZT" width="66" height="22">';
+
+/* ---------- цены (примерные) ---------- */
+var PRICE={letter:95,photo:40,reply:30};
+var COMMISSION=0.03;
+
+/* ---------- состояние ---------- */
+var KEY='zt-demo-v2';
+function fresh(){return {
+  auth:false,phone:'',
+  account:1250,card:340,cardLast:'вчера, 18:05',
+  relative:{name:'Иван Петров',short:'Иван',dat:'Ивану',gen:'Ивана',ini:'ИП',place:'ИК-2 · Тульская область'},
+  unread:true,
+  letters:[
+    {id:'l4',dir:'in',date:'Сегодня, 10:12',status:'new',text:'Мама, здравствуй!\n\nПисьмо и фотографии получил, спасибо. Повесил над кроватью, мужики говорят — красивый сад.\n\nУ меня всё нормально, работаю в швейке, кормят сносно. Передай Оле, что я про неё помню.\n\nОбнимаю, Ваня',replyTo:'l3'},
+    {id:'l3',dir:'out',date:'24 сентября',status:'answered',photos:2,reply:true,text:'Ванечка, привет! Посылаю фотографии с дачи — яблоки в этом году уродились. Мы с папой всё хорошо. Пиши, как ты.',steps:['24 сентября, 19:40','26 сентября','26 сентября','Сегодня, 10:12']},
+    {id:'l2',dir:'out',date:'12 сентября',status:'rejected',reply:true,text:'Ваня, скинула тебе денег, карта ····',reason:'В письме был номер банковской карты — такие письма учреждение не пропускает. 125 ₽ вернулись на ваш счёт.'},
+    {id:'l1',dir:'out',date:'5 сентября',status:'delivered',reply:false,text:'С днём рождения, сынок!',steps:['5 сентября, 08:15','6 сентября','6 сентября']}
+  ],
+  ops:[
+    {d:'Сегодня',t:'Видеозвонок, 8 мин',s:'карта для звонков Ивану',a:-96,k:'call'},
+    {d:'24 сентября',t:'Письмо и 2 фото',s:'Ивану · с бланком ответа',a:-205,k:'out'},
+    {d:'24 сентября',t:'Пополнение счёта',s:'СБП · Сбербанк',a:1000,k:'in'},
+    {d:'12 сентября',t:'Возврат за письмо',s:'учреждение не пропустило',a:125,k:'in'},
+    {d:'12 сентября',t:'Письмо Ивану',s:'с бланком ответа',a:-125,k:'out'},
+    {d:'5 сентября',t:'Карта для звонков Ивану',s:'пополнение',a:-500,k:'call'}
+  ],
+  draft:{text:'',photos:[],reply:true,extras:[]},
+  flash:null
+};}
+var S;
+try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}
+if(!S||!S.relative) S=fresh();
+S.draft.photos=[]; // фото не сохраняем между заходами
+function save(){try{var c=JSON.parse(JSON.stringify(S));c.draft.photos=[];localStorage.setItem(KEY,JSON.stringify(c))}catch(e){}}
+
+/* ---------- помощники ---------- */
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function rub(n){return (n<0?'−':'')+Math.abs(n).toLocaleString('ru-RU')+' ₽'}
+function go(h){location.hash=h}
+var toastT;
+function toast(t){var el=document.getElementById('toast');el.textContent=t;el.hidden=false;clearTimeout(toastT);toastT=setTimeout(function(){el.hidden=true},2600)}
+var STATUS={
+  check:['На проверке','s-wait'],delivered:['Передано','s-ok'],answered:['Есть ответ','s-ok'],
+  rejected:['Не пропустили','s-err'],new:['Новое','s-new'],read:['Прочитано','s-ok']
+};
+
+/* ---------- шапки и меню ---------- */
+function siteHdr(){return '<header class="hdr"><a href="#/" aria-label="ZT — на главную">'+LOGO+'</a><span class="sp"></span>'+(S.auth?'<a class="btn sm soft" href="#/lk">Кабинет</a>':'<a class="btn sm soft" href="#/login">Войти</a>')+'</header>';}
+function backHdr(title,to,right){return '<header class="hdr back"><a class="ib" href="#'+to+'" aria-label="Назад">'+ic('back')+'</a><div class="title">'+title+'</div>'+(right||'')+'</header>';}
+function lkHdr(title){return '<header class="hdr">'+(title?'<div class="title" style="font-size:22px;font-weight:700">'+title+'</div>':'<a href="#/lk" aria-label="ZT">'+LOGO+'</a><span class="sp"></span>')+'<a class="ib" href="#/lk/help" aria-label="Помощь">'+ic('help')+'</a></header>';}
+function tabbar(cur){
+  var t=[['/lk','Главная','home'],['/lk/letters','Переписка','chat'],['/lk/history','История','clock'],['/lk/profile','Профиль','user']];
+  return '<nav class="tabbar" aria-label="Разделы кабинета">'+t.map(function(x){return '<a href="#'+x[0]+'" class="'+(x[0]===cur?'on':'')+'"'+(x[0]===cur?' aria-current="page"':'')+'>'+ic(x[2])+x[1]+(x[0]==='/lk/letters'&&S.unread?'<span class="dot" aria-label="есть новое"></span>':'')+'</a>'}).join('')+'</nav>';
+}
+
+/* ================= САЙТ zt.ru ================= */
+var STAGES={
+  zaderzhan:{t:'Только что задержали',h:'Близкого задержали. Что делать в первые дни',
+    li:['Узнайте, в каком отделе полиции или изоляторе он сейчас — спросите у следователя или адвоката.','Через 1–3 дня его обычно переводят в СИЗО. Как только станет известно куда — добавьте его в кабинете.','Письмо можно отправить сразу после перевода. Оно придёт быстрее обычной почты.'],
+    cta:'Добавить близкого'},
+  sizo:{t:'Он в СИЗО',h:'Близкий в СИЗО. Чем вы можете помочь',
+    li:['Письма — самый быстрый способ связи. Их проверяет учреждение, обычно до 3 дней.','Деньги на лицевой счёт — чтобы он мог купить продукты и вещи в магазине СИЗО.','Звонки из СИЗО возможны только с разрешения следователя.'],
+    cta:'Написать письмо'},
+  kolonia:{t:'Он в колонии',h:'Близкий в колонии. Как быть на связи',
+    li:['Письма с фото и бланком для ответа — он ответит от руки, вы получите скан.','Звонки и видео — в приложении ZT. Он звонит вам сам с карты, которую вы пополняете.','Деньги на лицевой счёт — на магазин и передачи.'],
+    cta:'Начать'}
+};
+function pgLanding(){
+  return '<div class="page white">'+siteHdr()+
+  '<section class="hero"><div class="eyebrow">Если близкий под следствием или в заключении</div>'+
+  '<h1 class="h1">Вы можете быть рядом. Мы подскажем как.</h1>'+
+  '<p class="muted" style="margin:0">Письма, звонки, видео и переводы — в одном месте. Видно, что всё дошло.</p>'+
+  '<a class="btn" href="#/login">Начать — нужен только телефон</a></section>'+
+  '<section class="band"><h2 class="h2">Что сейчас происходит?</h2>'+
+  Object.keys(STAGES).map(function(k){var s=STAGES[k];return '<a class="item bordered" href="#/stage/'+k+'"><div class="grow"><b>'+s.t+'</b><small>'+{zaderzhan:'Не знаю, где он',sizo:'Письма, деньги, передачи',kolonia:'Звонки, видео, переводы'}[k]+'</small></div>'+ic('chev')+'</a>'}).join('')+
+  '</section>'+
+  '<section class="band grey"><h2 class="h2">Три шага</h2>'+
+  '<div class="step"><div class="num">1</div><div><b style="color:var(--ink)">Войдите по номеру телефона</b><div class="faint">Без пароля — придёт код в СМС</div></div></div>'+
+  '<div class="step"><div class="num">2</div><div><b style="color:var(--ink)">Добавьте близкого</b><div class="faint">ФИО и учреждение — один раз</div></div></div>'+
+  '<div class="step"><div class="num">3</div><div><b style="color:var(--ink)">Пишите, помогайте, звоните</b><div class="faint">У каждого письма виден статус</div></div></div>'+
+  '<a class="btn" href="#/login" style="margin-top:6px">Начать</a></section>'+
+  '<section class="band"><h2 class="h2">Частые вопросы</h2>'+
+  '<details><summary>Как узнать, где находится близкий?</summary><p>Спросите у следователя или адвоката. Если он уже в СИЗО или колонии — найдите учреждение при добавлении близкого, мы подскажем.</p></details>'+
+  '<details><summary>Когда дойдёт письмо?</summary><p>Письмо приходит в учреждение сразу. Там его проверяют — обычно до 3 дней, потом передают близкому. Статус вы увидите в кабинете.</p></details>'+
+  '<details><summary>Сколько это стоит?</summary><p>Письмо — '+PRICE.letter+' ₽, каждое фото — '+PRICE.photo+' ₽, бланк для ответа — '+PRICE.reply+' ₽. Звонок — от 12 ₽ за минуту.</p></details>'+
+  '<details><summary>Кто читает мои письма?</summary><p>Письма проверяет сотрудник учреждения — так положено по закону. Кроме него и адресата письмо не видит никто.</p></details>'+
+  '<details><summary>Что если письмо не пропустят?</summary><p>Вы увидите причину, а деньги за письмо вернутся на ваш счёт.</p></details>'+
+  '</section>'+
+  '<section class="band" style="padding-top:0"><div class="promo" style="flex-direction:column;align-items:stretch;background:var(--purple)"><div class="row">'+ic('video')+'<b style="font-size:18px;line-height:1.3">Звонки и видео — в приложении ZT</b></div><a class="btn white" href="#/app">Скачать приложение</a></div></section>'+
+  '<footer class="foot"><div class="row" style="gap:16px;flex-wrap:wrap"><a href="tel:88000000000">8 800 000-00-00</a><span>Поддержка круглосуточно</span></div><div class="row" style="gap:16px;flex-wrap:wrap"><a href="#/">О компании</a><a href="#/">Документы</a><a href="#/">Тарифы</a></div><div class="small">© ZT, 2026</div></footer>'+
+  '</div>';
+}
+function pgStage(k){
+  var s=STAGES[k]; if(!s) return pgLanding();
+  var next=k==='sizo'?'/lk/write':'/lk';
+  return '<div class="page white">'+backHdr(s.t,'/')+
+  '<div class="wrap loose"><h1 class="h1" style="font-size:26px">'+s.h+'</h1><ul class="bul">'+s.li.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul>'+
+  '<div class="card flat"><b style="color:var(--ink)">Нужна помощь?</b><div class="muted" style="margin-top:4px">Позвоните — объясним по шагам. <a href="tel:88000000000">8 800 000-00-00</a></div></div></div>'+
+  '<div class="stick"><a class="btn" href="#'+next+'">'+s.cta+'</a></div></div>';
+}
+function pgApp(){
+  return '<div class="page white">'+backHdr('Приложение ZT',S.auth?'/lk':'/')+
+  '<div class="wrap loose"><div style="height:180px;border-radius:24px;background:var(--purple);display:flex;align-items:center;justify-content:center;color:#fff"><svg viewBox="0 0 24 24" width="80" height="80" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="'+P.video+'"/></svg></div>'+
+  '<h1 class="h1" style="font-size:26px">Слышать и видеть '+S.relative.gen+' — в приложении ZT</h1>'+
+  '<p class="muted" style="margin:0">'+S.relative.short+' звонит вам сам. Вход тот же — по номеру телефона, ничего вводить заново.</p></div>'+
+  '<div class="stick"><div class="stores">'+
+  '<button class="btn dark" data-toast="Откроется RuStore">Скачать в RuStore</button>'+
+  '<button class="btn line" data-toast="Откроется App Store">App Store</button>'+
+  '<button class="btn line" data-toast="Откроется Google Play">Google Play</button></div></div></div>';
+}
+
+/* ================= ВХОД ================= */
+function pgLogin(){
+  return '<div class="page white">'+backHdr('',S.next?'/':'/')+
+  '<div class="wrap loose"><h1 class="h1">Вход</h1><p class="muted" style="margin:0">Впервые? Кабинет создастся сам. Пароль не нужен.</p>'+
+  '<div class="field"><label for="ph">Номер телефона</label><input class="inp" id="ph" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 900 000-00-00" value="'+esc(S.phone)+'"></div></div>'+
+  '<div class="stick"><button class="btn" id="getcode" data-act="getcode"'+(S.phone.replace(/\D/g,'').length<11?' disabled':'')+'>Получить код</button>'+
+  '<button class="btn line" data-act="gosu">Войти через Госуслуги</button></div></div>';
+}
+function pgCode(){
+  return '<div class="page white">'+backHdr('','/login')+
+  '<div class="wrap loose"><h1 class="h1">Код из СМС</h1><p class="muted" style="margin:0">Отправили на '+esc(S.phone||'ваш номер')+'</p>'+
+  '<input class="inp code" id="code" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="4" placeholder="····" aria-label="Код из СМС">'+
+  '<div class="faint">Для демонстрации подойдёт любой код из 4 цифр.</div>'+
+  '<button class="link" data-toast="Код отправлен ещё раз" style="align-self:flex-start">Отправить код ещё раз</button></div></div>';
+}
+function formatPhone(v){
+  var d=v.replace(/\D/g,''); if(d[0]==='8') d='7'+d.slice(1); if(d&&d[0]!=='7') d='7'+d; d=d.slice(0,11);
+  var r='+7'; if(d.length>1) r+=' '+d.slice(1,4); if(d.length>4) r+=' '+d.slice(4,7); if(d.length>7) r+='-'+d.slice(7,9); if(d.length>9) r+='-'+d.slice(9,11);
+  return d.length?r:'';
+}
+function login(){S.auth=true;save();var n=S.next||'/lk';S.next=null;go(n)}
+
+/* ================= КАБИНЕТ lk.zt.ru ================= */
+function relCard(){
+  var last=S.letters[0], st=STATUS[last.status];
+  var line = last.dir==='in' && last.status==='new'
+    ? '<a class="statusline" href="#/lk/letter/'+last.id+'" style="background:var(--purple-l);color:var(--purple-d)">'+ic('mail')+'<span class="grow">Пришёл ответ от '+S.relative.gen+' · '+last.date.toLowerCase().split(',')[0]+'</span>'+ic('chev')+'</a>'
+    : '<a class="statusline" href="#/lk/letter/'+last.id+'" style="background:'+(last.status==='check'?'var(--orange-l);color:var(--orange-d)':'var(--green-l);color:var(--green-d)')+'">'+ic(last.status==='check'?'clock':'check')+'<span class="grow">Письмо '+(last.status==='check'?'на проверке в учреждении':st[0].toLowerCase())+'</span>'+ic('chev')+'</a>';
+  return '<div class="card" style="display:flex;flex-direction:column;gap:14px"><div class="row"><div class="avatar">'+S.relative.ini+'</div><div class="grow"><div style="font-size:20px;font-weight:700;color:var(--ink);line-height:1.2">'+S.relative.name+'</div><div class="faint">'+S.relative.place+'</div></div>'+
+  '<button class="ib" data-act="switch" aria-label="Выбрать близкого" style="background:var(--bg)">'+ic('down')+'</button></div>'+line+'</div>';
+}
+function pgHome(){
+  return '<div class="page tabbed">'+lkHdr()+
+  '<div class="wrap">'+relCard()+
+  '<div class="sec">Что хотите сделать?</div>'+
+  '<div class="grid2">'+
+  '<a class="act main" href="#/lk/write">'+ic('mail')+'<div><b>Написать</b><span>письмо, фото, ответ</span></div></a>'+
+  '<a class="act" href="#/app">'+ic('video')+'<div><b>Поговорить</b><span>звонок и видео</span></div></a>'+
+  '<a class="act" href="#/lk/money">'+ic('wallet')+'<div><b>Помочь деньгами</b><span>на счёт или звонки</span></div></a>'+
+  '<a class="act" href="#/lk/joy">'+ic('gift')+'<div><b>Порадовать</b><span>фото, судоку, открытки</span></div></a></div>'+
+  '<div class="list">'+
+  '<a class="item" href="#/lk/account"><div class="ic" style="background:var(--purple-l);color:var(--purple-d)">'+ic('wallet')+'</div><div class="grow"><b>Мой счёт</b><small>для писем, фото и переводов</small></div><b style="font-size:17px">'+rub(S.account)+'</b>'+ic('chev')+'</a>'+
+  '<a class="item" href="#/lk/card"><div class="ic" style="background:var(--green-l);color:var(--green-d)">'+ic('phone')+'</div><div class="grow"><b>Карта для звонков</b><small>'+S.relative.short+' звонил '+S.cardLast+'</small></div><b style="font-size:17px">'+rub(S.card)+'</b>'+ic('chev')+'</a></div>'+
+  '<a class="promo" href="#/app">'+ic('video')+'<b style="flex:1;font-size:15px;line-height:1.35">Увидеть '+S.relative.gen+' по видео — в приложении</b><span class="btn sm white">Скачать</span></a>'+
+  '</div>'+tabbar('/lk')+'</div>';
+}
+function letterRow(l){
+  var st=STATUS[l.status], inc=l.dir==='in';
+  var title=inc?'Ответ от '+S.relative.gen:(l.photos?'Письмо и '+l.photos+' фото':'Ваше письмо');
+  var col=inc?'background:var(--purple-l);color:var(--purple-d)':l.status==='rejected'?'background:var(--red-l);color:var(--red)':l.status==='check'?'background:var(--orange-l);color:var(--orange-d)':'background:var(--green-l);color:var(--green-d)';
+  var sub=l.status==='rejected'?'деньги вернулись на счёт':(l.text||'').replace(/\n+/g,' ').slice(0,40)+'…';
+  return '<a class="item" href="#/lk/letter/'+l.id+'"><div class="ic" style="'+col+'">'+ic(inc?'in':'out')+'</div><div class="grow"><b>'+title+'</b><small>'+l.date+' · '+esc(sub)+'</small></div><span class="pill '+st[1]+'">'+st[0]+'</span></a>';
+}
+function pgLetters(){
+  return '<div class="page tabbed">'+lkHdr('Переписка')+
+  '<div class="wrap"><div class="row"><div class="avatar sm soft">'+S.relative.ini+'</div><div class="grow"><b style="color:var(--ink)">'+S.relative.name+'</b><div class="faint">Письма проверяет учреждение — обычно до 3 дней</div></div></div>'+
+  '<div class="list">'+S.letters.map(letterRow).join('')+'</div></div>'+
+  '<div style="position:fixed;left:50%;transform:translateX(-50%);bottom:calc(76px + var(--sb));width:100%;max-width:480px;padding:0 16px;z-index:25"><a class="btn" href="#/lk/write" style="box-shadow:0 8px 20px rgba(104,61,204,.3)">'+ic('plus')+'Написать письмо</a></div>'+
+  tabbar('/lk/letters')+'</div>';
+}
+function pgLetter(id){
+  var l=S.letters.filter(function(x){return x.id===id})[0]; if(!l) return pgLetters();
+  if(l.dir==='in'&&l.status==='new'){l.status='read';S.unread=false;save();}
+  var body;
+  if(l.dir==='in'){
+    body='<div class="paper">'+esc(l.text)+'</div><button class="item bordered" data-toast="Откроется скан бланка целиком"><div class="ic" style="background:var(--bg);color:var(--muted)">'+ic('photo')+'</div><div class="grow"><b>Скан бланка</b><small>написано от руки</small></div>'+ic('chev')+'</button>';
+  } else {
+    var steps=['Отправлено','Проверено учреждением','Передано '+S.relative.dat].concat(l.reply?['Ответ получен']:[]);
+    var done=l.steps?l.steps.length:0;
+    var tl='';
+    if(l.status==='rejected'){
+      tl='<div class="card" style="background:var(--red-l)"><b style="color:var(--red)">Учреждение не пропустило письмо</b><div style="color:var(--ink);margin-top:6px">'+esc(l.reason)+'</div></div>';
+    } else {
+      tl='<div class="card flat"><div class="h3" style="margin-bottom:14px">Где письмо</div><div class="tl">'+steps.map(function(s,i){var cls=i<done?'done':i===done?'cur':'todo';var when=i<done?l.steps[i]:(i===done&&l.status==='check'?'обычно до 3 дней':'');return '<div class="ts '+cls+'"><div class="c">'+(i<done?ic('check',3):'')+'</div><div><b>'+s+'</b>'+(when?'<span class="faint">'+when+'</span>':'')+'</div></div>'}).join('')+'</div></div>';
+    }
+    body=tl+'<div class="sec">Текст письма</div><div class="bubble">'+esc(l.text)+'</div>'+(l.photos?'<div class="faint">+ '+l.photos+' фото</div>':'');
   }
-  document.addEventListener('click',function(e){
-    var el=e.target.closest('[data-go],[data-toast]'); if(!el) return;
-    e.preventDefault();
-    if(el.dataset.sent){document.getElementById('newmsg').hidden=false;}
-    if(el.dataset.toast) say(el.dataset.toast);
-    if(el.dataset.go) go(el.dataset.go);
-  });
-  var am=document.getElementById('amounts');
-  am.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;am.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b)});document.getElementById('paybtn').textContent='Пополнить на '+b.textContent;});
-  // views
-  var views={proto:'view-proto',audit:'view-audit',schema:'view-schema'};
-  function view(v){Object.keys(views).forEach(function(k){document.getElementById(views[k]).hidden=k!==v;document.getElementById('tab-'+k).setAttribute('aria-selected',k===v);});}
-  document.querySelectorAll('[data-view]').forEach(function(b){b.addEventListener('click',function(){view(b.dataset.view);});});
-  var h=(location.hash||'').slice(1); if(views[h]) view(h);
-  // audit
-  var items=[
-    ['Главная начинается с моего телефона и баланса, потом два рекламных баннера. Близкий — в середине экрана.','Первое — близкий: имя, учреждение и последний статус («письмо доставлено вчера»).'],
-    ['Карты переговоров — номерами (63995203…): непонятно, чья карта.','Карта всегда «для кого»: «Моя карта для звонков Ивану».'],
-    ['Деньги в трёх местах: «Мои финансы», «Карты переговоров», плитка «Деньги».','Одна кнопка «Помочь деньгами» → на счёт или на звонки.'],
-    ['8 одинаковых плиток. «Фотокарточки» и «Изображения» — в чём разница?','4 действия-глагола. Фото и документы — внутри письма.'],
-    ['Ответ на письмо — платная добавка «Бланк ответа», спрятанная среди допов.','«Хочу получить ответ» — включено сразу, цена видна в итоге.'],
-    ['В форме письма — 8 развлекательных предложений до того, как человек что-то написал.','Сначала текст. Судоку и кроссворды — в «Порадовать».'],
-    ['Вкладка «Переговоры» в вебе пустая. Ни слова о том, что звонки в приложении.','«Поговорить» = установить приложение в одно нажатие.'],
-    ['Помощь разложена по продуктам. Есть «вернуться к старой версии» — два кабинета.','Помощь — вопросами человека. Одна версия кабинета.']
-  ];
-  document.getElementById('audit').innerHTML=items.map(function(it,i){return '<div class="aitem"><div class="n">'+(i+1)+'</div><div><div class="lab now">Сейчас</div><p>'+it[0]+'</p><div class="lab fix">Делаем</div><p>'+it[1]+'</p></div></div>';}).join('');
-  var start='landing'; try{var s=localStorage.getItem('zt-screen'); if(s&&document.querySelector('[data-screen="'+s+'"]')) start=s;}catch(e){}
-  go(start);
+  var title=l.dir==='in'?'Ответ от '+S.relative.gen:'Ваше письмо';
+  return '<div class="page white">'+backHdr(title,'/lk/letters')+
+  '<div class="wrap loose"><div class="faint">'+l.date+'</div>'+body+'</div>'+
+  '<div class="stick"><a class="btn" href="#/lk/write">'+(l.dir==='in'?'Ответить':'Написать ещё')+'</a></div></div>';
+}
+function draftTotal(){var d=S.draft;return (d.text.trim()||d.photos.length||d.extras.length?PRICE.letter:0)+d.photos.length*PRICE.photo+(d.reply?PRICE.reply:0)+d.extras.reduce(function(a,x){return a+x.p},0)}
+function pgWrite(){
+  var d=S.draft;
+  return '<div class="page white">'+backHdr('Письмо '+S.relative.dat,'/lk')+
+  '<div class="wrap loose">'+
+  '<textarea class="inp" id="lt" placeholder="Напишите, как у вас дела…" aria-label="Текст письма">'+esc(d.text)+'</textarea>'+
+  '<div><div class="row between" style="margin-bottom:8px"><span class="h3">Фото</span><span class="faint">'+PRICE.photo+' ₽ за фото</span></div><div class="thumbs" id="thumbs">'+
+  d.photos.map(function(src,i){return '<div class="thumb"><img src="'+src+'" alt="Фото '+(i+1)+'"><button data-act="rmph" data-i="'+i+'" aria-label="Убрать фото">×</button></div>'}).join('')+
+  '<label class="addph">'+ic('photo')+'Добавить<input type="file" accept="image/*" multiple id="phfile" hidden></label></div></div>'+
+  (d.extras.length?'<div style="display:flex;flex-direction:column;gap:8px">'+d.extras.map(function(x,i){return '<div class="extra">'+ic('gift')+'<span>'+x.t+' · '+x.p+' ₽</span><button data-act="rmex" data-i="'+i+'" aria-label="Убрать">×</button></div>'}).join('')+'</div>':'')+
+  '<div class="card flat" style="padding:4px 16px"><label class="opt"><div class="grow"><b style="color:var(--ink)">Хочу получить ответ</b><div class="faint">Приложим бланк — '+S.relative.short+' ответит на нём · '+PRICE.reply+' ₽</div></div><span class="sw"><input type="checkbox" id="reply"'+(d.reply?' checked':'')+'><i></i></span></label></div>'+
+  '<a class="faint" href="#/lk/rules" style="color:var(--purple)">Что нельзя писать, чтобы письмо пропустили</a>'+
+  '</div>'+
+  '<div class="stick"><div class="sum"><span class="muted">С моего счёта</span><b id="total">'+rub(draftTotal())+'</b></div>'+
+  '<button class="btn" data-act="send" id="sendbtn"'+(d.text.trim()||d.photos.length||d.extras.length?'':' disabled')+'>Отправить</button></div></div>';
+}
+function pgRules(){
+  return '<div class="page white">'+backHdr('Чтобы письмо пропустили','/lk/write')+
+  '<div class="wrap loose"><div class="card" style="background:var(--green-l)"><b style="color:var(--green-d)">Можно</b><ul class="bul" style="margin-top:10px"><li>Новости семьи, здоровье, планы</li><li>Фото родных, дома, природы</li><li>Слова поддержки</li></ul></div>'+
+  '<div class="card" style="background:var(--red-l)"><b style="color:var(--red)">Нельзя</b><ul class="bul" style="margin-top:10px"><li>Подробности уголовного дела</li><li>Номера карт, счетов и телефонов</li><li>Сведения о других людях в учреждении</li><li>Шифр, условные знаки</li></ul></div>'+
+  '<p class="muted" style="margin:0">Если письмо не пропустят, вы увидите причину, а деньги вернутся на счёт.</p></div>'+
+  '<div class="stick"><a class="btn" href="#/lk/write">Понятно</a></div></div>';
+}
+function pgMoney(){
+  return '<div class="page white">'+backHdr('Помочь деньгами','/lk')+
+  '<div class="wrap loose"><h1 class="h1" style="font-size:26px">Куда отправить деньги?</h1>'+
+  '<a class="item bordered" href="#/lk/transfer"><div class="ic" style="background:var(--purple-l);color:var(--purple-d)">'+ic('bank')+'</div><div class="grow"><b>На его счёт в учреждении</b><small>на магазин и передачи</small></div>'+ic('chev')+'</a>'+
+  '<a class="item bordered" href="#/lk/card"><div class="ic" style="background:var(--green-l);color:var(--green-d)">'+ic('phone')+'</div><div class="grow"><b>На звонки</b><small>ваша карта для звонков · '+rub(S.card)+'</small></div>'+ic('chev')+'</a>'+
+  '<div class="faint">Деньги списываются с вашего счёта. Сейчас на нём '+rub(S.account)+' · <a href="#/lk/account">пополнить</a></div></div></div>';
+}
+var amt={card:500,transfer:1000,account:1000};
+function amounts(key,list){return '<div class="choices" data-key="'+key+'">'+list.map(function(v){return '<button data-act="amt" data-v="'+v+'" class="'+(amt[key]===v?'on':'')+'" aria-pressed="'+(amt[key]===v)+'">'+v.toLocaleString('ru-RU')+' ₽</button>'}).join('')+'</div>';}
+function pgCard(){
+  var short=amt.card>S.account;
+  return '<div class="page white">'+backHdr('Карта для звонков','/lk/money')+
+  '<div class="wrap loose"><div class="balance" style="background:var(--green-d)"><small>Карта для звонков '+S.relative.dat+'</small><div class="v">'+rub(S.card)+'</div><small>Хватит примерно на '+Math.floor(S.card/12)+' мин · последний звонок '+S.cardLast+'</small></div>'+
+  '<div><div class="h3" style="margin-bottom:10px">Сколько положить</div>'+amounts('card',[300,500,1000])+'</div>'+
+  '<div class="faint">Эту карту видите и пополняете только вы. '+S.relative.short+' звонит с неё сам.</div></div>'+
+  '<div class="stick"><div class="sum"><span class="muted">С моего счёта ('+rub(S.account)+')</span><b>'+rub(amt.card)+'</b></div>'+
+  (short?'<a class="btn" href="#/lk/account">Сначала пополнить счёт</a>':'<button class="btn" data-act="pay" data-what="card">Пополнить на '+rub(amt.card)+'</button>')+'</div></div>';
+}
+function pgTransfer(){
+  var fee=Math.round(amt.transfer*COMMISSION), total=amt.transfer+fee, short=total>S.account;
+  return '<div class="page white">'+backHdr('На счёт в учреждении','/lk/money')+
+  '<div class="wrap loose"><div class="row"><div class="avatar sm soft">'+S.relative.ini+'</div><div class="grow"><b style="color:var(--ink)">'+S.relative.name+'</b><div class="faint">'+S.relative.place+'</div></div></div>'+
+  '<div><div class="h3" style="margin-bottom:10px">Сколько перевести</div>'+amounts('transfer',[500,1000,2000])+'</div>'+
+  '<div class="card flat" style="display:flex;flex-direction:column;gap:6px"><div class="row between"><span class="muted">Придёт '+S.relative.dat+'</span><b style="color:var(--ink)">'+rub(amt.transfer)+'</b></div><div class="row between"><span class="muted">Комиссия '+Math.round(COMMISSION*100)+'%</span><span>'+rub(fee)+'</span></div></div>'+
+  '<div class="row faint" style="gap:8px"><span style="color:var(--green-d);display:flex">'+ic('shield')+'</span>Вы подтверждены через Госуслуги</div></div>'+
+  '<div class="stick"><div class="sum"><span class="muted">С моего счёта ('+rub(S.account)+')</span><b>'+rub(total)+'</b></div>'+
+  (short?'<a class="btn" href="#/lk/account">Сначала пополнить счёт</a>':'<button class="btn" data-act="pay" data-what="transfer">Перевести '+rub(amt.transfer)+'</button>')+'</div></div>';
+}
+function pgAccount(){
+  return '<div class="page white">'+backHdr('Мой счёт','/lk')+
+  '<div class="wrap loose"><div class="balance"><small>На счёте</small><div class="v">'+rub(S.account)+'</div><small>Из него оплачиваются письма, фото, переводы и карта для звонков</small></div>'+
+  '<div><div class="h3" style="margin-bottom:10px">Пополнить на</div>'+amounts('account',[500,1000,3000])+'</div>'+
+  '<div class="list" style="border:1px solid var(--line)"><label class="item" style="cursor:pointer"><div class="ic" style="background:var(--bg);color:var(--ink)">'+ic('bank')+'</div><div class="grow"><b>СБП</b><small>без комиссии, через приложение банка</small></div><input type="radio" name="pm" checked style="width:22px;height:22px;accent-color:var(--purple)"></label>'+
+  '<label class="item" style="cursor:pointer"><div class="ic" style="background:var(--bg);color:var(--ink)">'+ic('card')+'</div><div class="grow"><b>Карта ·· 4417</b><small>сохранённая</small></div><input type="radio" name="pm" style="width:22px;height:22px;accent-color:var(--purple)"></label></div>'+
+  '<a class="link" href="#/lk/history" style="align-self:flex-start">История операций</a></div>'+
+  '<div class="stick"><button class="btn" data-act="pay" data-what="account">Пополнить на '+rub(amt.account)+'</button></div></div>';
+}
+var hf='all';
+function pgHistory(){
+  var ops=S.ops.filter(function(o){return hf==='all'||o.k===hf});
+  var html='',day=null;
+  ops.forEach(function(o){if(o.d!==day){day=o.d;html+='<div class="day">'+day+'</div>'}
+    html+='<div class="op"><div class="ic" style="background:'+(o.a>0?'var(--green-l);color:var(--green-d)':'var(--bg);color:var(--muted)')+'">'+ic(o.k==='call'?'phone':o.k==='in'?'plus':o.k==='gift'?'gift':o.k==='transfer'?'bank':'mail')+'</div><div class="grow"><b>'+o.t+'</b><span class="faint">'+o.s+'</span></div><span class="amt'+(o.a>0?' plus':'')+'">'+(o.a>0?'+':'')+rub(o.a)+'</span></div>'});
+  var f=[['all','Все'],['in','Пополнения'],['out','Письма'],['call','Звонки'],['transfer','Переводы']];
+  return '<div class="page tabbed">'+lkHdr('История')+
+  '<div class="wrap"><a class="balance" href="#/lk/account" style="display:block"><small>Мой счёт</small><div class="v" style="margin-bottom:4px">'+rub(S.account)+'</div><small>Пополнить ›</small></a>'+
+  '<div class="filters">'+f.map(function(x){return '<button data-act="hf" data-f="'+x[0]+'" class="'+(hf===x[0]?'on':'')+'" aria-pressed="'+(hf===x[0])+'">'+x[1]+'</button>'}).join('')+'</div>'+
+  '<div class="list" style="padding-bottom:4px">'+(html||'<div class="op faint">Здесь пока пусто</div>')+'</div></div>'+tabbar('/lk/history')+'</div>';
+}
+function pgProfile(){
+  return '<div class="page tabbed">'+lkHdr('Профиль')+
+  '<div class="wrap"><div class="card row"><div class="avatar soft">АП</div><div class="grow"><b style="font-size:18px;color:var(--ink)">Анна Петрова</b><div style="margin-top:4px"><span class="pill s-ok">Госуслуги ✓</span></div></div></div>'+
+  '<div class="sec">Мои близкие</div><div class="list">'+
+  '<div class="item"><div class="avatar sm">'+S.relative.ini+'</div><div class="grow"><b>'+S.relative.name+'</b><small>'+S.relative.place+'</small></div><button class="link" data-toast="Перевели в другое учреждение? Изменится у всех родственников">Изменить</button></div>'+
+  '<button class="item" data-toast="Добавление: ФИО, дата рождения, учреждение"><div class="ic" style="background:var(--purple-l);color:var(--purple-d)">'+ic('plus')+'</div><div class="grow"><b style="color:var(--purple)">Добавить близкого</b></div></button></div>'+
+  '<div class="sec">Мои телефоны</div><div class="list">'+
+  '<div class="item"><div class="grow"><b>'+esc(S.phone||'+7 900 000-00-01')+'</b></div><span class="pill s-new">Основной</span></div>'+
+  '<button class="item" data-toast="Новый номер подтверждается кодом из СМС"><div class="ic" style="background:var(--purple-l);color:var(--purple-d)">'+ic('plus')+'</div><div class="grow"><b style="color:var(--purple)">Добавить номер</b></div></button></div>'+
+  '<div class="sec">Уведомления</div><div class="card" style="padding:4px 16px">'+
+  '<label class="opt"><span class="grow">Пришёл ответ</span><span class="sw"><input type="checkbox" checked><i></i></span></label>'+
+  '<label class="opt"><span class="grow">Письмо не пропустили</span><span class="sw"><input type="checkbox" checked><i></i></span></label>'+
+  '<label class="opt"><span class="grow">На карте для звонков мало денег</span><span class="sw"><input type="checkbox" checked><i></i></span></label></div>'+
+  '<div class="sec">Безопасность</div><div class="card" style="padding:4px 16px">'+
+  '<label class="opt"><div class="grow">Не выходить на этом телефоне<div class="faint">Вход запомнится на месяцы</div></div><span class="sw"><input type="checkbox" checked><i></i></span></label>'+
+  '<label class="opt"><div class="grow">Вход без СМС<div class="faint">по отпечатку или лицу — ключ доступа</div></div><span class="sw"><input type="checkbox"><i></i></span></label></div>'+
+  '<div class="list" style="margin-top:8px"><a class="item" href="#/lk/help"><div class="ic" style="background:var(--bg);color:var(--ink)">'+ic('help')+'</div><div class="grow"><b>Помощь</b><small>вопросы и поддержка</small></div>'+ic('chev')+'</a>'+
+  '<button class="item" data-act="logout"><div class="ic" style="background:var(--bg);color:var(--ink)">'+ic('logout')+'</div><div class="grow"><b>Выйти</b><small>и начать демонстрацию заново</small></div></button></div>'+
+  '</div>'+tabbar('/lk/profile')+'</div>';
+}
+function pgHelp(){
+  return '<div class="page white">'+backHdr('Помощь','/lk')+
+  '<div class="wrap loose"><h1 class="h1" style="font-size:26px">Чем помочь?</h1>'+
+  '<details><summary>Письмо долго на проверке</summary><p>Учреждение проверяет письма до 3 дней. Если прошло больше — напишите нам, мы уточним.</p></details>'+
+  '<details><summary>Почему не пропустили письмо?</summary><p>Причина указана в самом письме. Деньги за него уже вернулись на ваш счёт.</p></details>'+
+  '<details><summary>Как ему позвонить?</summary><p>Позвонить в учреждение нельзя — '+S.relative.short+' звонит вам сам из приложения ZT. Пополните карту для звонков, чтобы ему хватило минут.</p></details>'+
+  '<details><summary>Близкого перевели</summary><p>Откройте Профиль → Мои близкие → Изменить. Новое учреждение появится у всех родственников.</p></details>'+
+  '<a class="item bordered" href="tel:88000000000"><div class="ic" style="background:var(--green-l);color:var(--green-d)">'+ic('phone')+'</div><div class="grow"><b>Позвонить в поддержку</b><small>8 800 000-00-00 · круглосуточно</small></div></a>'+
+  '<button class="item bordered" data-toast="Откроется чат с поддержкой"><div class="ic" style="background:var(--purple-l);color:var(--purple-d)">'+ic('chat')+'</div><div class="grow"><b>Написать в чат</b><small>отвечаем за 5 минут</small></div></button></div></div>';
+}
+var JOY=[['📷','Фото','напечатаем и передадим',PRICE.photo,'var(--purple-l)','photo'],['🔢','Судоку','10 штук, три уровня',60,'var(--green-l)'],['✏️','Кроссворды','10 штук',60,'var(--orange-l)'],['💌','Открытка','к празднику',50,'var(--blue-l)']];
+function pgJoy(){
+  return '<div class="page white">'+backHdr('Порадовать','/lk')+
+  '<div class="wrap loose"><h1 class="h1" style="font-size:26px">Порадуйте '+S.relative.gen+'</h1><p class="muted" style="margin:0">Придёт вместе с письмом.</p>'+
+  '<div class="grid2">'+JOY.map(function(j,i){return '<button class="tile" style="background:'+j[4]+'" data-act="joy" data-i="'+i+'"><span class="em" aria-hidden="true">'+j[0]+'</span><div><b>'+j[1]+'</b><br><span>'+j[2]+' · '+j[3]+' ₽</span></div></button>'}).join('')+'</div>'+
+  '<div class="promo" style="background:var(--ink)"><span class="em" style="font-size:28px" aria-hidden="true">🎄</span><div><b>Новогодние открытки</b><div style="color:#A9ABBD;font-size:14px">со скидкой 20% до 31 декабря</div></div></div></div></div>';
+}
+function pgDone(){
+  var f=S.flash||{t:'Готово',s:''};
+  return '<div class="page white"><div class="wrap loose center" style="flex:1;justify-content:center;padding-top:60px"><div class="done-ic">'+ic('check',2.5)+'</div><h1 class="h1" style="font-size:26px">'+f.t+'</h1><p class="muted" style="margin:0;max-width:30ch">'+f.s+'</p></div>'+
+  '<div class="stick">'+(f.to?'<a class="btn" href="#'+f.to[0]+'">'+f.to[1]+'</a>':'')+'<a class="btn '+(f.to?'line':'')+'" href="#/lk">На главную</a></div></div>';
+}
+
+/* ---------- окна снизу ---------- */
+function sheet(html){var s=document.getElementById('sheet');s.innerHTML='<div class="sheet-bg" data-act="closesheet"><div class="sheet" role="dialog" aria-modal="true">'+'<div class="grab"></div>'+html+'</div></div>';document.body.style.overflow='hidden';}
+function closeSheet(){document.getElementById('sheet').innerHTML='';document.body.style.overflow='';}
+var pending=null;
+function confirmPay(what,sumTxt){
+  pending=what;
+  sheet('<h2 class="h2">Подтвердите оплату</h2><div class="sum"><span class="muted">'+{card:'Карта для звонков',transfer:'Перевод '+S.relative.dat,account:'Пополнение счёта'}[what]+'</span><b>'+sumTxt+'</b></div>'+
+  '<div class="field"><label for="pc">Код из СМС на '+esc(S.phone||'ваш номер')+'</label><input class="inp code" id="pc" inputmode="numeric" maxlength="4" autocomplete="one-time-code" placeholder="····"></div>'+
+  '<div class="faint">Для демонстрации подойдёт любой код из 4 цифр.</div><button class="btn line" data-act="closesheet">Отмена</button>');
+  setTimeout(function(){var i=document.getElementById('pc');if(i)i.focus()},250);
+}
+function today(){var d=new Date();return 'Сегодня, '+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)}
+function doPay(){
+  var w=pending; pending=null; closeSheet();
+  if(w==='card'){S.account-=amt.card;S.card+=amt.card;S.ops.unshift({d:'Сегодня',t:'Карта для звонков '+S.relative.dat,s:'пополнение',a:-amt.card,k:'call'});S.flash={t:'Карта пополнена',s:'На карте для звонков '+rub(S.card)+'. '+S.relative.short+' может звонить.',to:['/app','Как принять звонок']};}
+  if(w==='transfer'){var fee=Math.round(amt.transfer*COMMISSION);S.account-=amt.transfer+fee;S.ops.unshift({d:'Сегодня',t:'Перевод '+S.relative.dat,s:'на счёт в учреждении · комиссия '+rub(fee),a:-(amt.transfer+fee),k:'transfer'});S.flash={t:'Деньги отправлены',s:'Учреждение зачислит '+rub(amt.transfer)+' на счёт '+S.relative.gen+' в течение 1–2 рабочих дней.'};}
+  if(w==='account'){S.account+=amt.account;S.ops.unshift({d:'Сегодня',t:'Пополнение счёта',s:'СБП',a:amt.account,k:'in'});S.flash={t:'Счёт пополнен',s:'На счёте '+rub(S.account)+'.',to:['/lk/write','Написать письмо']};}
+  save(); go('/lk/done');
+}
+function send(){
+  var d=S.draft,t=draftTotal();
+  if(t>S.account){toast('На счёте не хватает денег');go('/lk/account');return}
+  var id='l'+Date.now();
+  S.letters.unshift({id:id,dir:'out',date:today(),status:'check',photos:d.photos.length,reply:d.reply,text:d.text||'(только фото)',steps:[today().replace('Сегодня','сегодня')]});
+  S.account-=t;
+  S.ops.unshift({d:'Сегодня',t:'Письмо '+S.relative.dat,s:[d.photos.length?d.photos.length+' фото':'',d.reply?'с бланком ответа':'',d.extras.map(function(x){return x.t.toLowerCase()}).join(', ')].filter(Boolean).join(' · ')||'без фото',a:-t,k:'out'});
+  S.draft={text:'',photos:[],reply:true,extras:[]};
+  S.flash={t:'Письмо отправлено',s:'Учреждение проверит его — обычно до 3 дней. Мы сообщим, когда '+S.relative.short+' его получит.',to:['/lk/letter/'+id,'Где письмо']};
+  save(); go('/lk/done');
+}
+
+/* ---------- маршруты ---------- */
+function route(){
+  closeSheet();
+  var h=(location.hash||'#/').slice(1)||'/', parts=h.split('/').filter(Boolean);
+  if(parts[0]==='lk'&&!S.auth){S.next=h;save();location.replace('#/login');return}
+  var html;
+  if(!parts.length) html=pgLanding();
+  else if(parts[0]==='stage') html=pgStage(parts[1]);
+  else if(parts[0]==='app') html=pgApp();
+  else if(parts[0]==='login') html=S.auth?(location.replace('#/lk'),''):pgLogin();
+  else if(parts[0]==='code') html=pgCode();
+  else if(parts[0]==='lk'){
+    var p=parts[1]||'';
+    html={'':pgHome,letters:pgLetters,write:pgWrite,rules:pgRules,money:pgMoney,card:pgCard,transfer:pgTransfer,account:pgAccount,history:pgHistory,profile:pgProfile,help:pgHelp,joy:pgJoy,done:pgDone}[p];
+    html=p==='letter'?pgLetter(parts[2]):(html?html():pgHome());
+  } else html=pgLanding();
+  if(!html) return;
+  document.getElementById('app').innerHTML=html;
+  document.title=parts[0]==='lk'?'Кабинет ZT':'ZT — связь с близким';
+  if(!keepScroll) window.scrollTo(0,0); keepScroll=false;
+  var c=document.getElementById('code'); if(c) setTimeout(function(){c.focus()},200);
+}
+var keepScroll=false;
+function rerender(){keepScroll=true;route()}
+window.addEventListener('hashchange',route);
+
+/* ---------- действия ---------- */
+document.addEventListener('click',function(e){
+  var t=e.target.closest('[data-act],[data-toast]'); if(!t) return;
+  var a=t.dataset.act;
+  if(t.dataset.toast){e.preventDefault();toast(t.dataset.toast);return}
+  if(a==='closesheet'){if(e.target===t||t.tagName==='BUTTON')closeSheet();return}
+  if(a==='getcode'){go('/code')}
+  else if(a==='gosu'){toast('Вход через Госуслуги');login()}
+  else if(a==='switch'){sheet('<h2 class="h2">Кому</h2><div class="list" style="border:1px solid var(--line)"><button class="item" data-act="closesheet"><div class="avatar sm">'+S.relative.ini+'</div><div class="grow"><b>'+S.relative.name+'</b><small>'+S.relative.place+'</small></div><span style="color:var(--purple);display:flex">'+ic('check')+'</span></button><button class="item" data-toast="Добавление: ФИО, дата рождения, учреждение"><div class="ic" style="background:var(--purple-l);color:var(--purple-d)">'+ic('plus')+'</div><div class="grow"><b style="color:var(--purple)">Добавить близкого</b></div></button></div>')}
+  else if(a==='amt'){var k=t.parentNode.dataset.key;amt[k]=+t.dataset.v;rerender()}
+  else if(a==='pay'){var w=t.dataset.what;confirmPay(w,rub(w==='transfer'?amt.transfer+Math.round(amt.transfer*COMMISSION):amt[w]))}
+  else if(a==='send'){send()}
+  else if(a==='rmph'){S.draft.photos.splice(+t.dataset.i,1);rerender()}
+  else if(a==='rmex'){S.draft.extras.splice(+t.dataset.i,1);save();rerender()}
+  else if(a==='hf'){hf=t.dataset.f;rerender()}
+  else if(a==='joy'){var j=JOY[+t.dataset.i];if(j[5]==='photo'){go('/lk/write');setTimeout(function(){var f=document.getElementById('phfile');if(f)f.click()},300);return}S.draft.extras.push({t:j[1],p:j[3]});save();toast(j[1]+' добавлены к письму');go('/lk/write')}
+  else if(a==='logout'){try{localStorage.removeItem(KEY)}catch(x){}S=fresh();go('/')}
+});
+document.addEventListener('input',function(e){
+  var t=e.target;
+  if(t.id==='ph'){var f=formatPhone(t.value);t.value=f;S.phone=f;var b=document.getElementById('getcode');if(b)b.disabled=f.replace(/\D/g,'').length<11}
+  if(t.id==='code'){t.value=t.value.replace(/\D/g,'');if(t.value.length===4){t.blur();setTimeout(login,250)}}
+  if(t.id==='pc'){t.value=t.value.replace(/\D/g,'');if(t.value.length===4){t.blur();setTimeout(doPay,250)}}
+  if(t.id==='lt'){S.draft.text=t.value;document.getElementById('total').textContent=rub(draftTotal());document.getElementById('sendbtn').disabled=!(t.value.trim()||S.draft.photos.length||S.draft.extras.length);clearTimeout(t._s);t._s=setTimeout(save,400)}
+});
+document.addEventListener('change',function(e){
+  var t=e.target;
+  if(t.id==='reply'){S.draft.reply=t.checked;document.getElementById('total').textContent=rub(draftTotal());save()}
+  if(t.id==='phfile'){var files=[].slice.call(t.files||[]),n=files.length;if(!n)return;files.forEach(function(f){var r=new FileReader();r.onload=function(){S.draft.photos.push(r.result);if(--n===0)rerender()};r.readAsDataURL(f)})}
+});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSheet()});
+
+route();
 })();
 </script>
+</body>
+</html>
