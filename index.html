@@ -81,7 +81,7 @@ a{color:var(--purple);text-decoration:none}
 .avatar.soft{background:var(--purple-l);color:var(--purple-d)}
 .pill{display:inline-block;font-size:12px;font-weight:600;padding:4px 8px;border-radius:8px;white-space:nowrap}
 .s-ok{background:var(--green-l);color:var(--green-d)}.s-wait{background:var(--orange-l);color:var(--orange-d)}.s-new{background:var(--purple-l);color:var(--purple-d)}.s-err{background:var(--red-l);color:var(--red)}
-.chev{color:#C7C9D9;flex-shrink:0;width:20px;height:20px}
+.chev,.item > svg:last-child{color:#C7C9D9;flex-shrink:0;width:20px;height:20px}
 .item{min-height:64px;width:100%;display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--card);border:0;border-radius:16px;text-align:left;color:var(--text)}
 .item:active{background:var(--soft)}
 .item b{display:block;color:var(--ink);font-size:16px;font-weight:600}
@@ -310,7 +310,7 @@ var P={
   shield:'M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z',
   logout:'M15 12H4M8 8l-4 4 4 4M13 4h6v16h-6'
 };
-function ic(n,sw){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="'+(sw||2)+'" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="'+P[n]+'"/></svg>';}
+function ic(n,sw){return '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="'+(sw||2)+'" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="'+P[n]+'"/></svg>';}
 var LOGO='<img class="logo" src="https://cdn.zt.ru/images/logos/ZT.svg" alt="ZT" width="66" height="22">';
 
 /* ---------- цены (примерные) ---------- */
