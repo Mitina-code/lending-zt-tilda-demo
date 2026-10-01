@@ -439,6 +439,31 @@ audio{background:transparent}
 .scanfull{background:#FFFDF7 repeating-linear-gradient(transparent 0 27px,#E7E0CC 27px 28px);border:1px solid #EFE6CF;border-radius:14px;padding:14px 18px;font-family:'Caveat',cursive;font-size:24px;line-height:28px;color:#2B3A67;white-space:pre-wrap;min-height:240px}
 .scanfull .redact{background:#111}
 
+/* ===== Главная после входа и знакомство ===== */
+.dash{padding:20px 16px 8px;display:flex;flex-direction:column;gap:12px;background:linear-gradient(180deg,#F6F1FF 0%,#FFFFFF 100%)}
+.relcard{display:flex;flex-direction:column;gap:10px;background:#fff;border:1px solid var(--line2);border-radius:20px;padding:16px;box-shadow:0 6px 18px rgba(40,20,90,.06);color:var(--text)}
+.relcard b{display:block;font-size:18px;color:var(--ink)}
+.relcard small{display:block;font-size:13px;color:var(--faint)}
+.lastmsg{background:var(--bg);border-radius:14px;padding:10px 12px;font-size:15px;color:var(--ink)}
+.quick3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.quick3 a{display:flex;flex-direction:column;gap:2px;background:#fff;border:1px solid var(--line2);border-radius:16px;padding:12px;color:var(--ink)}
+.quick3 svg{width:24px;height:24px;color:var(--purple);margin-bottom:4px}
+.quick3 b{font-size:15px}
+.quick3 small{font-size:12px;color:var(--faint);line-height:1.3}
+.nextstep{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:16px;background:#fff;border:2px solid var(--purple);color:var(--text)}
+.nextstep b{display:block;color:var(--ink);font-size:16px}
+.nextstep small{display:block;color:var(--faint);font-size:13px}
+.nextstep.off{border:1px solid var(--line2);opacity:.6}
+.nextstep.off .num{background:var(--line);color:var(--muted)}
+.intro{display:flex;flex-direction:column;gap:14px;margin-top:6px}
+.intro>div{display:grid;grid-template-columns:48px minmax(0,1fr);column-gap:14px}
+.intro span{grid-row:span 2;width:48px;height:48px;border-radius:16px;display:flex;align-items:center;justify-content:center}
+.intro svg{width:24px;height:24px}
+.intro b{color:var(--ink);font-size:17px}
+.intro small{color:var(--muted);font-size:14px}
+.emptychat{align-self:center;margin:40px 12px;max-width:320px;background:#fff;border-radius:20px;padding:20px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;color:var(--muted)}
+.emptychat b{color:var(--ink);font-size:17px}
+
 /* ===== Забота каждый день ===== */
 .sh-hero{position:relative;overflow:hidden;border-radius:24px;padding:22px 20px 24px;background:linear-gradient(150deg,#5E32BE 0%,#683DCC 45%,#00A47A 130%);color:#E9E2FF;display:flex;flex-direction:column;gap:10px}
 .sh-hero p{margin:0;font-size:16px;line-height:1.5}
@@ -629,7 +654,7 @@ const ROLE={мать:'мама',отец:'папа',жена:'жена',сест
 
 /* ================= состояние ================= */
 const KEY='zt-ryadom-v1';
-function fresh(){return {me:null,phone:'',account:1250,card:340,sent:[],reqs:[],ops:[],read:{},flash:null,notify:{},replyBlank:true,support:[],streams:{}}}
+function fresh(){return {me:null,phone:'',account:1250,card:340,sent:[],reqs:[],ops:[],read:{},flash:null,notify:{},replyBlank:true,support:[],streams:{},auth:false,meContact:null}}
 let S; try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}
 if(!S||!('reqs' in S)) S=fresh();
 function save(){try{const c=JSON.parse(JSON.stringify(S));c.sent.forEach(x=>{delete x.url;x.photosData=[]});localStorage.setItem(KEY,JSON.stringify(c))}catch(e){}}
@@ -639,7 +664,7 @@ function rel(){
   const p=BY[S.me.pid]; const parts=p[1].split(' '); const first=parts[1];
   return {id:p[0],name:p[1],short:parts[0]+' '+first,first,dat:decl(first,'d'),gen:decl(first,'g'),ins:decl(first,'i'),ini:parts[0][0]+first[0],dob:p[2],unit:p[3],since:p[4],confirmed:!!p[5],vt:!!p[6],why:p[7],place:FAM.учреждение.short+' · '+p[3].replace('Отряд','отряд'),inst:FAM.учреждение};
 }
-function me(){const c=BY[S.me.pid][8][S.me.ci];const parts=c[0].split(' ');return {name:c[0],call:parts.slice(1).join(' '),ini:parts[0][0]+(parts[1]||'')[0],role:c[1],roleTxt:ROLE[c[1]]||c[1],phone:c[2],verified:!!c[3]}}
+function me(){const c=S.me.ci<0?S.meContact:BY[S.me.pid][8][S.me.ci];const parts=c[0].split(' ');return {name:c[0],call:parts.slice(1).join(' '),ini:parts[0][0]+(parts[1]||'')[0],role:c[1],roleTxt:ROLE[c[1]]||c[1],phone:c[2],verified:!!c[3]}}
 
 /* ================= лента переписки =================
    Механика: родственник пишет → учреждение проверяет → дальше развилка:
@@ -689,7 +714,7 @@ function feed(){
     }
   });
   // звонки: близкий звонит сам с карты для звонков — раз в 8–12 дней
-  if(r.confirmed){for(let d=3+hash(r.id)%5;d<FAM.окноДней;d+=8+hash(r.id+d)%5){const t=dAgo(d);t.setHours(18+d%3,10+d%40);items.push({kind:'ev',type:'call',t:t.getTime(),min:4+hash(r.id+'c'+d)%11})}}
+  if(r.confirmed&&S.me.ci>=0){for(let d=3+hash(r.id)%5;d<FAM.окноДней;d+=8+hash(r.id+d)%5){const t=dAgo(d);t.setHours(18+d%3,10+d%40);items.push({kind:'ev',type:'call',t:t.getTime(),min:4+hash(r.id+'c'+d)%11})}}
   S.ops.filter(o=>o.pid===r.id&&o.ev).forEach(o=>items.push({kind:'ev',type:o.ev,t:o.t,o}));
   S.reqs.filter(q=>q.pid===r.id).forEach(q=>items.push({kind:'ev',type:'req',t:q.t,q}));
   streamEvents(r).forEach(e=>items.push(e));
@@ -697,7 +722,7 @@ function feed(){
   if(pq){const t=dAgo(pq.days);t.setHours(11,5);const txt=addressMe()+', если можно — подключи мне '+(FMT_ACC[pq.fmt]||'что-нибудь почитать')+'. Тут очень длинные дни.';items.push({kind:'msg',id:'plea',t:t.getTime(),out:false,ch:0,dec:0,how:'paper',route:'paper',parts:[txt],text:txt+'\n\n'+r.first,plea:true,status:S.read.plea?'seen':'new',h:1})}
   return items.sort((a,b)=>a.t-b.t);
 }
-function unreadCount(){return feed().filter(m=>m.kind==='msg'&&!m.out&&m.status==='new').length}
+function unreadCount(){if(!S.me)return 0;return feed().filter(m=>m.kind==='msg'&&!m.out&&m.status==='new').length}
 function pendingDemo(){const n=Date.now();return S.sent.some(x=>x.pid===S.me.pid&&n-x.t<DEMO.reply+2000)}
 
 /* ---------- заявки ---------- */
@@ -841,15 +866,85 @@ function pgApp(){
 /* «Главная» после входа — маркетинговый раздел для прогрева: тот же лендинг,
    но с обращением по имени, кнопки ведут в переписку, внизу меню. */
 function pgHomeMkt(){
-  const r=rel(), m=me();
   let h=pgLanding();
-  h=h.replace('<div class="page white land">'+siteHdr(),'<div class="page white land tabbed"><header class="hdr"><a href="#/lk/home" aria-label="ZT Рядом — главная">'+BRAND+'</a><span class="sp"></span><a class="ib" href="#/lk/help" aria-label="Помощь">'+ic('help')+'</a></header>');
-  h=h.replace('<span class="pulse"></span>Если близкий в СИЗО или колонии','<span class="pulse"></span>'+esc(m.call)+', здравствуйте');
-  h=h.split('href="#/login" id="herocta">Начать — нужен только телефон').join('href="#/lk/chat" id="herocta">Написать '+esc(r.dat));
-  h=h.split('<a class="btn white" href="#/login">Начать — нужен только телефон</a>').join('<a class="btn white" href="#/lk/chat">Написать '+esc(r.dat)+'</a><a class="btn ghostw" href="#/lk/stream">Забота каждый день</a>');
+  h=h.replace('<div class="page white land">'+siteHdr(),'<div class="page white land tabbed"><header class="hdr"><a href="#/lk/home" aria-label="ZT Рядом — главная">'+BRAND+'</a><span class="sp"></span><a class="ib" href="#/lk/support" aria-label="Поддержка">'+ic('chat')+'</a>'+(S.me?'<a class="ib" href="#/lk/help" aria-label="Помощь">'+ic('help')+'</a>':'')+'</header>');
+  // вместо рекламного первого экрана — своё: близкий, новое, что дальше
+  h=h.replace(/<section class="hero2">[\s\S]*?<\/section>/,dashboard());
+  const cta=S.me?'<a class="btn white" href="#/lk/chat">Написать '+esc(rel().dat)+'</a><a class="btn ghostw" href="#/lk/stream">Забота каждый день</a>':'<a class="btn white" href="#/lk/find">Найти близкого</a>';
+  h=h.split('<a class="btn white" href="#/login">Начать — нужен только телефон</a>').join(cta);
   h=h.replace(/<div class="stickycta" id="stickycta" hidden>[\s\S]*?<\/div><\/div>$/,'</div>');
   h=h.split('href="#/stage/').join('href="#/lk/stage/');
   return h.replace(/<\/div>$/,'')+tabbar('/lk/home')+'</div>';
+}
+function hello(){const h=new Date().getHours();return h<6?'Доброй ночи':h<12?'Доброе утро':h<18?'Добрый день':'Добрый вечер'}
+function dashboard(){
+  if(!S.me) return `<section class="dash"><div class="eyebrow2"><span class="pulse"></span>${hello()}</div>
+  <h1 class="h1" style="font-size:28px">Добро пожаловать в ZT Рядом</h1>
+  <p class="muted" style="margin:0">Здесь вы переписываетесь с близким, помогаете ему и решаете вопросы с учреждением. Начните с одного шага.</p>
+  <a class="nextstep" href="#/lk/find"><span class="num">1</span><span class="grow"><b>Найдите близкого</b><small>фамилия и дата рождения — этого достаточно</small></span>${ic('chev')}</a>
+  <div class="nextstep off"><span class="num">2</span><span class="grow"><b>Напишите первое сообщение</b><small>он получит его после проверки учреждением</small></span></div>
+  <div class="nextstep off"><span class="num">3</span><span class="grow"><b>Пополните счёт</b><small>для сообщений, звонков и заботы каждый день</small></span></div>
+  <a class="item bordered" href="#/lk/support"><div class="ic" style="background:var(--green-l);color:var(--green-d)">${ic('chat')}</div><div class="grow"><b>Не знаете, с чего начать?</b><small>напишите нам — ответим за 5 минут, круглосуточно</small></div>${ic('chev')}</a>
+  <div class="eyebrow2" style="margin-top:14px">Полезно знать</div></section>`;
+  const r=rel(), m=me(), L=feed().filter(x=>x.kind==='msg'), last=L[L.length-1], un=unreadCount(), st=stream();
+  const ss=st&&streamState(st), open=S.reqs.filter(q=>q.pid===r.id&&q.status!=='done'&&q.status!=='no');
+  const lastTxt=last?(last.ch===1?'🎙 Голосовое':last.ch===2?'🎥 Видеосообщение':(last.out?'Вы: '+last.text:(last.parts?last.parts[0]:''))):'Пока писем нет — напишите первое';
+  return `<section class="dash"><div class="eyebrow2"><span class="pulse"></span>${hello()}, ${esc(m.call)}</div>
+  <a class="relcard" href="#/lk/chat"><div class="row"><div class="avatar">${r.ini}</div><div class="grow"><b>${esc(r.short)}</b><small>${r.place} · ${r.vt?'видеотерминал есть':'сообщения на бумаге'}</small></div>${un?`<span class="ubadge">${un}</span>`:''}</div>
+  <div class="lastmsg">${esc(lastTxt.replace(/\n+/g,' ').slice(0,110))}</div><span class="btn sm" style="align-self:flex-start">${un?'Прочитать':'Написать'}</span></a>
+  <div class="quick3"><a href="#/lk/stream">${ic('heart')}<b>Забота</b><small>${st?(ss.next?'выпуск '+daysTo(ss.next.t):'идёт'):'не подключена'}</small></a><a href="#/lk/requests">${ic('list')}<b>Заявки</b><small>${open.length?open.length+' в работе':'свидание, справка'}</small></a><a href="#/lk/money">${ic('wallet')}<b>Счёт</b><small>${rub(S.account)}</small></a></div>
+  ${!st?`<a class="promo" href="#/lk/stream" style="background:linear-gradient(150deg,#5E32BE,#00A47A)">${ic('heart')}<b style="flex:1;font-size:15px;line-height:1.35">${request()?r.first+' просит подключить заботу каждый день':'Пусть каждый день у '+esc(r.gen)+' будет что-то от вас'}</b><span class="btn sm white">Подключить</span></a>`:''}
+  <div class="eyebrow2" style="margin-top:14px">Полезно знать</div></section>`;
+}
+
+/* ---------- новичок: знакомство и поиск близкого ---------- */
+function pgStart(){
+  if(S.me){return pgHomeMkt()}
+  return `<div class="page white"><div class="wrap loose" style="padding-top:32px"><div>${BRAND}</div>
+  <h1 class="h1">Вы на месте. Здесь проще, чем кажется</h1>
+  <p class="lead2" style="margin:0">ZT Рядом — переписка с близким, как в мессенджере, и всё остальное, что нужно, пока он там.</p>
+  <div class="intro">
+  <div><span style="background:var(--purple-l);color:var(--purple-d)">${ic('chat')}</span><b>Писать и получать ответы</b><small>как в мессенджере — с фото, голосом и видео</small></div>
+  <div><span style="background:var(--green-l);color:var(--green-d)">${ic('heart')}</span><b>Заботиться каждый день</b><small>даже когда вы заняты — выпуск от вас каждую неделю</small></div>
+  <div><span style="background:var(--blue-l);color:#0052CC">${ic('list')}</span><b>Решать вопросы без поездок</b><small>свидания, справки, заявления, деньги</small></div></div></div>
+  <div class="stick"><a class="btn" href="#/lk/find">Найти близкого</a><a class="btn line" href="#/lk/home">Сначала осмотрюсь</a><a class="link" href="#/lk/support" style="text-align:center">Нужна помощь? Напишите нам</a></div></div>`;
+}
+let FIND={q:''};
+function pgFind(){
+  const q=FIND.q.trim().toLowerCase();
+  const res=q.length<2?[]:FAM.люди.filter(p=>p[1].toLowerCase().startsWith(q)).slice(0,8);
+  return `<div class="page white">${backHdr('Найти близкого',S.me?'/lk/home':'/lk/start')}<div class="wrap loose">
+  <p class="muted" style="margin:0">Начните вводить фамилию. Мы покажем, кто с такой фамилией есть в учреждениях, где работает ZT.</p>
+  <div class="field"><label for="fq">Фамилия</label><input class="inp" id="fq" type="text" autocomplete="off" placeholder="Например, Петров" value="${esc(FIND.q)}"></div>
+  <div id="fres">${findList(res,q)}</div>
+  <div class="faint">Для демонстрации попробуйте «Иванов» или «Петров».</div></div></div>`;
+}
+function findList(res,q){
+  if(q.length<2) return '';
+  if(!res.length) return `<div class="info warn">${ic('info')}<span>Никого не нашли. Проверьте фамилию — или он ещё не подключён к ZT. <a href="#/lk/support">Напишите нам</a>, поможем найти.</span></div>`;
+  return '<div class="list" style="border:1px solid var(--line)">'+res.map(p=>{const pr=p[1].split(' ');return `<a class="item" href="#/lk/find/${p[0]}"><div class="avatar sm soft">${pr[0][0]+pr[1][0]}</div><div class="grow"><b>${esc(p[1])}</b><small>${p[2]} г. р. · ${FAM.учреждение.short} · ${p[3].replace('Отряд','отряд')}</small></div>${ic('chev')}</a>`}).join('')+'</div>';
+}
+let ADD={role:null,name:''};
+const ROLES_ADD=[['мать','Мама'],['отец','Папа'],['жена','Жена'],['сестра','Сестра'],['брат','Брат'],['дочь','Дочь'],['знакомая','Другое']];
+function pgFindOne(pid){
+  const p=BY[pid]; if(!p) return pgFind();
+  const pr=p[1].split(' ');
+  return `<div class="page white">${backHdr('Это он?','/lk/find')}<div class="wrap loose">
+  <div class="card flat row"><div class="avatar">${pr[0][0]+pr[1][0]}</div><div class="grow"><b style="font-size:18px;color:var(--ink)">${esc(p[1])}</b><div class="faint">${p[2]} г. р.</div><div class="faint">${esc(FAM.учреждение.full)}, ${esc(FAM.учреждение.city)}</div></div></div>
+  <div class="h3">Кем вы ему приходитесь?</div>
+  <div class="phr">${ROLES_ADD.map(r=>`<button data-act="addrole" data-r="${r[0]}" class="${ADD.role===r[0]?'on':''}">${r[1]}</button>`).join('')}</div>
+  <div class="field"><label for="an">Как вас зовут</label><input class="inp" id="an" type="text" autocomplete="name" placeholder="Фамилия Имя Отчество" value="${esc(ADD.name)}"></div>
+  <button class="link" data-act="gosuname" style="align-self:flex-start">Подставить из Госуслуг</button>
+  <div class="info">${ic('info')}<span>Писать ему можно сразу. Чтобы он мог вам звонить, он добавит ваш номер в разрешённые — мы отправим ему запрос.</span></div></div>
+  <div class="stick"><button class="btn" data-act="addrel" data-pid="${pid}"${ADD.role&&ADD.name.trim().split(/\s+/).length>=2?'':' disabled'} id="addbtn">Добавить и написать</button></div></div>`;
+}
+function addRel(pid){
+  S.me={pid,ci:-1};
+  S.meContact=[ADD.name.trim(),ADD.role,S.phone||NEWBIE_PHONE,1];
+  S.account=0;S.card=0;S.reqs=[];S.ops=[];S.streams={};
+  ADD={role:null,name:''};FIND={q:''};save();
+  S.flash=null;go('/lk/chat');
+  setTimeout(()=>toast(rel().first+' добавлен. Напишите первое сообщение'),300);
 }
 
 /* ================= ВХОД ================= */
@@ -858,7 +953,7 @@ function pgLogin(){
   const chip=(x,sel,label)=>{if(!x)return '';const c=x[8][sel.ci];return `<button class="item bordered" data-act="demo" data-phone="${esc(c[2])}"><div class="avatar sm soft">${c[0].split(' ').map(w=>w[0]).slice(0,2).join('')}</div><div class="grow"><b>${esc(c[0].split(' ').slice(1).join(' '))}</b><small>${ROLE[c[1]]} · ${label}</small></div></button>`};
   return `<div class="page white">${backHdr('','/')}<div class="wrap loose"><div>${BRAND}</div><h1 class="h1">Вход</h1><p class="muted" style="margin:0">Впервые? Всё создастся само. Пароль не нужен.</p>
   <div class="field"><label for="ph">Номер телефона</label><input class="inp" id="ph" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 900 000-00-00" value="${esc(S.phone)}"></div>
-  <div class="demo"><b>Для демонстрации</b>${chip(a,d.сТерминалом,'есть видеотерминал')}${chip(b,d.безТерминала,'нет терминала — на бумаге')}</div></div>
+  <div class="demo"><b>Для демонстрации</b>${chip(a,d.сТерминалом,'есть видеотерминал')}${chip(b,d.безТерминала,'нет терминала — на бумаге')}<button class="item bordered" data-act="demo" data-phone="${NEWBIE_PHONE}"><div class="avatar sm" style="background:var(--bg);color:var(--muted)">${ic('user')}</div><div class="grow"><b>Новичок</b><small>только что узнал о ZT Рядом · пока никого нет</small></div></button></div></div>
   <div class="stick"><button class="btn" id="getcode" data-act="getcode"${digits(S.phone).length<11?' disabled':''}>Получить код</button><button class="btn line" data-act="gosu">Войти через Госуслуги</button></div></div>`;
 }
 function pgCode(){
@@ -871,11 +966,16 @@ function formatPhone(v){
   let r='+7'; if(d.length>1) r+=' '+d.slice(1,4); if(d.length>4) r+=' '+d.slice(4,7); if(d.length>7) r+='-'+d.slice(7,9); if(d.length>9) r+='-'+d.slice(9,11);
   return d.length?r:'';
 }
+const NEWBIE_PHONE='+7 999 100-20-30';
 function login(){
-  const hit=PHONES[digits(S.phone)]||FAM.демо.сТерминалом;
+  const hit=PHONES[digits(S.phone)];
+  if(!hit){
+    // новый человек: никого ещё нет — знакомство и поиск близкого
+    if(!S.auth||S.me){const ph=S.phone;S=fresh();S.phone=ph;S.account=0;S.card=0}
+    S.auth=true;save();go('/lk/start');return;
+  }
   if(!S.me||S.me.pid!==hit.pid||S.me.ci!==hit.ci){const ph=S.phone;S=fresh();S.phone=ph;S.me={pid:hit.pid,ci:hit.ci};seedFor(hit.pid,hit.ci)}
-  if(!PHONES[digits(S.phone)]) toast('Номер не найден — показываем демо');
-  save(); const n=S.next||'/lk/chat'; S.next=null; go(n);
+  S.auth=true;save(); const n=S.next||'/lk/home'; S.next=null; go(n);
 }
 
 /* ================= ЧАТЫ ================= */
@@ -953,7 +1053,7 @@ function pgChat(){
   <a class="chat-who" href="#/lk/rel"><div class="avatar">${r.ini}</div><div style="min-width:0"><b>${esc(r.short)}</b><small>${r.inst.name} · ${r.unit.replace('Отряд','отряд')} · ${r.vt?'<i>терминал</i>':'на бумаге'}</small></div></a>
   <button class="hbtn" data-act="callsheet" aria-label="Звонок">${ic('phone')}</button>
   <button class="hbtn${r.vt?'':' off'}" data-act="${r.vt?'vvisitsheet':'whyvt'}" aria-label="Видеосвидание">${ic('video')}${r.vt?'':`<span class="lk">${ic('lock')}</span>`}</button></header>
-  <div class="msgs" id="msgs">${html}${typing}</div>
+  <div class="msgs" id="msgs">${html||`<div class="emptychat"><div class="avatar">${r.ini}</div><b>Здесь будет ваша переписка с ${esc(r.ins)}</b><span>Напишите первое сообщение. Учреждение проверит его — обычно до 3 дней, — и ${esc(r.first)} ${r.vt?"прочитает его на терминале":"получит его на бумаге"}.</span><span class="faint">Первое сообщение — ${PRICE.letter} ₽. Счёт можно пополнить при отправке.</span></div>`}${typing}</div>
   ${composer()}</div>`;
 }
 function composerHint(){
@@ -1199,7 +1299,7 @@ function pgTransfer(){
 function pgProfile(){
   const r=rel(), m=me();
   return `<div class="page tabbed">${lkHdr('Профиль')}<div class="wrap"><div class="card row"><div class="avatar soft">${m.ini}</div><div class="grow"><b style="font-size:18px;color:var(--ink)">${esc(m.call)}</b><div class="faint">${m.roleTxt} ${r.gen}</div><div style="margin-top:6px">${m.verified?'<span class="pill s-ok">Госуслуги ✓</span>':'<span class="pill s-wait">Госуслуги не подтверждены</span>'}</div></div></div>
-  <div class="sec">Мой телефон</div><div class="list"><div class="item"><div class="grow"><b>${esc(m.phone)}</b><small>в списке разрешённых у ${r.gen}</small></div><span class="pill s-ok">Разрешён</span></div></div>
+  <div class="sec">Мой телефон</div><div class="list"><div class="item"><div class="grow"><b>${esc(m.phone)}</b><small>${S.me.ci<0?"ждём, когда "+r.first+" добавит его в разрешённые":"в списке разрешённых у "+r.gen}</small></div>${S.me.ci<0?'<span class="pill s-wait">Ждёт</span>':'<span class="pill s-ok">Разрешён</span>'}</div></div>
   <div class="sec">Уведомления</div><div class="card" style="padding:4px 16px">
   <label class="opt"><span class="grow">Новое сообщение</span><span class="sw"><input type="checkbox" checked><i></i></span></label>
   <label class="opt"><span class="grow">Сообщение прочитано</span><span class="sw"><input type="checkbox" checked><i></i></span></label>
@@ -1428,18 +1528,22 @@ function route(){
   const full=(location.hash||'#/').slice(1)||'/', h=full.split('?')[0], q=full.split('?')[1]||'', parts=h.split('/').filter(Boolean);
   const needData=parts[0]==='lk'||parts[0]==='login'||parts[0]==='code';
   if(needData&&!FAM){document.getElementById('app').innerHTML=pgLoading();loadFam(route);return}
-  if(parts[0]==='lk'&&(!S.me||!BY[S.me.pid])){S.me=null;S.next=h;save();location.replace('#/login');return}
+  if(S.me&&!S.auth) S.auth=true;   // сохранённые раньше входы
+  if(S.me&&S.me.ci>=0&&!BY[S.me.pid]) S.me=null;
+  if(parts[0]==='lk'&&!S.auth){S.next=h;save();location.replace('#/login');return}
+  // без близкого открываются только знакомство, поиск, главная, поддержка и помощь
+  if(parts[0]==='lk'&&!S.me&&!['start','find','home','support'].includes(parts[1]||'')){location.replace('#/lk/start');return}
   if(!(parts[0]==='lk'&&parts[1]==='chat')&&REC.st!=='idle') resetRec();
   if(parts[1]==='visit'&&q==='video'&&!VS.type) VS={type:rel().vt?'video':null,date:null,slot:null};
   let html;
   if(!parts.length) html=pgLanding();
   else if(parts[0]==='stage') html=pgStage(parts[1]);
   else if(parts[0]==='app') html=pgApp();
-  else if(parts[0]==='login'){if(S.me){location.replace('#/lk/chat');return}html=pgLogin()}
+  else if(parts[0]==='login'){if(S.auth){location.replace(S.me?'#/lk/home':'#/lk/start');return}html=pgLogin()}
   else if(parts[0]==='code') html=pgCode();
   else if(parts[0]==='lk'){
     const p=parts[1]||'';
-    const M={home:pgHomeMkt,stage:()=>pgStage(parts[2]).replace(backHdr(STAGES[parts[2]]?STAGES[parts[2]].t:'','/'),backHdr(STAGES[parts[2]]?STAGES[parts[2]].t:'','/lk/home')),stream:pgStream,'':pgChats,chat:pgChat,support:pgSupport,rel:pgRel,video:pgVideo,rules:pgRules,money:pgMoney,card:pgCard,transfer:pgTransfer,profile:pgProfile,help:pgHelp,joy:pgJoy,done:pgDone,visit:pgVisit,requests:pgRequests,place:pgPlace};
+    const M={start:pgStart,find:()=>parts[2]?pgFindOne(parts[2]):pgFind(),home:pgHomeMkt,stage:()=>pgStage(parts[2]).replace(backHdr(STAGES[parts[2]]?STAGES[parts[2]].t:'','/'),backHdr(STAGES[parts[2]]?STAGES[parts[2]].t:'','/lk/home')),stream:pgStream,'':pgChats,chat:pgChat,support:pgSupport,rel:pgRel,video:pgVideo,rules:pgRules,money:pgMoney,card:pgCard,transfer:pgTransfer,profile:pgProfile,help:pgHelp,joy:pgJoy,done:pgDone,visit:pgVisit,requests:pgRequests,place:pgPlace};
     html=p==='req'?pgReq(parts[2]):p==='apply'?pgApply(parts[2]):(M[p]||pgChats)();
   } else html=pgLanding();
   document.getElementById('app').innerHTML=html;
@@ -1497,6 +1601,9 @@ document.addEventListener('click',e=>{
   else if(a==='sphr'){stream().phrase=t.dataset.p;save();rerender()}
   else if(a==='pausestream'){const st=stream();st.paused=!st.paused;save();toast(st.paused?'Пауза. Прогресс сохранится':'Забота снова идёт');rerender()}
   else if(a==='invite'){inviteSheet()}
+  else if(a==='addrole'){ADD.role=t.dataset.r;rerender()}
+  else if(a==='gosuname'){ADD.name='Смирнова Ольга Викторовна';rerender();toast('Имя подставлено из Госуслуг')}
+  else if(a==='addrel'){addRel(t.dataset.pid)}
   else if(a==='gomoney'){closeSheet();go('/lk/rel')}
   else if(a==='govisit'){closeSheet();go('/lk/visit')}
   else if(a==='goapply'){closeSheet();go('/lk/apply')}
@@ -1531,6 +1638,8 @@ document.addEventListener('input',e=>{
   if(t.id==='pc'){t.value=digits(t.value);if(t.value.length===4){t.blur();setTimeout(doPay,250)}}
   if(t.id==='cin'){DRAFT.text=t.value;autoGrow();refreshComposer()}
   if(t.id==='sin'){autoGrow()}
+  if(t.id==='fq'){FIND.q=t.value;const q=t.value.trim().toLowerCase();document.getElementById('fres').innerHTML=findList(q.length<2?[]:FAM.люди.filter(p=>p[1].toLowerCase().startsWith(q)).slice(0,8),q)}
+  if(t.id==='an'){ADD.name=t.value;const b=document.getElementById('addbtn');if(b)b.disabled=!(ADD.role&&t.value.trim().split(/\s+/).length>=2)}
 });
 document.addEventListener('change',e=>{
   const t=e.target;
