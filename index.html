@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#FFFFFF">
-<title>ZT — связь с близким</title>
+<title>ZT Рядом — связь с близким</title>
 <link rel="icon" href="https://cdn.zt.ru/images/logos/ZT.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Golos+Text:wght@400;500;600;700&display=swap">
 <style>
 /* Мобильный сайт zt.ru и кабинет lk.zt.ru так, как их видит родственник в браузере телефона.
    На широком экране — та же колонка по центру. Светлая тема — фирменный стиль ZT. */
@@ -335,6 +335,109 @@ audio{background:transparent}
 .tags span{font-size:14px;padding:6px 10px;border-radius:10px;background:var(--bg);color:var(--text)}
 .tags span.vt{background:var(--purple-l);color:var(--purple-d)}
 .foot-note{font-size:13px;color:var(--faint)}
+
+/* ===== ZT Рядом: переписка как мессенджер ===== */
+.brand{display:flex;align-items:center;gap:8px}
+.brand span{font-weight:700;font-size:18px;color:var(--ink);letter-spacing:-.01em}
+.brand span em{font-style:normal;color:var(--purple)}
+.chat-page{min-height:100vh;min-height:100dvh;background:#EFEAF8;background-image:radial-gradient(rgba(104,61,204,.06) 1px,transparent 1px);background-size:18px 18px;display:flex;flex-direction:column}
+.chat-hdr{position:sticky;top:0;z-index:20;height:62px;display:flex;align-items:center;gap:6px;padding:0 6px 0 4px;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line2)}
+.chat-who{flex:1;min-width:0;display:flex;align-items:center;gap:10px;background:none;border:0;text-align:left;padding:4px;border-radius:12px}
+.chat-who .avatar{width:40px;height:40px;font-size:14px}
+.chat-who b{display:block;font-size:16px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chat-who small{display:block;font-size:12px;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chat-who small i{font-style:normal;color:var(--purple)}
+.hbtn{width:44px;height:44px;border-radius:50%;border:0;background:transparent;color:var(--purple);display:flex;align-items:center;justify-content:center;position:relative;flex-shrink:0}
+.hbtn svg{width:24px;height:24px}
+.hbtn.off{color:#B4B6C8}
+.hbtn .lk{position:absolute;right:6px;bottom:6px;width:14px;height:14px;background:#fff;border-radius:50%;color:var(--faint)}
+.hbtn .lk svg{width:14px;height:14px}
+.msgs{flex:1;padding:12px 10px calc(150px + var(--sb));display:flex;flex-direction:column;gap:4px}
+.dsep{align-self:center;margin:12px 0 6px;font-size:12px;font-weight:600;color:var(--muted);background:rgba(255,255,255,.85);padding:4px 10px;border-radius:10px}
+.b{max-width:84%;padding:8px 11px 6px;border-radius:18px;position:relative;font-size:16px;line-height:1.4;color:var(--ink);background:#fff;align-self:flex-start;border:0;text-align:left;box-shadow:0 1px 1px rgba(28,28,40,.06);margin-top:2px}
+.b.me{align-self:flex-end;background:var(--purple);color:#fff;border-bottom-right-radius:6px}
+.b.him{border-bottom-left-radius:6px}
+.b .tx{white-space:pre-wrap;word-wrap:break-word}
+.b .meta{display:flex;justify-content:flex-end;align-items:center;gap:4px;font-size:11px;color:var(--faint);margin-top:2px;white-space:nowrap}
+.b.me .meta{color:#D9CCF7}
+.b .meta svg{width:16px;height:16px}
+.b .meta .rd{color:#7CF0C3}
+.b .lab{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--purple-d);margin-bottom:4px}
+.b .lab svg{width:14px;height:14px}
+.b.me .lab{color:#E6DCFF}
+.redact{background:#1C1C28;color:transparent;border-radius:3px;user-select:none;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.b.me .redact{background:#2B1B5C}
+.rnote{font-size:12px;color:var(--orange-d);margin-top:4px;display:flex;gap:4px;align-items:center}
+.b.me .rnote{color:#FFD9A0}
+.rnote svg{width:14px;height:14px}
+.scanthumb{display:block;width:100%;height:92px;border-radius:12px;margin:2px 0 6px;background:#FFFDF7 repeating-linear-gradient(transparent 0 15px,#E7E0CC 15px 16px);border:1px solid #EFE6CF;position:relative;overflow:hidden}
+.scanthumb::before{content:attr(data-t);position:absolute;inset:8px 10px;font-family:'Caveat',cursive;font-size:17px;line-height:16px;color:#2B3A67;opacity:.9;overflow:hidden}
+.scanthumb .bar{position:absolute;left:24%;top:40px;width:52%;height:14px;background:#111;border-radius:2px;transform:rotate(-1deg)}
+.scanthumb small{position:absolute;right:6px;bottom:6px;font-size:11px;background:rgba(28,28,40,.7);color:#fff;padding:2px 6px;border-radius:6px}
+.b.rej{background:var(--red-l);color:var(--ink)}
+.b.rej .meta{color:var(--red)}
+.vbub{display:flex;align-items:center;gap:10px;min-width:220px}
+.vbub .pl{width:40px;height:40px;border-radius:50%;border:0;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.b.me .vbub .pl{background:#fff;color:var(--purple)}
+.vbub .pl svg{width:18px;height:18px}
+.vbub .wv{flex:1;height:26px;background:repeating-linear-gradient(90deg,currentColor 0 3px,transparent 3px 6px);opacity:.35;border-radius:3px;-webkit-mask:linear-gradient(180deg,transparent 0,#000 30%,#000 70%,transparent 100%)}
+.vbub audio{max-width:220px;height:40px}
+.circle{width:200px;height:200px;border-radius:50%;overflow:hidden;position:relative;background:linear-gradient(135deg,#3A2A6E,#1C1C28);display:flex;align-items:center;justify-content:center;color:#fff;border:0}
+.circle video{width:100%;height:100%;object-fit:cover;border-radius:0}
+.circle .pl{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center}
+.circle .pl svg{width:26px;height:26px}
+.b.round{background:transparent;box-shadow:none;padding:0}
+.b.round .meta{background:rgba(28,28,40,.55);color:#fff;border-radius:10px;padding:2px 8px;align-self:flex-end;width:max-content;margin:4px 0 0 auto}
+.photos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px;margin:-2px -5px 6px;border-radius:14px;overflow:hidden}
+.photos img,.photos span{width:100%;height:110px;object-fit:cover;display:block;background:linear-gradient(135deg,#9BD8B8,#5FB38A)}
+.photos span:nth-child(2n){background:linear-gradient(135deg,#F7C98B,#E6955A)}
+.ev{align-self:center;max-width:90%;display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text);background:rgba(255,255,255,.92);padding:7px 12px;border-radius:14px;margin:6px 0;border:0;text-align:left}
+.ev svg{width:16px;height:16px;color:var(--purple);flex-shrink:0}
+.ev small{color:var(--faint)}
+.ev.green svg{color:var(--green-d)}
+.typing{align-self:flex-start;font-size:13px;color:var(--muted);background:rgba(255,255,255,.85);padding:6px 12px;border-radius:12px;margin-top:6px}
+.composer{position:fixed;z-index:30;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line2);padding:8px 8px calc(8px + var(--sb))}
+.crow{display:flex;align-items:flex-end;gap:6px}
+.cbtn{width:46px;height:46px;border-radius:50%;border:0;background:transparent;color:var(--muted);display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative}
+.cbtn svg{width:26px;height:26px}
+.cbtn.send{background:var(--purple);color:#fff}
+.cbtn.send svg{width:22px;height:22px}
+.cbtn.lockd{color:#B4B6C8}
+.cbtn .lk{position:absolute;right:7px;bottom:7px;width:14px;height:14px;background:#fff;border-radius:50%;color:var(--faint)}
+.cbtn .lk svg{width:14px;height:14px}
+.cin{flex:1;min-height:46px;max-height:140px;resize:none;border:1px solid var(--line);background:var(--soft);border-radius:23px;padding:11px 16px;font-size:16px;line-height:1.4;color:var(--ink);outline:none}
+.cin:focus{border-color:var(--purple);background:#fff}
+.hint{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);padding:2px 8px 8px}
+.hint svg{width:16px;height:16px;color:var(--purple);flex-shrink:0}
+.hint b{color:var(--ink);font-weight:600;margin-left:auto;white-space:nowrap}
+.hint label{display:flex;align-items:center;gap:6px;margin-left:auto;white-space:nowrap}
+.hint input{width:18px;height:18px;accent-color:var(--purple)}
+.pstrip{display:flex;gap:6px;padding:0 6px 8px;overflow-x:auto}
+.pstrip .thumb{width:60px;height:60px;flex-shrink:0}
+.recrow{display:flex;align-items:center;gap:10px;min-height:46px;padding:0 4px}
+.recdot{width:12px;height:12px;border-radius:50%;background:var(--red)}
+@media (prefers-reduced-motion:no-preference){.recdot{animation:blink 1s infinite}@keyframes blink{50%{opacity:.2}}}
+.recrow .tm{font-variant-numeric:tabular-nums;font-weight:600;color:var(--ink);min-width:44px}
+.recrow .grow{color:var(--muted);font-size:14px}
+.attach{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px 8px}
+.attach button,.attach label{display:flex;flex-direction:column;align-items:center;gap:6px;border:0;background:none;font-size:13px;color:var(--ink);cursor:pointer;position:relative}
+.attach .ci{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.attach .ci svg{width:26px;height:26px}
+.attach .off{opacity:.45}
+.chatlist .item{min-height:76px}
+.chatlist .avatar{width:54px;height:54px}
+.chatlist .tm{font-size:12px;color:var(--faint);align-self:flex-start;margin-top:4px}
+.ubadge{min-width:22px;height:22px;border-radius:11px;background:var(--purple);color:#fff;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;padding:0 6px}
+.relhead{display:flex;flex-direction:column;align-items:center;gap:8px;padding:24px 16px 16px;background:#fff;text-align:center}
+.relhead .avatar{width:88px;height:88px;font-size:30px}
+.quick{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;width:100%;margin-top:8px}
+.quick a,.quick button{display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 4px;border-radius:14px;background:var(--bg);border:0;font-size:13px;font-weight:600;color:var(--purple-d);position:relative}
+.quick svg{width:22px;height:22px}
+.quick .off{color:#B4B6C8}
+.legend{display:grid;grid-template-columns:auto 1fr;gap:8px 10px;align-items:center;font-size:14px;color:var(--muted)}
+.legend svg{width:18px;height:18px}
+.scanfull{background:#FFFDF7 repeating-linear-gradient(transparent 0 27px,#E7E0CC 27px 28px);border:1px solid #EFE6CF;border-radius:14px;padding:14px 18px;font-family:'Caveat',cursive;font-size:24px;line-height:28px;color:#2B3A67;white-space:pre-wrap;min-height:240px}
+.scanfull .redact{background:#111}
 </style>
 </head>
 <body>
@@ -351,8 +454,9 @@ document.documentElement.classList.add('js');
    Люди, учреждение и переписка — из общего набора проекта цензора (MVP_ZT).
    Те же люди, что видит цензор; без статьи, риска и досье. */
 /* ?v= — номер версии набора: меняйте при каждом обновлении data-family.js, иначе браузер до 10 минут держит старую копию */
-const DATA_URL='https://mitina-code.github.io/osnova-demo/data-family.js?v=3';
-/* запасной мини-набор в том же формате — если общий не загрузился */
+const DATA_URL='https://mitina-code.github.io/osnova-demo/data-family.js?v=4';
+/* запасной мини-набор в том же формате — если общий не загрузился.
+   переписка: [id, днейНазад, человек, контакт, от родственника(1), канал 0/1/2, решение 0/1/2, цифра(1)/бумага(0)] */
 const FALLBACK={
   учреждение:{name:'ИК-5',short:'ФКУ ИК-5',full:'Федеральное казённое учреждение «Исправительная колония № 5»',city:'г. Северодвинск',parent:'Управление ФСИН России',отрядыСТерминалом:['Отряд 1','Отряд 2','Отряд 3','Отряд 4','Отряд 5','Отряд 6']},
   окноДней:90,
@@ -360,7 +464,7 @@ const FALLBACK={
     ['p38','Кузнецов Даниил Леонидович','12.03.1990','Отряд 5','14.02.2025',1,1,null,[['Виноградова Галина Петровна','мать','+7 9811475944',1]]],
     ['p135','Орлов Вадим Антонович','03.07.1986','Отряд 8','20.11.2024',1,0,'в его отряде пока нет видеотерминала',[['Васильева Оксана Олеговна','жена','+7 9884654999',1]]]
   ],
-  переписка:[[1,40,38,0,1,0,0],[2,35,38,0,0,0,0],[3,20,38,0,1,1,0],[4,12,38,0,1,0,2],[5,6,38,0,1,0,0],[6,3,38,0,0,2,0],[7,30,135,0,1,0,0],[8,22,135,0,0,0,0],[9,9,135,0,1,0,1],[10,4,135,0,0,0,0]],
+  переписка:[[1,40,38,0,1,0,0,1],[2,35,38,0,0,0,1,0],[3,20,38,0,1,0,0,1],[4,12,38,0,0,0,0,0],[5,6,38,0,1,0,0,1],[6,3,38,0,0,0,1,0],[7,30,135,0,1,0,0,0],[8,22,135,0,0,0,0,0],[9,9,135,0,1,0,0,0],[10,4,135,0,0,0,0,0]],
   заявления:[],
   демо:{сТерминалом:{pid:'p38',ci:0},безТерминала:{pid:'p135',ci:0}}
 };
@@ -387,7 +491,7 @@ const P={
   video:'M15 10l5-3v10l-5-3M4 6h11v12H4z',
   wallet:'M3 10h18M16 14h2M5 6h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z',
   gift:'M20 12v8H4v-8M2 7h20v5H2zM12 20V7M12 7c-1-3-5-4-5-1 0 1.5 2 1 5 1zm0 0c1-3 5-4 5-1 0 1.5-2 1-5 1z',
-  check:'M5 12l5 5L20 7',in:'M17 7L7 17M7 9v8h8',out:'M7 17L17 7M9 7h8v8',
+  check:'M5 12l5 5L20 7',dcheck:'M2 12l5 5L17 7M9 15l2 2L21 7',
   photo:'M4 7h3l2-2h6l2 2h3v12H4zM12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z',
   plus:'M12 5v14M5 12h14',down:'M6 9l6 6 6-6',
   phone:'M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2',
@@ -396,7 +500,7 @@ const P={
   help:'M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.7v.5M12 17h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z',
   shield:'M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z',logout:'M15 12H4M8 8l-4 4 4 4M13 4h6v16h-6',
   mic:'M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3zM5 11a7 7 0 0 0 14 0M12 18v3',
-  stop:'M7 7h10v10H7z',play:'M8 5l11 7-11 7z',
+  stop:'M7 7h10v10H7z',play:'M8 5l11 7-11 7z',send:'M4 12l16-8-6 16-2-7z',
   lock:'M6 11h12v10H6zM8 11V8a4 4 0 0 1 8 0v3',
   doc:'M7 3h7l5 5v13H7zM14 3v5h5M10 13h6M10 17h6',
   cal:'M4 6h16v15H4zM4 10h16M8 3v4M16 3v4',
@@ -404,10 +508,15 @@ const P={
   info:'M12 8h.01M11 12h1v5h1M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z',
   heart:'M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z',
   list:'M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01',
-  pin:'M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11zM12 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4z'
+  pin:'M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11zM12 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4z',
+  print:'M7 9V3h10v6M7 17H4v-7h16v7h-3M7 14h10v7H7z',
+  terminal:'M3 4h18v12H3zM8 20h8M12 16v4M7 9l2 2-2 2M11 13h4',
+  pen:'M4 20l4-1 11-11-3-3L5 16zM14 6l3 3',
+  scan:'M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3M7 12h10'
 };
 const ic=(n,sw)=>`<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${sw||2}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${P[n]}"/></svg>`;
 const LOGO='<img class="logo" src="https://cdn.zt.ru/images/logos/ZT.svg" alt="ZT" width="66" height="22">';
+const BRAND=`<span class="brand">${LOGO}<span><em>Рядом</em></span></span>`;
 
 /* ================= цены (примерные) ================= */
 const PRICE={letter:95,photo:40,reply:30,voice:30,video:45,vvisit:150};
@@ -427,8 +536,10 @@ const WD=['вс','пн','вт','ср','чт','пт','сб'];
 const BASE=new Date(2026,8,28);
 function dAgo(d){const x=new Date(BASE);x.setDate(x.getDate()-d);return x}
 function fmt(dt){return dt.getDate()+' '+MON[dt.getMonth()]}
-function today(){const d=new Date();return 'сегодня, '+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)}
-/* склонение мужских имён: дательный, родительный */
+const hm=t=>{const d=new Date(t);return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)};
+function dayLabel(t){const d=new Date(t),n=new Date();const y=new Date();y.setDate(n.getDate()-1);
+  if(d.toDateString()===n.toDateString())return 'Сегодня';if(d.toDateString()===y.toDateString())return 'Вчера';return fmt(d)}
+function today(){return 'сегодня, '+hm(Date.now())}
 const IRREG={'Павел':'Павл','Лев':'Льв','Пётр':'Петр'};
 function decl(n,c){
   const last=n.slice(-1),stem=n.slice(0,-1);
@@ -440,59 +551,74 @@ function decl(n,c){
 const ROLE={мать:'мама',отец:'папа',жена:'жена',сестра:'сестра',брат:'брат',дочь:'дочь',знакомая:'знакомая'};
 
 /* ================= состояние ================= */
-const KEY='zt-demo-v3';
-function fresh(){return {me:null,phone:'',account:1250,card:340,sent:[],reqs:[],ops:[],read:{},draft:{text:'',photos:[],reply:true,extras:[]},flash:null,notify:{}}}
+const KEY='zt-ryadom-v1';
+function fresh(){return {me:null,phone:'',account:1250,card:340,sent:[],reqs:[],ops:[],read:{},flash:null,notify:{},replyBlank:true,support:[]}}
 let S; try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}
 if(!S||!('reqs' in S)) S=fresh();
-S.draft.photos=[];
-function save(){try{const c=JSON.parse(JSON.stringify(S));c.draft.photos=[];c.sent.forEach(x=>{delete x.url});localStorage.setItem(KEY,JSON.stringify(c))}catch(e){}}
+function save(){try{const c=JSON.parse(JSON.stringify(S));c.sent.forEach(x=>{delete x.url;x.photosData=[]});localStorage.setItem(KEY,JSON.stringify(c))}catch(e){}}
+let DRAFT={text:'',photos:[]};   // черновик живёт до перезагрузки
 
-/* ---------- кто я и кто мой близкий ---------- */
-function rel(){ // близкий
-  const p=BY[S.me.pid]; const parts=p[1].split(' ');
-  const first=parts[1];
-  return {id:p[0],name:p[1],first,dat:decl(first,'d'),gen:decl(first,'g'),ini:parts[0][0]+first[0],dob:p[2],unit:p[3],since:p[4],confirmed:!!p[5],vt:!!p[6],why:p[7],place:FAM.учреждение.short+' · '+p[3],inst:FAM.учреждение};
+function rel(){
+  const p=BY[S.me.pid]; const parts=p[1].split(' '); const first=parts[1];
+  return {id:p[0],name:p[1],short:parts[0]+' '+first,first,dat:decl(first,'d'),gen:decl(first,'g'),ins:decl(first,'i'),ini:parts[0][0]+first[0],dob:p[2],unit:p[3],since:p[4],confirmed:!!p[5],vt:!!p[6],why:p[7],place:FAM.учреждение.short+' · '+p[3].replace('Отряд','отряд'),inst:FAM.учреждение};
 }
 function me(){const c=BY[S.me.pid][8][S.me.ci];const parts=c[0].split(' ');return {name:c[0],call:parts.slice(1).join(' '),ini:parts[0][0]+(parts[1]||'')[0],role:c[1],roleTxt:ROLE[c[1]]||c[1],phone:c[2],verified:!!c[3]}}
 
-/* письма пары «я — близкий» из общего набора + отправленные здесь */
-/* тексты зависят от того, кто пишет: мама не пишет «любимый», жена не пишет «сынок» */
+/* ================= лента переписки =================
+   Механика: родственник пишет → учреждение проверяет → дальше развилка:
+   у близкого есть видеотерминал — читает на терминале, нет — цензор печатает и вручает.
+   Обратно: близкий пишет на терминале или от руки; бумагу сканируют и распознают
+   (вымарать могут на бланке до скана или в распознанном тексте), текст приходит в ленту. */
 const OUT_T={
   parent:['{R}, здравствуй! У нас всё хорошо, все здоровы. На даче собрали картошку, яблок в этом году много. Очень ждём от тебя весточки.','Сынок, привет. Получила твоё письмо, спасибо. Не переживай за нас, мы справляемся. Береги себя, пей витамины.','Здравствуй, родной! Была у врача — всё в порядке. Соседка передаёт тебе привет. Пиши, как кормят, что нужно прислать.','Привет! Узнала про свидания — буду записываться на следующий месяц. Скажи, что тебе привезти.'],
   wife:['Любимый, привет! Дети здоровы, Маша пошла в школу — очень гордая. Скучаем по тебе каждый день.','{R}, здравствуй. Получила твоё письмо, перечитала три раза. Мы справляемся, не волнуйся за нас.','Родной мой, как ты? Записалась на свидание, считаю дни. Напиши, что тебе привезти.','Привет! Посылаю фотографии — мы с детьми были у твоей мамы. Все передают тебе привет.'],
   other:['{R}, привет! У нас всё по-старому, все здоровы. Держись, мы с тобой.','Здравствуй! Получили твоё письмо, спасибо. Пиши, что нужно прислать.','Привет! Узнали про свидания — постараемся приехать. Береги себя.']
 };
 const outSet=role=>role==='мать'||role==='отец'?OUT_T.parent:role==='жена'?OUT_T.wife:OUT_T.other;
+/* в каждом ответе вторая фраза — та, что могут закрыть */
 const IN_T=[
-  'Здравствуй! Письмо получил, спасибо. У меня всё нормально, работаю, здоровье в порядке. Передавай всем привет.\n\n{S}',
-  'Привет, родные! Фотографии повесил над кроватью, мужики говорят — красиво. Жду свидания, считаю дни.\n\n{S}',
-  'Здравствуй! Не волнуйся за меня. Читаю книги из библиотеки, хожу в спортзал. Пришли, если можно, тёплые носки.\n\n{S}',
-  'Спасибо за письмо и за деньги на счёт. Купил в магазине чай и конфеты. Скучаю по дому.\n\n{S}'
+  ['Здравствуй! Письмо получил, спасибо.','В отряде говорят, что скоро переведут на другой участок.','У меня всё нормально, работаю, здоровье в порядке. Передавай всем привет.'],
+  ['Привет, родные! Фотографии повесил над кроватью, мужики говорят — красиво.','Сосед по койке просил узнать про его дело у адвоката.','Жду свидания, считаю дни.'],
+  ['Здравствуй! Не волнуйся за меня.','На прошлой неделе был шмон, забрали кипятильник.','Читаю книги из библиотеки, хожу в спортзал. Пришли, если можно, тёплые носки.'],
+  ['Спасибо за письмо и за деньги на счёт.','Здесь в магазине всё в два раза дороже, чем у вас.','Купил чай и конфеты. Скучаю по дому.'],
+  ['Привет! Погода у нас уже холодная, по утрам иней.','Начальник отряда опять придирается по мелочам.','Записался в кружок, учусь резьбе по дереву. Сделаю вам подарок.'],
+  ['Здравствуйте, мои дорогие! Письмо ваше читал перед сном.','Говорят, в следующем месяце будет проверка из управления.','Здоровье нормально, зубы вылечил. Передайте привет соседям.'],
+  ['Привет! Получил фотографии, долго смотрел.','Тут один парень из нашего отряда просил передать весточку его матери.','Очень соскучился. Напиши, как у вас дела дома.'],
+  ['Здравствуй! Спасибо за поддержку, без неё было бы тяжело.','В столовой на прошлой неделе была драка.','Я держусь, работаю, читаю. Жду свидания.']
 ];
-const REJ=['В письме был номер банковской карты — такие письма учреждение не пропускает.','В письме были подробности уголовного дела.','В письме были сведения о другом человеке, который содержится в учреждении.'];
-function letters(){
-  const r=rel(), pn=Number(r.id.slice(1));
-  const hist=FAM.переписка.filter(z=>z[2]===pn&&z[3]===S.me.ci).map(z=>({
-    id:'h'+z[0],d:z[1],out:z[4]===1,ch:z[5],dec:z[6],local:false
-  }));
-  const loc=S.sent.filter(x=>x.pid===r.id).map(x=>Object.assign({d:0,out:true,dec:null,local:true},x));
-  const all=loc.concat(hist).sort((a,b)=>a.d-b.d||(b.t||0)-(a.t||0));
-  const firstIn=all.find(l=>!l.out);
-  all.forEach(l=>{
-    l.dateTxt=l.local?l.when:fmt(dAgo(l.d));
-    if(l.local) l.status='check';
-    else if(!l.out) l.status=(l===firstIn&&!S.read[l.id]&&l.d<=10)?'new':'read';
-    else l.status=['delivered','redacted','rejected'][l.dec];
-    const h=hash(l.id);
-    const OT=outSet(me().role);l.text=l.text||(l.out?OT[h%OT.length]:IN_T[h%IN_T.length]).replace('{R}',r.first).replace('{S}',r.first);
-    l.dur=l.dur||(30+h%60);
-    if(l.status==='rejected') l.reason=REJ[h%REJ.length];
+const REPLY_T=['Получил твоё сообщение, спасибо! Всё хорошо, не переживай. Жду следующего.','Спасибо, что пишешь. Прочитал два раза. Обнимаю.','Получил! Очень рад. Передавай всем привет.'];
+const REJ=['В сообщении был номер банковской карты — такие учреждение не пропускает.','В сообщении были подробности уголовного дела.','В сообщении были сведения о другом человеке, который содержится в учреждении.'];
+const SEC=1000, DEMO={checked:12*SEC,delivered:25*SEC,read:40*SEC,reply:60*SEC};   // ускоренная механика для показа
+
+function feed(){
+  const r=rel(), pn=Number(r.id.slice(1)), OT=outSet(me().role), now=Date.now();
+  const items=[];
+  FAM.переписка.filter(z=>z[2]===pn&&z[3]===S.me.ci).forEach(z=>{
+    const out=z[4]===1, dec=z[6], dig=z[7]===1, h=hash('h'+z[0]);
+    if(!out&&dec===2) return;   // его письма, которые не пропустили, родственнику не показываем
+    const d=dAgo(z[1]); d.setHours(9+h%12,h%60);
+    const m={kind:'msg',id:'h'+z[0],t:d.getTime(),out,ch:z[5],dec,route:dig?'terminal':'paper',dur:25+h%60,h};
+    if(out){m.text=OT[h%OT.length].replace('{R}',r.first);m.status=dec===2?'rejected':(dig?'read':'handed');if(dec===2)m.reason=REJ[h%REJ.length]}
+    else{const T=IN_T[h%IN_T.length];m.parts=T;m.text=T.join(' ')+'\n\n'+r.first;m.how=dig?'terminal':'paper';m.cut=dec===1?(h%2?'paper':'text'):null;m.status=(!S.read[m.id]&&z[1]<=8)?'new':'seen'}
+    items.push(m);
   });
-  return all;
+  S.sent.filter(x=>x.pid===r.id).forEach(x=>{
+    const age=now-x.t, route=r.vt?'terminal':'paper';
+    const st=age<DEMO.checked?'check':age<DEMO.delivered?'checked':route==='terminal'?(age<DEMO.read?'delivered':'read'):'handed';
+    items.push(Object.assign({kind:'msg',out:true,route,status:st,dec:0},x));
+    if(x.ch===0&&age>=DEMO.reply&&!x.noReply){
+      const h=hash(x.id);
+      items.push({kind:'msg',id:x.id+'r',t:x.t+DEMO.reply,out:false,ch:0,dec:0,how:r.vt?'terminal':'paper',route:r.vt?'terminal':'paper',parts:[REPLY_T[h%REPLY_T.length]],text:REPLY_T[h%REPLY_T.length]+'\n\n'+r.first,status:S.read[x.id+'r']?'seen':'new',h});
+    }
+  });
+  // звонки: близкий звонит сам с карты для звонков — раз в 8–12 дней
+  if(r.confirmed){for(let d=3+hash(r.id)%5;d<FAM.окноДней;d+=8+hash(r.id+d)%5){const t=dAgo(d);t.setHours(18+d%3,10+d%40);items.push({kind:'ev',type:'call',t:t.getTime(),min:4+hash(r.id+'c'+d)%11})}}
+  S.ops.filter(o=>o.pid===r.id&&o.ev).forEach(o=>items.push({kind:'ev',type:o.ev,t:o.t,o}));
+  S.reqs.filter(q=>q.pid===r.id).forEach(q=>items.push({kind:'ev',type:'req',t:q.t,q}));
+  return items.sort((a,b)=>a.t-b.t);
 }
-const STATUS={check:['На проверке','s-wait'],delivered:['Передано','s-ok'],redacted:['Передано частично','s-wait'],rejected:['Не пропустили','s-err'],new:['Новое','s-new'],read:['Прочитано','s-ok']};
-const CH_NAME=['Письмо','Голосовое','Видео'];
-function unread(){return letters().some(l=>l.status==='new')}
+function unreadCount(){return feed().filter(m=>m.kind==='msg'&&!m.out&&m.status==='new').length}
+function pendingDemo(){const n=Date.now();return S.sent.some(x=>x.pid===S.me.pid&&n-x.t<DEMO.reply+2000)}
 
 /* ---------- заявки ---------- */
 const APPLY={
@@ -504,111 +630,108 @@ const APPLY={
 const VISIT={
   short:{t:'Краткосрочное свидание',s:'до 4 часов, в комнате свиданий',price:0,vt:false},
   long:{t:'Длительное свидание',s:'до 3 суток, с проживанием',price:0,vt:false},
-  video:{t:'Видеосвидание',s:'20 минут, через видеотерминал',price:PRICE.vvisit,vt:true}
+  video:{t:'Видеосвидание',s:'20 минут вживую, через видеотерминал',price:PRICE.vvisit,vt:true}
 };
 const REQ_ST={sent:['Отправлено','s-wait'],review:['На рассмотрении','s-wait'],ok:['Одобрено','s-ok'],done:['Готово','s-ok'],no:['Отказано','s-err']};
 function seedFor(pid,ci){
-  // стартовые заявки демонстрационного входа: одна завершённая, чтобы было видно, чем всё кончается
-  const r=BY[pid];
-  S.reqs=[{id:'q'+hash(pid+'s'),pid,kind:'apply',type:'spravka',status:'done',when:fmt(dAgo(14)),t:Date.now()-14*864e5,steps:[fmt(dAgo(14)),fmt(dAgo(13)),fmt(dAgo(12)),fmt(dAgo(11))]}];
-  // операции по счёту из переписки за 30 дней
+  const r=BY[pid], first=r[1].split(' ')[1], pn=Number(pid.slice(1));
+  const t14=dAgo(14).setHours(11,20);
+  S.reqs=[{id:'q'+hash(pid+'s'),pid,kind:'apply',type:'spravka',status:'done',when:fmt(dAgo(14)),t:t14,steps:[fmt(dAgo(14)),fmt(dAgo(13)),fmt(dAgo(12)),fmt(dAgo(11))]}];
   S.ops=[];
-  const pn=Number(pid.slice(1));
-  FAM.переписка.filter(z=>z[2]===pn&&z[3]===ci&&z[4]===1&&z[1]<=30).forEach(z=>{
-    S.ops.push({d:z[1],t:(z[5]===0?'Письмо':z[5]===1?'Голосовое':'Видеосообщение')+' '+decl(r[1].split(' ')[1],'d'),s:z[6]===2?'учреждение не пропустило':'',a:-(z[5]===0?PRICE.letter:z[5]===1?PRICE.voice:PRICE.video),k:'out'});
-    if(z[6]===2) S.ops.push({d:z[1],t:'Возврат за письмо',s:'учреждение не пропустило',a:PRICE.letter,k:'in'});
+  FAM.переписка.filter(z=>z[2]===pn&&z[3]===ci&&z[4]===1&&z[1]<=40).forEach(z=>{
+    const t=dAgo(z[1]).setHours(10,0);
+    S.ops.push({pid,t,title:(z[5]===0?'Сообщение ':z[5]===1?'Голосовое ':'Видеосообщение ')+decl(first,'d'),s:'',a:-(z[5]===0?PRICE.letter:z[5]===1?PRICE.voice:PRICE.video),k:'out'});
+    if(z[6]===2) S.ops.push({pid,t:t+3*864e5,title:'Возврат за сообщение',s:'учреждение не пропустило',a:PRICE.letter,k:'in'});
   });
-  S.ops.push({d:25,t:'Пополнение счёта',s:'СБП',a:2000,k:'in'});
-  S.ops.sort((a,b)=>a.d-b.d);
+  S.ops.push({pid,t:dAgo(21).setHours(19,5),title:'Перевод '+decl(first,'d'),s:'на счёт в учреждении',a:-1030,k:'transfer',ev:'transfer',sum:1000});
+  S.ops.push({pid,t:dAgo(25).setHours(9,40),title:'Пополнение счёта',s:'СБП',a:3000,k:'in'});
 }
 
-/* ================= шапки ================= */
-function siteHdr(){return `<header class="hdr"><a href="#/" aria-label="ZT — на главную">${LOGO}</a><span class="sp"></span>${S.me?'<a class="btn sm soft" href="#/lk">Кабинет</a>':'<a class="btn sm soft" href="#/login">Войти</a>'}</header>`}
+/* ================= шапки и меню ================= */
+function siteHdr(){return `<header class="hdr"><a href="#/" aria-label="ZT Рядом — на главную">${BRAND}</a><span class="sp"></span>${S.me?'<a class="btn sm soft" href="#/lk/chat">Открыть</a>':'<a class="btn sm soft" href="#/login">Войти</a>'}</header>`}
 function backHdr(title,to,right){return `<header class="hdr back"><a class="ib" href="#${to}" aria-label="Назад">${ic('back')}</a><div class="title">${title}</div>${right||''}</header>`}
-function lkHdr(title){return `<header class="hdr">${title?`<div class="title" style="font-size:22px;font-weight:700">${title}</div>`:`<a href="#/lk" aria-label="ZT">${LOGO}</a><span class="sp"></span>`}<a class="ib" href="#/lk/help" aria-label="Помощь">${ic('help')}</a></header>`}
+function lkHdr(title){return `<header class="hdr"><div class="title" style="font-size:22px;font-weight:700">${title}</div><a class="ib" href="#/lk/help" aria-label="Помощь">${ic('help')}</a></header>`}
 function tabbar(cur){
-  const t=[['/lk','Главная','home'],['/lk/letters','Переписка','chat'],['/lk/requests','Заявки','list'],['/lk/profile','Профиль','user']];
-  const un=unread();
-  return '<nav class="tabbar" aria-label="Разделы кабинета">'+t.map(x=>`<a href="#${x[0]}" class="${x[0]===cur?'on':''}"${x[0]===cur?' aria-current="page"':''}>${ic(x[2])}${x[1]}${x[0]==='/lk/letters'&&un?'<span class="dot" aria-label="есть новое"></span>':''}</a>`).join('')+'</nav>';
+  const t=[['/lk','Чаты','chat'],['/lk/requests','Заявки','list'],['/lk/money','Счёт','wallet'],['/lk/profile','Профиль','user']];
+  const un=unreadCount();
+  return '<nav class="tabbar" aria-label="Разделы">'+t.map(x=>`<a href="#${x[0]}" class="${x[0]===cur?'on':''}"${x[0]===cur?' aria-current="page"':''}>${ic(x[2])}${x[1]}${x[0]==='/lk'&&un?'<span class="dot" aria-label="есть новое"></span>':''}</a>`).join('')+'</nav>';
 }
 
 /* ================= САЙТ zt.ru ================= */
 const STAGES={
   zaderzhan:{t:'Только что задержали',sub:'Не знаю, где он и что делать',h:'Близкого задержали. Что делать в первые дни',
-    li:['Узнайте, где он сейчас: в отделе полиции или изоляторе временного содержания. Спросите у следователя или адвоката.','Через 1–3 дня его обычно переводят в СИЗО. Как только станет известно куда — добавьте его в кабинете.','Письмо можно отправить сразу после перевода. Оно придёт быстрее обычной почты.'],cta:'Начать'},
-  sizo:{t:'Он в СИЗО',sub:'Письма, деньги, передачи',h:'Близкий в СИЗО. Чем вы можете помочь',
-    li:['Письма — самый быстрый способ связи. Их проверяет учреждение, обычно до 3 дней.','Деньги на лицевой счёт — чтобы он мог купить продукты и вещи в магазине СИЗО.','Звонки и свидания в СИЗО — только с разрешения следователя. Заявление можно подать онлайн.'],cta:'Написать письмо'},
-  kolonia:{t:'Он в колонии',sub:'Звонки, видео, свидания',h:'Близкий в колонии. Как быть на связи',
-    li:['Письма с фото и бланком для ответа — он ответит от руки, вы получите скан.','Если в отряде есть видеотерминал — голосовые и видеосообщения, видеосвидания.','Свидания и заявления в учреждение — записаться онлайн и видеть ответ.'],cta:'Начать'}
+    li:['Узнайте, где он сейчас: в отделе полиции или изоляторе временного содержания. Спросите у следователя или адвоката.','Через 1–3 дня его обычно переводят в СИЗО. Как только станет известно куда — найдите его в ZT Рядом.','Первое сообщение можно отправить сразу после перевода. Оно придёт быстрее обычной почты.'],cta:'Начать'},
+  sizo:{t:'Он в СИЗО',sub:'Сообщения, деньги, передачи',h:'Близкий в СИЗО. Чем вы можете помочь',
+    li:['Сообщения — самый быстрый способ связи. Их проверяет учреждение, обычно до 3 дней.','Деньги на лицевой счёт — чтобы он мог купить продукты и вещи в магазине СИЗО.','Звонки и свидания в СИЗО — только с разрешения следователя. Заявление можно подать онлайн.'],cta:'Написать'},
+  kolonia:{t:'Он в колонии',sub:'Переписка, звонки, свидания',h:'Близкий в колонии. Как быть на связи',
+    li:['Переписка как в мессенджере: если в отряде есть видеотерминал — он читает там, если нет — ему распечатают и вручат.','Он отвечает на терминале или от руки — бумажное письмо сканируют, и оно приходит к вам в переписку.','Звонки, видеосвидания и заявления — тоже здесь.'],cta:'Начать'}
 };
 function pgLanding(){
-  const phone=`<div class="mock" aria-hidden="true"><div class="mock-scr">
-    <div class="m-top"><span class="m-av">ИП</span><div><b>Иван Петров</b><small>ИК-2 · отряд 3</small></div></div>
-    <div class="m-st ok">✓ Письмо передано Ивану</div>
-    <div class="m-paper"><small>Ответ от Ивана · 10:12</small>Мама, здравствуй! Письмо и фотографии получил, спасибо. Повесил над кроватью…</div>
-    <div class="m-photo"><span></span><span></span></div>
-    <div class="m-btn">Ответить</div></div></div>
-    <div class="float f1" aria-hidden="true"><span class="fdot" style="background:var(--green)"></span>Ответ пришёл</div>
+  const phone=`<div class="mock" aria-hidden="true"><div class="mock-scr" style="background:#EFEAF8">
+    <div class="m-top"><span class="m-av">ИП</span><div><b>Иван Петров</b><small>ИК-2 · терминал в отряде</small></div></div>
+    <div class="m-paper" style="align-self:flex-start;max-width:88%"><small>✍ Письмо от руки · скан</small>Мама, здравствуй! Фотографии получил, спасибо. Повесил над кроватью…</div>
+    <div class="m-st" style="align-self:flex-end;background:var(--purple);color:#fff;max-width:80%;font-weight:500">Ванечка, мы тебя очень ждём ❤️<br><span style="opacity:.8;font-size:10px">прочитано на терминале ✓✓</span></div>
+    <div class="m-st" style="align-self:center;background:#fff;color:var(--ink);font-weight:500">📞 Иван звонил · 8 мин</div>
+    <div class="m-btn" style="margin-top:auto;background:#fff;color:var(--faint);text-align:left;font-weight:400">Сообщение…</div></div></div>
+    <div class="float f1" aria-hidden="true"><span class="fdot" style="background:var(--green)"></span>Прочитано на терминале</div>
     <div class="float f2" aria-hidden="true">🎙 Голосовое · 0:48</div>`;
-  const pains=[['Не знаешь, где он','Задержали — и тишина. Куда писать, что можно передать, кому звонить.'],['Письма идут неделями','Отправила — и не понимаешь, дошло или потерялось по дороге.'],['Всё — через очереди','Свидание, справка, передача — поездки, бланки и ожидание.'],['Ему важно знать, что помнят','Одно письмо с фото может держать человека неделями.']];
+  const pains=[['Не знаешь, где он','Задержали — и тишина. Куда писать, что можно передать, кому звонить.'],['Письма идут неделями','Отправила — и не понимаешь, дошло или потерялось по дороге.'],['Всё — через очереди','Свидание, справка, передача — поездки, бланки и ожидание.'],['Ему важно знать, что помнят','Одно сообщение с фото может держать человека неделями.']];
   const eco=[
-    ['info','Узнать','Что делать на вашем этапе',['Памятки: задержан, СИЗО, колония','Справочник учреждений','Что можно передать'],'var(--blue-l)','#0052CC'],
-    ['mail','Связаться','Слышать и видеть друг друга',['Письма с фото','Голосовые сообщения*','Видеосообщения*','Звонки и видеозвонки'],'var(--purple-l)','var(--purple-d)'],
+    ['chat','Переписка','Как в привычном мессенджере',['Сообщения и фото','Голосовые*','Видеосообщения*','Ответы от руки — сканом'],'var(--purple-l)','var(--purple-d)'],
+    ['phone','Живая связь','Голос и лицо',['Он звонит вам сам','Видеосвидание*'],'var(--green-l)','var(--green-d)'],
     ['wallet','Помочь','Деньгами и вещами',['На счёт в учреждении','На звонки','Лекарства'],'var(--orange-l)','var(--orange-d)'],
-    ['cal','Решить вопрос','Без поездок и очередей',['Запись на свидание','Видеосвидание*','Справки и заявления','Обращение к начальнику'],'var(--green-l)','var(--green-d)'],
-    ['gift','Порадовать','Мелочи, которые держат',['Фото','Открытки','Судоку и кроссворды'],'#FFEFF5','#C2185B']
+    ['cal','Решить вопрос','Без поездок и очередей',['Запись на свидание','Справки и заявления','Обращение к начальнику'],'var(--blue-l)','#0052CC'],
+    ['info','Узнать','Что делать на вашем этапе',['Памятки','Справочник учреждений','Что можно передать'],'#FFEFF5','#C2185B']
   ];
-  const steps=[['Отправлено','сегодня, 19:40'],['Проверено учреждением','обычно до 3 дней'],['Передано Ивану','вы получите уведомление'],['Ответ получен','скан письма — в кабинете']];
   return `<div class="page white land">${siteHdr()}
   <section class="hero2"><div class="eyebrow2"><span class="pulse"></span>Если близкий в СИЗО или колонии</div>
   <h1 class="big">Вы можете быть <em>рядом</em>.<br>Мы подскажем как.</h1>
-  <p class="lead2">Письма, голос, видео, свидания и деньги — с вашего телефона. И всегда видно, что всё дошло.</p>
-  <div class="hero-ctas"><a class="btn" href="#/login" id="herocta">Начать — нужен только телефон</a><button class="btn line" data-act="scroll" data-to="eco">Что можно сделать</button></div>
+  <p class="lead2"><b style="color:var(--ink)">ZT Рядом</b> — переписка с близким, как в мессенджере. Сообщения, голос, видео, звонки и свидания — с вашего телефона. И всегда видно, что всё дошло.</p>
+  <div class="hero-ctas"><a class="btn" href="#/login" id="herocta">Начать — нужен только телефон</a><button class="btn line" data-act="scroll" data-to="how">Как это работает</button></div>
   <div class="stage-phone">${phone}</div></section>
 
   <section class="dark2 reveal"><div class="eyebrow2 light">Мы понимаем</div>
   <h2 class="big2">Когда близкий там, связь рвётся <em>первой</em></h2>
   <div class="pains">${pains.map(p=>`<div class="pain"><b>${p[0]}</b><span>${p[1]}</span></div>`).join('')}</div>
-  <p class="after">ZT собирает всё в одном месте. От первой памятки до свидания — с телефона, в удобное время и по правилам учреждения.</p></section>
+  <p class="after">ZT Рядом возвращает разговор. Одна переписка — и в ней всё: слова, голос, фото, звонки и свидания.</p></section>
+
+  <section class="band2 soft2 reveal" id="how"><div class="eyebrow2">Как это работает</div><h2 class="big2 ink">Вы пишете — он <em>читает</em>. Он отвечает — вы видите</h2>
+  <div class="card tlcard"><div class="tl">
+  <div class="ts done" style="--d:0s"><div class="c">${ic('check',3)}</div><div><b>Вы отправляете сообщение</b><span class="faint">текст, фото, голос или видео</span></div></div>
+  <div class="ts done" style="--d:.3s"><div class="c">${ic('check',3)}</div><div><b>Учреждение проверяет</b><span class="faint">так положено по закону · обычно до 3 дней</span></div></div>
+  <div class="ts done" style="--d:.6s"><div class="c">${ic('check',3)}</div><div><b>Он читает на терминале</b><span class="faint">а если терминала нет — ему распечатают и вручат</span></div></div>
+  <div class="ts cur" style="--d:.9s"><div class="c"></div><div><b>Ответ приходит в переписку</b><span class="faint">с терминала или от руки — бумагу отсканируют</span></div></div></div></div></section>
 
   <section class="band2 reveal" id="eco"><div class="eyebrow2">Всё в одном месте</div><h2 class="big2 ink">Одно окно на всё, что нужно близкому</h2>
   <div class="eco">${eco.map(g=>`<div class="eco-g"><div class="hd"><div class="fic" style="background:${g[4]};color:${g[5]}">${ic(g[0])}</div><div><small>${g[1]}</small><b>${g[2]}</b></div></div><div class="tags">${g[3].map(t=>`<span class="${t.endsWith('*')?'vt':''}">${t.replace('*','')}</span>`).join('')}</div></div>`).join('')}</div>
-  <p class="foot-note">Фиолетовым — если у близкого есть доступ к видеотерминалу. Мы подскажем, есть ли он в его отряде.</p></section>
+  <p class="foot-note">Фиолетовым — если в отряде близкого есть видеотерминал. ZT Рядом подскажет, есть ли он.</p></section>
 
-  <section class="band2 soft2 reveal"><div class="eyebrow2">Главное — спокойствие</div><h2 class="big2 ink">Вы всегда знаете, <em>где письмо</em></h2>
-  <p class="lead2" style="margin:0">Больше не нужно гадать, дошло ли. Каждый шаг видно в кабинете, о каждом — уведомление.</p>
-  <div class="card tlcard"><div class="tl">${steps.map((s,i)=>`<div class="ts ${i<3?'done':'cur'}" style="--d:${i*0.35}s"><div class="c">${i<3?ic('check',3):''}</div><div><b>${s[0]}</b><span class="faint">${s[1]}</span></div></div>`).join('')}</div></div></section>
+  <section class="band2 soft2 reveal"><div class="eyebrow2">Голос и лицо</div><h2 class="big2 ink">Когда слов на бумаге <em>мало</em></h2>
+  <div class="feats">
+  <div class="feat"><div class="fic" style="background:var(--purple-l);color:var(--purple-d)">${ic('mic')}</div><div><b>Голосовое и видеосообщение</b><span>Запишите сейчас — до 90 секунд. Он послушает или посмотрит на терминале после проверки.</span></div></div>
+  <div class="feat"><div class="fic" style="background:var(--green-l);color:var(--green-d)">${ic('video')}</div><div><b>Видеосвидание</b><span>Разговор вживую через терминал, 20 минут. Выберите время — учреждение подтвердит.</span></div></div>
+  <div class="feat"><div class="fic" style="background:var(--orange-l);color:var(--orange-d)">${ic('phone')}</div><div><b>Звонок</b><span>Он звонит вам сам с карты для звонков, которую вы пополняете.</span></div></div></div></section>
 
-  <section class="band2 reveal"><div class="eyebrow2">Услышать голос</div><h2 class="big2 ink">Когда слов на бумаге <em>мало</em></h2>
-  <p class="lead2" style="margin:0">Запишите голосовое или короткое видео — до 90 секунд. Близкий посмотрит его на видеотерминале в отряде после проверки.</p>
-  <div class="media" style="background:var(--purple-l)"><span class="play" style="background:var(--purple);color:#fff;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center">${ic('play')}</span><span class="wave"></span><b style="color:var(--purple-d)">0:48</b></div>
-  <div class="info">${ic('info')}<span>Голос и видео доступны, если в отряде близкого стоит видеотерминал. Если нет — письма работают всегда, а мы сообщим, когда терминал появится.</span></div></section>
-
-  <section class="band2 soft2 reveal"><div class="eyebrow2">С чего начать</div><h2 class="big2 ink">Где сейчас ваш близкий?</h2><p class="lead2" style="margin:0">Подскажем, что делать именно на вашем этапе. Коротко и по шагам.</p>
+  <section class="band2 reveal"><div class="eyebrow2">С чего начать</div><h2 class="big2 ink">Где сейчас ваш близкий?</h2><p class="lead2" style="margin:0">Подскажем, что делать именно на вашем этапе. Коротко и по шагам.</p>
   ${Object.keys(STAGES).map(k=>`<a class="item bordered" href="#/stage/${k}"><div class="grow"><b>${STAGES[k].t}</b><small>${STAGES[k].sub}</small></div>${ic('chev')}</a>`).join('')}</section>
 
-  <section class="band2 reveal"><div class="eyebrow2">Это просто</div><h2 class="big2 ink">Первое письмо — через 5 минут</h2>
-  <div class="step"><div class="num">1</div><div><b style="color:var(--ink)">Войдите по номеру телефона</b><div class="faint">Пароль не нужен — придёт код в СМС</div></div></div>
-  <div class="step"><div class="num">2</div><div><b style="color:var(--ink)">Найдите близкого</b><div class="faint">Если он добавил ваш номер — он уже в кабинете</div></div></div>
-  <div class="step"><div class="num">3</div><div><b style="color:var(--ink)">Пишите, записывайтесь, помогайте</b><div class="faint">И следите, что всё дошло</div></div></div></section>
-
   <section class="band2 soft2 reveal"><div class="eyebrow2">Честные цены</div><h2 class="big2 ink">Сколько это стоит</h2>
-  <div class="prices">${[['Письмо','до 2 страниц',PRICE.letter],['Фото к письму','за каждое',PRICE.photo],['Голосовое сообщение','до 90 секунд',PRICE.voice],['Видеосообщение','до 90 секунд',PRICE.video],['Видеосвидание','20 минут',PRICE.vvisit],['Заявления и справки','онлайн','0']].map(p=>`<div class="price"><div class="grow"><b>${p[0]}</b><small>${p[1]}</small></div><span>${p[2]==='0'?'бесплатно':p[2]+' ₽'}</span></div>`).join('')}</div>
+  <div class="prices">${[['Сообщение','до 2 страниц',PRICE.letter],['Фото','за каждое',PRICE.photo],['Голосовое сообщение','до 90 секунд',PRICE.voice],['Видеосообщение','до 90 секунд',PRICE.video],['Видеосвидание','20 минут',PRICE.vvisit],['Заявления и справки','онлайн','0']].map(p=>`<div class="price"><div class="grow"><b>${p[0]}</b><small>${p[1]}</small></div><span>${p[2]==='0'?'бесплатно':p[2]+' ₽'}</span></div>`).join('')}</div>
   <p class="faint" style="margin:0">Если учреждение не пропустит сообщение — деньги вернутся на ваш счёт.</p></section>
 
   <section class="dark2 reveal"><div class="eyebrow2 light">Почему ZT</div><h2 class="big2">Мы на связи с учреждениями <em>15 лет</em></h2>
   <div class="trust">
-  <div><span>${ic('shield')}</span><b>Безопасные платежи</b><small>Деньги вносятся только в кабинете. Мы никогда не просим переводить на чужие карты или номера.</small></div>
-  <div><span>${ic('check')}</span><b>Всё видно</b><small>Статус каждого письма, заявления и платежа — в одном месте.</small></div>
-  <div><span>${ic('phone')}</span><b>Живая поддержка</b><small>Круглосуточно, по телефону и в чате. Объясним по шагам.</small></div></div></section>
+  <div><span>${ic('shield')}</span><b>Безопасные платежи</b><small>Деньги вносятся только в ZT Рядом. Мы никогда не просим переводить на чужие карты или номера.</small></div>
+  <div><span>${ic('check')}</span><b>Всё видно</b><small>У каждого сообщения — галочки, как в мессенджере: проверено, доставлено, прочитано.</small></div>
+  <div><span>${ic('phone')}</span><b>Живая поддержка</b><small>Круглосуточно — прямо в чате. Объясним по шагам.</small></div></div></section>
 
   <section class="band2 reveal"><h2 class="big2 ink">Частые вопросы</h2>
-  <details><summary>Кто читает мои письма?</summary><p>Письма и сообщения проверяет сотрудник учреждения — так положено по закону. Кроме него и адресата их не видит никто.</p></details>
-  <details><summary>Почему у меня нет голосовых и видео?</summary><p>Они доступны, если в отряде близкого стоит видеотерминал и учреждение подтвердило его личность. В кабинете видно, чего не хватает.</p></details>
-  <details><summary>Как записаться на свидание?</summary><p>В кабинете: выберите вид свидания и дату. Учреждение ответит обычно в течение 3 дней, статус будет виден в «Заявках».</p></details>
-  <details><summary>Что если письмо не пропустят?</summary><p>Вы увидите причину, а деньги вернутся на ваш счёт.</p></details></section>
+  <details><summary>Кто читает мои сообщения?</summary><p>Их проверяет сотрудник учреждения — так положено по закону. Кроме него и адресата их не видит никто.</p></details>
+  <details><summary>Что если у него нет видеотерминала?</summary><p>Сообщения работают всегда: их распечатают и вручат. Голосовые, видеосообщения и видеосвидания откроются, когда терминал появится.</p></details>
+  <details><summary>Как он ответит, если пишет от руки?</summary><p>Бумажное письмо проверят и отсканируют. Текст распознается и придёт к вам в переписку, а скан можно открыть.</p></details>
+  <details><summary>Что если сообщение не пропустят?</summary><p>Вы увидите причину, а деньги вернутся на ваш счёт.</p></details></section>
 
-  <section class="final reveal"><h2 class="big2">Напишите ему <em>сегодня</em></h2><p>Одно письмо — и он знает, что его ждут.</p><a class="btn white" href="#/login">Начать — нужен только телефон</a><a class="btn ghostw" href="#/app">Скачать приложение ZT</a></section>
+  <section class="final reveal"><h2 class="big2">Напишите ему <em>сегодня</em></h2><p>Одно сообщение — и он знает, что его ждут.</p><a class="btn white" href="#/login">Начать — нужен только телефон</a><a class="btn ghostw" href="#/app">Скачать приложение ZT Рядом</a></section>
   <footer class="foot"><div class="row" style="gap:16px;flex-wrap:wrap"><a href="tel:88000000000">8 800 000-00-00</a><span>Поддержка круглосуточно</span></div><div class="row" style="gap:16px;flex-wrap:wrap"><a href="#/">О компании</a><a href="#/">Документы</a><a href="#/">Тарифы</a></div><div class="small">© ZT, 2010–2026</div></footer>
   <div class="stickycta" id="stickycta" hidden><a class="btn" href="#/login">Начать — нужен только телефон</a></div></div>`;
 }
@@ -616,12 +739,12 @@ function pgStage(k){
   const s=STAGES[k]; if(!s) return pgLanding();
   return `<div class="page white">${backHdr(s.t,'/')}<div class="wrap loose"><h1 class="h1" style="font-size:26px">${s.h}</h1><ul class="bul">${s.li.map(x=>`<li>${x}</li>`).join('')}</ul>
   <div class="card flat"><b style="color:var(--ink)">Нужна помощь?</b><div class="muted" style="margin-top:4px">Позвоните — объясним по шагам. <a href="tel:88000000000">8 800 000-00-00</a></div></div></div>
-  <div class="stick"><a class="btn" href="#${k==='sizo'?'/lk/write':'/lk'}">${s.cta}</a></div></div>`;
+  <div class="stick"><a class="btn" href="#/lk/chat">${s.cta}</a></div></div>`;
 }
 function pgApp(){
   const r=S.me&&FAM?rel():null, who=r?r.gen:'близкого', whoN=r?r.first:'Близкий';
-  return `<div class="page white">${backHdr('Приложение ZT',S.me?'/lk':'/')}<div class="wrap loose"><div style="height:180px;border-radius:24px;background:var(--purple);display:flex;align-items:center;justify-content:center;color:#fff"><svg viewBox="0 0 24 24" width="80" height="80" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="${P.video}"/></svg></div>
-  <h1 class="h1" style="font-size:26px">Слышать и видеть ${who} — в приложении ZT</h1><p class="muted" style="margin:0">${whoN} звонит вам сам. Вход тот же — по номеру телефона, ничего вводить заново.</p></div>
+  return `<div class="page white">${backHdr('Приложение ZT Рядом',S.me?'/lk/chat':'/')}<div class="wrap loose"><div style="height:180px;border-radius:24px;background:var(--purple);display:flex;align-items:center;justify-content:center;color:#fff"><svg viewBox="0 0 24 24" width="80" height="80" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="${P.phone}"/></svg></div>
+  <h1 class="h1" style="font-size:26px">Звонки ${who} — в приложении</h1><p class="muted" style="margin:0">${whoN} звонит вам сам. В приложении та же переписка и тот же вход — ничего вводить заново.</p></div>
   <div class="stick"><div class="stores"><button class="btn dark" data-toast="Откроется RuStore">Скачать в RuStore</button><button class="btn line" data-toast="Откроется App Store">App Store</button><button class="btn line" data-toast="Откроется Google Play">Google Play</button></div></div></div>`;
 }
 
@@ -629,9 +752,9 @@ function pgApp(){
 function pgLogin(){
   const d=FAM.демо, a=d.сТерминалом&&BY[d.сТерминалом.pid], b=d.безТерминала&&BY[d.безТерминала.pid];
   const chip=(x,sel,label)=>{if(!x)return '';const c=x[8][sel.ci];return `<button class="item bordered" data-act="demo" data-phone="${esc(c[2])}"><div class="avatar sm soft">${c[0].split(' ').map(w=>w[0]).slice(0,2).join('')}</div><div class="grow"><b>${esc(c[0].split(' ').slice(1).join(' '))}</b><small>${ROLE[c[1]]} · ${label}</small></div></button>`};
-  return `<div class="page white">${backHdr('','/')}<div class="wrap loose"><h1 class="h1">Вход</h1><p class="muted" style="margin:0">Впервые? Кабинет создастся сам. Пароль не нужен.</p>
+  return `<div class="page white">${backHdr('','/')}<div class="wrap loose"><div>${BRAND}</div><h1 class="h1">Вход</h1><p class="muted" style="margin:0">Впервые? Всё создастся само. Пароль не нужен.</p>
   <div class="field"><label for="ph">Номер телефона</label><input class="inp" id="ph" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 900 000-00-00" value="${esc(S.phone)}"></div>
-  <div class="demo"><b>Для демонстрации</b>${chip(a,d.сТерминалом,'есть видеотерминал')}${chip(b,d.безТерминала,'только письма')}</div></div>
+  <div class="demo"><b>Для демонстрации</b>${chip(a,d.сТерминалом,'есть видеотерминал')}${chip(b,d.безТерминала,'нет терминала — на бумаге')}</div></div>
   <div class="stick"><button class="btn" id="getcode" data-act="getcode"${digits(S.phone).length<11?' disabled':''}>Получить код</button><button class="btn line" data-act="gosu">Войти через Госуслуги</button></div></div>`;
 }
 function pgCode(){
@@ -647,149 +770,217 @@ function formatPhone(v){
 function login(){
   const hit=PHONES[digits(S.phone)]||FAM.демо.сТерминалом;
   if(!S.me||S.me.pid!==hit.pid||S.me.ci!==hit.ci){const ph=S.phone;S=fresh();S.phone=ph;S.me={pid:hit.pid,ci:hit.ci};seedFor(hit.pid,hit.ci)}
-  if(!PHONES[digits(S.phone)]) toast('Номер не найден — показываем демо-кабинет');
-  save(); const n=S.next||'/lk'; S.next=null; go(n);
+  if(!PHONES[digits(S.phone)]) toast('Номер не найден — показываем демо');
+  save(); const n=S.next||'/lk/chat'; S.next=null; go(n);
 }
 
-/* ================= КАБИНЕТ ================= */
-function vtBadge(r){return r.vt?`<span class="badge s-new">${ic('video')}Видеотерминал есть</span>`:`<button class="badge s-wait" data-act="whyvt" style="border:0">${ic('info')}Только письма</button>`}
-function relCard(){
-  const r=rel(), L=letters(), last=L[0];
-  let line='';
-  if(last){
-    const st=STATUS[last.status];
-    const bg=last.status==='new'?'var(--purple-l);color:var(--purple-d)':last.status==='check'||last.status==='redacted'?'var(--orange-l);color:var(--orange-d)':last.status==='rejected'?'var(--red-l);color:var(--red)':'var(--green-l);color:var(--green-d)';
-    const txt=last.status==='new'?`${last.ch?CH_NAME[last.ch]+' от':'Ответ от'} ${r.gen} · ${last.dateTxt}`:`${CH_NAME[last.ch]} ${last.status==='check'?'на проверке в учреждении':st[0].toLowerCase()} · ${last.dateTxt}`;
-    line=`<a class="statusline" href="#/lk/letter/${last.id}" style="background:${bg}">${ic(last.status==='new'?'mail':last.status==='check'?'clock':'check')}<span class="grow">${txt}</span>${ic('chev')}</a>`;
-  }
-  return `<div class="card" style="display:flex;flex-direction:column;gap:12px"><div class="row"><div class="avatar">${r.ini}</div><div class="grow"><div style="font-size:19px;font-weight:700;color:var(--ink);line-height:1.2">${esc(r.name)}</div><div class="faint">${r.place}</div></div>
-  <button class="ib" data-act="switch" aria-label="Выбрать близкого" style="background:var(--bg)">${ic('down')}</button></div><div>${vtBadge(r)}</div>${line}</div>`;
+/* ================= ЧАТЫ ================= */
+function lastPreview(){
+  const f=feed().filter(m=>m.kind==='msg'), l=f[f.length-1]; if(!l) return ['','',0];
+  const txt=l.ch===1?'🎙 Голосовое':l.ch===2?'🎥 Видеосообщение':(l.out?'Вы: '+(l.text||''):(l.parts?l.parts[0]:'')).replace(/\n+/g,' ');
+  return [txt,dayLabel(l.t)==='Сегодня'?hm(l.t):dayLabel(l.t),unreadCount()];
 }
-function nextVisit(){return S.reqs.find(q=>q.pid===S.me.pid&&q.kind==='visit'&&q.status!=='no')}
-function pgHome(){
-  const r=rel(), v=nextVisit();
-  const tile=(href,icn,t,s,main,locked)=>`<a class="act${main?' main':''}${locked?' locked':''}" ${locked?'href="#" data-act="whyvt"':`href="#${href}"`}>${locked?`<span class="lock">${ic('lock')}</span>`:''}${ic(icn)}<div><b>${t}</b><span>${s}</span></div></a>`;
-  return `<div class="page tabbed">${lkHdr()}<div class="wrap">${relCard()}
-  ${v?`<a class="item" href="#/lk/req/${v.id}"><div class="ic" style="background:var(--green-l);color:var(--green-d)">${ic('cal')}</div><div class="grow"><b>${VISIT[v.type].t}</b><small>${v.dateTxt}${v.slot?', '+v.slot:''} · ${REQ_ST[v.status][0].toLowerCase()}</small></div>${ic('chev')}</a>`:''}
-  <div class="sec">Что хотите сделать?</div>
-  <div class="grid2">
-  ${tile('/lk/write','mail','Написать','письмо и фото',true)}
-  ${tile('/lk/voice','mic','Голос и видео',r.vt?'до 90 секунд':'нужен терминал',false,!r.vt)}
-  ${tile('/lk/visit','cal','Свидание',r.vt?'в учреждении или по видео':'записаться онлайн')}
-  ${tile('/lk/money','wallet','Помочь деньгами','на счёт или звонки')}
-  ${tile('/app','phone','Поговорить','звонок из приложения')}
-  ${tile('/lk/joy','gift','Порадовать','фото, судоку, открытки')}</div>
-  <div class="sec">Решить вопрос</div>
-  <div class="list">
-  <a class="item" href="#/lk/apply"><div class="ic" style="background:var(--blue-l);color:#0052CC">${ic('doc')}</div><div class="grow"><b>Заявление или справка</b><small>в учреждение, без поездки</small></div>${ic('chev')}</a>
-  <a class="item" href="#/lk/place"><div class="ic" style="background:var(--bg);color:var(--ink)">${ic('build')}</div><div class="grow"><b>${r.inst.short}</b><small>адрес, приём, правила</small></div>${ic('chev')}</a>
-  <a class="item" href="#/lk/rules"><div class="ic" style="background:var(--bg);color:var(--ink)">${ic('info')}</div><div class="grow"><b>Что можно писать и передавать</b><small>чтобы не вернули</small></div>${ic('chev')}</a></div>
-  <div class="sec">Деньги</div>
-  <div class="list">
-  <a class="item" href="#/lk/account"><div class="ic" style="background:var(--purple-l);color:var(--purple-d)">${ic('wallet')}</div><div class="grow"><b>Мой счёт</b><small>история операций</small></div><b style="font-size:17px">${rub(S.account)}</b>${ic('chev')}</a>
-  <a class="item" href="#/lk/card"><div class="ic" style="background:var(--green-l);color:var(--green-d)">${ic('phone')}</div><div class="grow"><b>Карта для звонков</b><small>${r.first} звонит с неё сам</small></div><b style="font-size:17px">${rub(S.card)}</b>${ic('chev')}</a></div>
-  <a class="promo" href="#/app">${ic('video')}<b style="flex:1;font-size:15px;line-height:1.35">Увидеть ${r.gen} по видео — в приложении</b><span class="btn sm white">Скачать</span></a>
+function pgChats(){
+  const r=rel(), [pv,tm,un]=lastPreview();
+  const sp=S.support.length?S.support[S.support.length-1].text:'Здравствуйте! Мы на связи круглосуточно.';
+  return `<div class="page tabbed">${`<header class="hdr"><a href="#/lk" aria-label="ZT Рядом">${BRAND}</a><span class="sp"></span><a class="ib" href="#/lk/help" aria-label="Помощь">${ic('help')}</a></header>`}
+  <div class="wrap"><div class="list chatlist">
+  <a class="item" href="#/lk/chat"><div class="avatar">${r.ini}</div><div class="grow"><b>${esc(r.short)}</b><small style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(pv)}</small></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px"><span class="tm">${tm}</span>${un?`<span class="ubadge">${un}</span>`:''}</div></a>
+  <a class="item" href="#/lk/support"><div class="avatar" style="background:var(--green-l);color:var(--green-d)">${ic('help')}</div><div class="grow"><b>Поддержка ZT Рядом</b><small style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(sp)}</small></div></a></div>
+  <button class="item bordered" data-toast="Поиск близкого: ФИО, дата рождения, учреждение"><div class="ic" style="background:var(--purple-l);color:var(--purple-d)">${ic('plus')}</div><div class="grow"><b style="color:var(--purple)">Найти ещё близкого</b><small>если он добавил ваш номер</small></div></button>
+  <a class="promo" href="#/app">${ic('phone')}<b style="flex:1;font-size:15px;line-height:1.35">Звонки ${r.gen} — в приложении ZT Рядом</b><span class="btn sm white">Скачать</span></a>
   </div>${tabbar('/lk')}</div>`;
+}
+
+/* ---------- сам чат ---------- */
+function ticks(m){
+  const s=m.status;
+  if(s==='check') return `<span title="на проверке">${ic('clock')}</span>`;
+  if(s==='checked') return `<span title="проверено">${ic('check')}</span>`;
+  if(s==='delivered') return `<span title="доставлено на терминал">${ic('dcheck')}</span>`;
+  if(s==='read') return `<span class="rd" title="прочитано на терминале">${ic('dcheck')}</span>`;
+  if(s==='handed') return `<span class="rd" title="распечатано и вручено">${ic('print',2)}</span>`;
+  return '';
+}
+function redactText(m){
+  // вторая фраза закрыта; если вымарали на бумаге — то же в распознанном тексте
+  if(!m.cut) return esc(m.text);
+  // закрытый текст родственнику не передаётся: на его месте заглушка той же длины
+  const p=m.parts; return esc(p[0])+' <span class="redact" role="img" aria-label="текст закрыт учреждением">'+p[1].replace(/\S/g,'▇')+'</span> '+esc(p.slice(2).join(' '))+'\n\n'+esc(rel().first);
+}
+function bubble(m){
+  const r=rel(), cls=m.out?'me':'him', time=hm(m.t);
+  if(m.status==='rejected') return `<div class="b me rej" role="button" tabindex="0" data-act="minfo" data-id="${m.id}"><div class="lab" style="color:var(--red)">${ic('info')}Не пропущено учреждением</div><div class="tx">${esc(m.text)}</div><div class="meta">деньги вернулись · ${time}</div></div>`;
+  if(m.ch===2){
+    const inner=m.url?`<video src="${m.url}" playsinline controls></video>`:`<span class="pl">${ic('play')}</span>`;
+    return `<div class="b ${cls} round"><button class="circle" data-act="${m.url?'':'toast'}" data-msg="Воспроизведение (демо)">${inner}</button><button class="meta" data-act="minfo" data-id="${m.id}" style="border:0">0:${String(m.dur).padStart(2,'0')} · ${time} ${m.out?ticks(m):''}</button></div>`;
+  }
+  let body='';
+  if(m.ch===1) body=`<div class="vbub">${m.url?`<audio controls src="${m.url}"></audio>`:`<span class="pl" data-act="toast" data-msg="Воспроизведение (демо)">${ic('play')}</span><span class="wv"></span>`}<span style="font-size:13px">0:${String(m.dur).padStart(2,'0')}</span></div>`;
+  else {
+    let lab='';
+    if(!m.out&&m.how==='paper') lab=`<div class="lab">${ic('pen')}Письмо от руки · скан</div><span class="scanthumb" data-t="${esc(m.parts[0])}">${m.cut==='paper'?'<span class="bar"></span>':''}<small>открыть скан</small></span>`;
+    else if(!m.out&&m.how==='terminal') lab=`<div class="lab">${ic('terminal')}С терминала</div>`;
+    const ph=m.photos?`<div class="photos">${(m.photosData&&m.photosData.length?m.photosData.map(s=>`<img src="${s}" alt="">`):Array.from({length:m.photos},()=>'<span></span>')).join('')}</div>`:'';
+    body=lab+ph+(m.text?`<div class="tx">${m.out?esc(m.text):redactText(m)}</div>`:'')+(m.cut?`<div class="rnote">${ic('info')}${m.cut==='paper'?'Часть вымарана на бланке до сканирования':'Часть текста закрыта учреждением'}</div>`:'');
+  }
+  return `<div class="b ${cls}" role="button" tabindex="0" data-act="minfo" data-id="${m.id}">${body}<div class="meta">${m.out&&m.route==='paper'&&m.status==='handed'?'вручено · ':''}${time} ${m.out?ticks(m):''}</div></div>`;
+}
+function event(e){
+  const r=rel();
+  if(e.type==='call') return `<button class="ev green" data-act="callsheet">${ic('phone')}<span>${r.first} звонил · ${e.min} мин <small>${hm(e.t)}</small></span></button>`;
+  if(e.type==='transfer') return `<a class="ev" href="#/lk/money">${ic('bank')}<span>Вы перевели ${rub(e.o.sum)} на счёт ${r.gen} <small>${hm(e.t)}</small></span></a>`;
+  if(e.type==='card') return `<a class="ev green" href="#/lk/card">${ic('phone')}<span>Карта для звонков +${rub(e.o.sum)} <small>${hm(e.t)}</small></span></a>`;
+  if(e.type==='req'){const q=e.q;return `<a class="ev" href="#/lk/req/${q.id}">${ic(q.kind==='visit'?(q.type==='video'?'video':'cal'):'doc')}<span>${reqTitle(q)}${q.kind==='visit'?' · '+q.dateTxt+(q.slot?', '+q.slot:''):''} · ${REQ_ST[q.status][0].toLowerCase()}</span></a>`}
+  return '';
+}
+function pgChat(){
+  const r=rel(), F=feed();
+  let html='',day='';
+  F.forEach(m=>{const dl=dayLabel(m.t);if(dl!==day){day=dl;html+=`<div class="dsep">${dl}</div>`}html+=m.kind==='msg'?bubble(m):event(m)});
+  // отметить прочитанными входящие
+  let ch=false; F.forEach(m=>{if(m.kind==='msg'&&!m.out&&m.status==='new'){S.read[m.id]=1;ch=true}}); if(ch) save();
+  const typing=S.sent.some(x=>x.pid===r.id&&x.ch===0&&!x.noReply&&Date.now()-x.t>=DEMO.read&&Date.now()-x.t<DEMO.reply)?`<div class="typing">${r.first} ${r.vt?'пишет на терминале…':'пишет ответ…'}</div>`:'';
+  return `<div class="chat-page">
+  <header class="chat-hdr"><a class="ib" href="#/lk" aria-label="К списку чатов">${ic('back')}</a>
+  <a class="chat-who" href="#/lk/rel"><div class="avatar">${r.ini}</div><div style="min-width:0"><b>${esc(r.short)}</b><small>${r.inst.name} · ${r.unit.replace('Отряд','отряд')} · ${r.vt?'<i>терминал</i>':'на бумаге'}</small></div></a>
+  <button class="hbtn" data-act="callsheet" aria-label="Звонок">${ic('phone')}</button>
+  <button class="hbtn${r.vt?'':' off'}" data-act="${r.vt?'vvisitsheet':'whyvt'}" aria-label="Видеосвидание">${ic('video')}${r.vt?'':`<span class="lk">${ic('lock')}</span>`}</button></header>
+  <div class="msgs" id="msgs">${html}${typing}</div>
+  ${composer()}</div>`;
+}
+function composerHint(){
+  const r=rel(), d=DRAFT, has=d.text.trim()||d.photos.length;
+  if(!has) return '';
+  const sum=PRICE.letter+d.photos.length*PRICE.photo+(!r.vt&&S.replyBlank?PRICE.reply:0);
+  return r.vt
+    ? `<div class="hint">${ic('terminal')}<span>Прочитает на терминале после проверки</span><b>${rub(sum)}</b></div>`
+    : `<div class="hint">${ic('print')}<span>Распечатают и вручат</span><label><input type="checkbox" id="blank"${S.replyBlank?' checked':''}>бланк для ответа</label><b>${rub(sum)}</b></div>`;
+}
+function composer(){
+  const r=rel(), d=DRAFT;
+  if(REC.st==='rec'||REC.st==='done') return `<div class="composer"><div class="recrow">${REC.st==='rec'?'<span class="recdot"></span>':`<span style="color:var(--purple);display:flex">${ic('mic')}</span>`}<span class="tm" id="rtime">${Math.floor(REC.sec/60)}:${String(REC.sec%60).padStart(2,'0')}</span><span class="grow">${REC.st==='rec'?'Идёт запись · до 90 с':REC.url?`<audio controls src="${REC.url}" style="height:36px;max-width:150px;vertical-align:middle"></audio>`:'Запись готова'}</span>
+    <button class="cbtn" data-act="reccancel" aria-label="Удалить запись">${ic('close')}</button>
+    ${REC.st==='rec'?`<button class="cbtn send" data-act="recstop" aria-label="Остановить" style="background:var(--red)">${ic('stop')}</button>`:`<button class="cbtn send" data-act="sendvoice" aria-label="Отправить голосовое">${ic('send')}</button>`}</div>
+    <div class="hint" style="padding-bottom:0">${ic('terminal')}<span>Послушает на терминале после проверки</span><b>${rub(PRICE.voice)}</b></div></div>`;
+  const has=d.text.trim()||d.photos.length;
+  return `<div class="composer" id="composer">${d.photos.length?`<div class="pstrip">${d.photos.map((s,i)=>`<div class="thumb"><img src="${s}" alt=""><button data-act="rmph" data-i="${i}" aria-label="Убрать">×</button></div>`).join('')}</div>`:''}
+  <div id="hint">${composerHint()}</div>
+  <div class="crow"><button class="cbtn" data-act="attach" aria-label="Прикрепить">${ic('plus')}</button>
+  <textarea class="cin" id="cin" rows="1" placeholder="Сообщение" aria-label="Сообщение">${esc(d.text)}</textarea>
+  <span id="cact">${has?`<button class="cbtn send" data-act="sendtext" aria-label="Отправить">${ic('send')}</button>`:(r.vt?`<button class="cbtn" data-act="recstart" aria-label="Записать голосовое">${ic('mic')}</button>`:`<button class="cbtn lockd" data-act="whyvt" aria-label="Голосовые недоступны">${ic('mic')}<span class="lk">${ic('lock')}</span></button>`)}</span></div></div>`;
+}
+function scrollBottom(){window.scrollTo(0,document.body.scrollHeight)}
+
+/* ---------- окна в чате ---------- */
+function msgInfo(id){
+  const r=rel(), m=feed().find(x=>x.id===id); if(!m) return;
+  const T=(steps)=>`<div class="tl">${steps.map((s,i)=>`<div class="ts ${s[2]==='done'?'done':s[2]==='cur'?'cur':'todo'}"><div class="c">${s[2]==='done'?ic('check',3):''}</div><div><b>${s[0]}</b>${s[1]?`<span class="faint">${s[1]}</span>`:''}</div></div>`).join('')}</div>`;
+  const when=t=>dayLabel(t)+', '+hm(t);
+  let html='';
+  if(m.out){
+    const what=m.ch===1?'Голосовое':m.ch===2?'Видеосообщение':'Сообщение';
+    if(m.status==='rejected') html=`<h2 class="h2">${what} не пропустили</h2><div class="info warn">${ic('info')}<span>${esc(m.reason)} Деньги вернулись на ваш счёт.</span></div>`;
+    else{
+      const s=m.status, order=['check','checked','delivered','read'];
+      const st=m.route==='terminal'
+        ? [['Отправлено',when(m.t),'done'],['Проверено учреждением',s==='check'?'обычно до 3 дней':'',s==='check'?'cur':'done'],['Доставлено на терминал','',order.indexOf(s)>=2?'done':s==='checked'?'cur':'todo'],[`Прочитано ${r.ins}`,'',s==='read'?'done':s==='delivered'?'cur':'todo']]
+        : [['Отправлено',when(m.t),'done'],['Проверено учреждением',s==='check'?'обычно до 3 дней':'',s==='check'?'cur':'done'],['Распечатано цензором','',s==='handed'?'done':s==='checked'?'cur':'todo'],[`Вручено ${r.dat} лично`,'',s==='handed'?'done':'todo']];
+      html=`<h2 class="h2">Путь сообщения</h2>${T(st)}<div class="info">${ic(m.route==='terminal'?'terminal':'print')}<span>${m.route==='terminal'?`У ${r.gen} в отряде есть видеотерминал — он читает там.`:`У ${r.gen} нет видеотерминала — сообщение распечатают и вручат на бумаге.`}</span></div>`;
+    }
+  } else {
+    if(m.how==='paper'){
+      html=`<h2 class="h2">Письмо от руки</h2>${T([[`${r.first} написал письмо`,'на бланке','done'],['Учреждение проверило',m.cut==='paper'?'часть вымарана на бланке':'','done'],['Отсканировано и распознано','','done'],[m.cut==='text'?'Часть распознанного текста закрыта':'Пришло к вам в переписку',when(m.t),'done']])}
+      <div class="scanfull">${redactText(m).replace(/\n\n/,'\n\n')}</div><div class="faint">Так выглядит скан. Почерк распознан автоматически — если что-то не так, откройте скан.</div>`;
+    } else html=`<h2 class="h2">С терминала</h2>${T([[`${r.first} написал на видеотерминале`,'','done'],['Учреждение проверило','','done'],['Пришло к вам',when(m.t),'done']])}`;
+  }
+  sheet(html+'<button class="btn line" data-act="closesheet">Закрыть</button>');
+}
+function callSheet(){
+  const r=rel();
+  sheet(`<h2 class="h2">Звонок</h2><p class="muted" style="margin:0">Позвонить в учреждение нельзя — <b style="color:var(--ink)">${r.first} звонит вам сам</b> с карты для звонков. Разговор слушает учреждение.</p>
+  <a class="item bordered" href="#/lk/card"><div class="ic" style="background:var(--green-l);color:var(--green-d)">${ic('phone')}</div><div class="grow"><b>Карта для звонков · ${rub(S.card)}</b><small>хватит примерно на ${Math.floor(S.card/12)} мин</small></div>${ic('chev')}</a>
+  <div class="legend"><span style="color:var(--green-d)">${ic('phone')}</span><span><b style="color:var(--ink)">Звонок</b> — живой разговор, голосом</span><span style="color:var(--purple)">${ic('video')}</span><span><b style="color:var(--ink)">Видеосвидание</b> — вживую с видео, по записи</span><span style="color:var(--muted)">${ic('mic')}</span><span><b style="color:var(--ink)">Голосовое</b> — записали сейчас, он послушает после проверки</span></div>
+  <a class="btn" href="#/app">Принимать звонки — в приложении</a>`);
+}
+function vvisitSheet(){
+  const r=rel();
+  sheet(`<h2 class="h2">Видеосвидание</h2><p class="muted" style="margin:0">Разговор <b style="color:var(--ink)">вживую с видео</b> — ${r.first} подходит к терминалу в отряде, вы — к телефону. 20 минут, по записи.</p>
+  <div class="info">${ic('info')}<span>Не путать с видеосообщением: его вы записываете сейчас, а ${r.first} смотрит позже, после проверки. Видеосообщение — в «+» внизу переписки.</span></div>
+  <div class="sum"><span class="muted">Стоимость</span><b>${rub(PRICE.vvisit)}</b></div>
+  <a class="btn" href="#/lk/visit?video">Выбрать время</a>`);
+}
+function attachSheet(){
+  const r=rel(), lock=r.vt?'':'off';
+  sheet(`<div class="attach">
+  <label><span class="ci" style="background:var(--purple-l);color:var(--purple-d)">${ic('photo')}</span>Фото<input type="file" accept="image/*" multiple id="phfile" hidden></label>
+  <button data-act="${r.vt?'govideo':'whyvt'}" class="${lock}"><span class="ci" style="background:#FFEFF5;color:#C2185B">${ic('video')}</span>Видео&shy;сообщение</button>
+  <button data-act="gojoy"><span class="ci" style="background:var(--orange-l);color:var(--orange-d)">${ic('gift')}</span>Порадовать</button>
+  <button data-act="gomoney"><span class="ci" style="background:var(--green-l);color:var(--green-d)">${ic('wallet')}</span>Деньги</button>
+  <button data-act="govisit"><span class="ci" style="background:var(--blue-l);color:#0052CC">${ic('cal')}</span>Свидание</button>
+  <button data-act="goapply"><span class="ci" style="background:var(--bg);color:var(--ink)">${ic('doc')}</span>Заявление</button></div>
+  ${r.vt?'':`<div class="info warn">${ic('info')}<span>Видеосообщения и голосовые откроются, когда у ${r.gen} появится видеотерминал.</span></div>`}`);
 }
 function whyVtSheet(){
   const r=rel();
   sheet(`<h2 class="h2">Голос и видео пока недоступны</h2>
   <div class="info warn">${ic('info')}<span>У ${r.gen}: ${esc(r.why||'нет доступа к видеотерминалу')}.</span></div>
-  <p class="muted" style="margin:0">Голосовые, видеосообщения и видеосвидания близкий получает через видеотерминал в отряде. ${r.confirmed?'Когда терминал появится или его переведут в отряд с терминалом, всё откроется само.':'Когда учреждение подтвердит его личность, всё откроется само.'}</p>
-  <p class="muted" style="margin:0"><b style="color:var(--ink)">Письма работают всегда</b> — с фото и бланком для ответа.</p>
-  <label class="opt" style="border-top:1px solid var(--bg)"><div class="grow"><b style="color:var(--ink)">Сообщить, когда откроется</b><div class="faint">пришлём СМС</div></div><span class="sw"><input type="checkbox" data-act="notifyvt"${S.notify[r.id]?' checked':''}><i></i></span></label>
-  <a class="btn" href="#/lk/write">Написать письмо</a>`);
-}
-function letterRow(l){
-  const r=rel(), st=STATUS[l.status];
-  const title=l.out?(l.ch?CH_NAME[l.ch]+' '+r.dat:(l.photos?'Письмо и '+l.photos+' фото':'Ваше письмо')):(l.ch?CH_NAME[l.ch]+' от '+r.gen:'Ответ от '+r.gen);
-  const col=!l.out?'background:var(--purple-l);color:var(--purple-d)':l.status==='rejected'?'background:var(--red-l);color:var(--red)':l.status==='check'||l.status==='redacted'?'background:var(--orange-l);color:var(--orange-d)':'background:var(--green-l);color:var(--green-d)';
-  const sub=l.ch?('0:'+String(l.dur).padStart(2,'0')):l.status==='rejected'?'деньги вернулись на счёт':l.text.replace(/\n+/g,' ').slice(0,38)+'…';
-  return `<a class="item" href="#/lk/letter/${l.id}"><div class="ic" style="${col}">${ic(l.ch===1?'mic':l.ch===2?'video':l.out?'out':'in')}</div><div class="grow"><b>${title}</b><small>${l.dateTxt} · ${esc(sub)}</small></div><span class="pill ${st[1]}">${st[0]}</span></a>`;
-}
-function pgLetters(){
-  const r=rel(), L=letters();
-  return `<div class="page tabbed">${lkHdr('Переписка')}<div class="wrap"><div class="row"><div class="avatar sm soft">${r.ini}</div><div class="grow"><b style="color:var(--ink)">${esc(r.name)}</b><div class="faint">Всё проверяет учреждение — обычно до 3 дней</div></div></div>
-  <div class="list">${L.length?L.map(letterRow).join(''):'<div class="item"><span class="faint">Писем пока нет</span></div>'}</div><div style="height:70px"></div></div>
-  <div style="position:fixed;left:50%;transform:translateX(-50%);bottom:calc(76px + var(--sb));width:100%;max-width:480px;padding:0 16px;z-index:25;display:flex;gap:8px"><a class="btn" href="#/lk/write" style="box-shadow:0 8px 20px rgba(104,61,204,.3)">${ic('plus')}Написать</a>${r.vt?`<a class="btn soft" href="#/lk/voice" style="width:auto;padding:0 18px" aria-label="Голосовое">${ic('mic')}</a>`:''}</div>
-  ${tabbar('/lk/letters')}</div>`;
-}
-function steps4(l){
-  const r=rel(), sent=l.local?l.when:fmt(dAgo(l.d)), chk=l.local?'':fmt(dAgo(Math.max(0,l.d-1)));
-  if(l.status==='check') return [['Отправлено',sent,1],['Проверено учреждением','обычно до 3 дней',0],['Передано '+r.dat,'',0]];
-  if(l.status==='rejected') return null;
-  return [['Отправлено',sent,1],['Проверено учреждением',chk,1],[(l.status==='redacted'?'Передано с вымарками':'Передано '+r.dat),chk,1]];
-}
-function pgLetter(id){
-  const r=rel(), l=letters().find(x=>x.id===id); if(!l) return pgLetters();
-  if(!l.out&&!S.read[l.id]){S.read[l.id]=1;save()}
-  let body='';
-  if(l.ch===1) body=`<div class="media">${l.url?`<audio controls src="${l.url}"></audio>`:`<button class="play" data-toast="Воспроизведение (демо)">${ic('play')}</button><span class="wave"></span><b style="color:var(--purple-d)">0:${String(l.dur).padStart(2,'0')}</b>`}</div>`;
-  else if(l.ch===2) body=l.url?`<video controls playsinline src="${l.url}"></video>`:`<button class="vthumb" data-toast="Воспроизведение (демо)" style="border:0;width:100%"><span class="play">${ic('play')}</span><small>0:${String(l.dur).padStart(2,'0')}</small></button>`;
-  else body=l.out?`<div class="bubble">${esc(l.text)}</div>${l.photos?`<div class="faint">+ ${l.photos} фото</div>`:''}`:`<div class="paper">${esc(l.text)}</div><button class="item bordered" data-toast="Откроется скан бланка целиком"><div class="ic" style="background:var(--bg);color:var(--muted)">${ic('photo')}</div><div class="grow"><b>Скан бланка</b><small>написано от руки</small></div>${ic('chev')}</button>`;
-  let tl='';
-  if(l.out){
-    if(l.status==='rejected') tl=`<div class="card" style="background:var(--red-l)"><b style="color:var(--red)">Учреждение не пропустило</b><div style="color:var(--ink);margin-top:6px">${esc(l.reason)} Деньги вернулись на ваш счёт.</div></div>`;
-    else { const st=steps4(l); tl=`<div class="card flat"><div class="h3" style="margin-bottom:14px">Где ${l.ch?'сообщение':'письмо'}</div><div class="tl">${st.map((s,i)=>{const done=s[2],cur=!done&&(i===0||st[i-1][2]);return `<div class="ts ${done?'done':cur?'cur':'todo'}"><div class="c">${done?ic('check',3):''}</div><div><b>${s[0]}</b>${s[1]?`<span class="faint">${s[1]}</span>`:''}</div></div>`}).join('')}</div></div>`;
-      if(l.status==='redacted') tl+=`<div class="info warn">${ic('info')}<span>Учреждение закрыло часть текста, остальное передано ${r.dat}.</span></div>`; }
-  }
-  const title=l.out?(l.ch?CH_NAME[l.ch]+' '+r.dat:'Ваше письмо'):(l.ch?CH_NAME[l.ch]+' от '+r.gen:'Ответ от '+r.gen);
-  return `<div class="page white">${backHdr(title,'/lk/letters')}<div class="wrap loose"><div class="faint">${l.dateTxt}</div>${body}${tl}</div>
-  <div class="stick"><a class="btn" href="#/lk/write">${l.out?'Написать ещё':'Ответить'}</a></div></div>`;
+  <p class="muted" style="margin:0">Голосовые, видеосообщения и видеосвидания близкий получает через видеотерминал. ${r.confirmed?'Когда терминал появится или его переведут туда, где он есть, всё откроется само.':'Когда учреждение подтвердит его личность, всё откроется само.'}</p>
+  <p class="muted" style="margin:0"><b style="color:var(--ink)">Сообщения работают всегда</b> — их распечатают и вручат, а ответ от руки придёт сканом.</p>
+  <label class="opt" style="border-top:1px solid var(--bg)"><div class="grow"><b style="color:var(--ink)">Сообщить, когда откроется</b><div class="faint">пришлём уведомление</div></div><span class="sw"><input type="checkbox" data-act="notifyvt"${S.notify[r.id]?' checked':''}><i></i></span></label>
+  <button class="btn" data-act="closesheet">Понятно</button>`);
 }
 
-/* ---------- написать: письмо, голос, видео ---------- */
-function composeTabs(cur){
-  const r=rel(); const t=[['/lk/write','mail','Письмо'],['/lk/voice','mic','Голос'],['/lk/video','video','Видео']];
-  return `<div class="seg2">${t.map(x=>{const locked=x[0]!=='/lk/write'&&!r.vt;return `<a href="#${locked?'':x[0]}" class="${x[0]===cur?'on':''}${locked?' off':''}"${locked?' data-act="whyvt"':''}>${ic(locked?'lock':x[1])}${x[2]}</a>`}).join('')}</div>`;
+/* ---------- поддержка ---------- */
+function pgSupport(){
+  const msgs=[{out:false,text:'Здравствуйте! Это поддержка ZT Рядом. Спросите что угодно — про сообщения, деньги, свидания. Отвечаем круглосуточно.',t:Date.now()-36e5}].concat(S.support);
+  return `<div class="chat-page"><header class="chat-hdr"><a class="ib" href="#/lk" aria-label="Назад">${ic('back')}</a><div class="chat-who"><div class="avatar" style="background:var(--green-l);color:var(--green-d)">${ic('help')}</div><div><b>Поддержка ZT Рядом</b><small>обычно отвечаем за 5 минут</small></div></div><a class="hbtn" href="tel:88000000000" aria-label="Позвонить в поддержку">${ic('phone')}</a></header>
+  <div class="msgs">${msgs.map(m=>`<div class="b ${m.out?'me':'him'}"><div class="tx">${esc(m.text)}</div><div class="meta">${hm(m.t)}</div></div>`).join('')}</div>
+  <div class="composer"><div class="crow"><textarea class="cin" id="sin" rows="1" placeholder="Вопрос в поддержку" aria-label="Вопрос"></textarea><button class="cbtn send" data-act="supsend" aria-label="Отправить">${ic('send')}</button></div></div></div>`;
 }
-function draftTotal(){const d=S.draft;return (d.text.trim()||d.photos.length||d.extras.length?PRICE.letter:0)+d.photos.length*PRICE.photo+(d.reply?PRICE.reply:0)+d.extras.reduce((a,x)=>a+x.p,0)}
-function pgWrite(){
-  const r=rel(), d=S.draft;
-  return `<div class="page white">${backHdr('Написать '+r.dat,'/lk')}<div class="wrap loose">${composeTabs('/lk/write')}
-  <textarea class="inp" id="lt" placeholder="Напишите, как у вас дела…" aria-label="Текст письма">${esc(d.text)}</textarea>
-  <div><div class="row between" style="margin-bottom:8px"><span class="h3">Фото</span><span class="faint">${PRICE.photo} ₽ за фото</span></div><div class="thumbs">
-  ${d.photos.map((src,i)=>`<div class="thumb"><img src="${src}" alt="Фото ${i+1}"><button data-act="rmph" data-i="${i}" aria-label="Убрать фото">×</button></div>`).join('')}
-  <label class="addph">${ic('photo')}Добавить<input type="file" accept="image/*" multiple id="phfile" hidden></label></div></div>
-  ${d.extras.length?`<div style="display:flex;flex-direction:column;gap:8px">${d.extras.map((x,i)=>`<div class="extra">${ic('gift')}<span>${x.t} · ${x.p} ₽</span><button data-act="rmex" data-i="${i}" aria-label="Убрать">×</button></div>`).join('')}</div>`:''}
-  <div class="card flat" style="padding:4px 16px"><label class="opt"><div class="grow"><b style="color:var(--ink)">Хочу получить ответ</b><div class="faint">Приложим бланк — ${r.first} ответит на нём · ${PRICE.reply} ₽</div></div><span class="sw"><input type="checkbox" id="reply"${d.reply?' checked':''}><i></i></span></label></div>
-  <a class="faint" href="#/lk/rules" style="color:var(--purple)">Что нельзя писать, чтобы письмо пропустили</a></div>
-  <div class="stick"><div class="sum"><span class="muted">С моего счёта</span><b id="total">${rub(draftTotal())}</b></div><button class="btn" data-act="send" id="sendbtn"${d.text.trim()||d.photos.length||d.extras.length?'':' disabled'}>Отправить</button></div></div>`;
+
+/* ---------- близкий: карточка-хаб ---------- */
+function pgRel(){
+  const r=rel();
+  return `<div class="page">${backHdr('','/lk/chat')}
+  <div class="relhead"><div class="avatar">${r.ini}</div><h1 class="h2">${esc(r.name)}</h1><div class="faint">${r.place}</div>
+  ${r.vt?`<span class="badge s-new">${ic('terminal')}Видеотерминал в отряде</span>`:`<button class="badge s-wait" data-act="whyvt" style="border:0">${ic('print')}Сообщения — на бумаге</button>`}
+  <div class="quick"><a href="#/lk/chat">${ic('chat')}Написать</a><button data-act="callsheet">${ic('phone')}Звонок</button><button data-act="${r.vt?'vvisitsheet':'whyvt'}" class="${r.vt?'':'off'}">${ic('video')}Видео&shy;свидание</button></div></div>
+  <div class="wrap"><div class="list">
+  <a class="item" href="#/lk/card"><div class="ic" style="background:var(--green-l);color:var(--green-d)">${ic('phone')}</div><div class="grow"><b>Карта для звонков</b><small>${r.first} звонит с неё сам</small></div><b>${rub(S.card)}</b>${ic('chev')}</a>
+  <a class="item" href="#/lk/transfer"><div class="ic" style="background:var(--purple-l);color:var(--purple-d)">${ic('bank')}</div><div class="grow"><b>Перевести на его счёт</b><small>на магазин и передачи</small></div>${ic('chev')}</a>
+  <a class="item" href="#/lk/visit"><div class="ic" style="background:var(--blue-l);color:#0052CC">${ic('cal')}</div><div class="grow"><b>Свидание</b><small>краткосрочное, длительное${r.vt?', видео':''}</small></div>${ic('chev')}</a>
+  <a class="item" href="#/lk/apply"><div class="ic" style="background:var(--bg);color:var(--ink)">${ic('doc')}</div><div class="grow"><b>Заявление или справка</b><small>в учреждение, без поездки</small></div>${ic('chev')}</a></div>
+  <div class="list"><a class="item" href="#/lk/place"><div class="ic" style="background:var(--bg);color:var(--ink)">${ic('build')}</div><div class="grow"><b>${r.inst.short}</b><small>адрес, приём, что можно передать</small></div>${ic('chev')}</a>
+  <a class="item" href="#/lk/rules"><div class="ic" style="background:var(--bg);color:var(--ink)">${ic('info')}</div><div class="grow"><b>Что можно писать</b><small>чтобы не вернули</small></div>${ic('chev')}</a></div></div></div>`;
 }
-let REC={st:'idle',sec:0,url:null,blob:null,timer:null,mr:null,stream:null,sim:false};
-function resetRec(){clearInterval(REC.timer);try{REC.mr&&REC.mr.state!=='inactive'&&REC.mr.stop()}catch(e){}if(REC.stream)REC.stream.getTracks().forEach(t=>t.stop());REC={st:'idle',sec:0,url:null,blob:null,timer:null,mr:null,stream:null,sim:false}}
-function pgVoice(){
-  const r=rel(); if(!r.vt) return pgWrite();
-  const mm=s=>Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
-  const inner=REC.st==='done'
-    ? `${REC.url?`<audio controls src="${REC.url}"></audio>`:`<div class="media" style="width:100%"><span class="play">${ic('play')}</span><span class="wave"></span><b style="color:var(--purple-d)">${mm(REC.sec)}</b></div>`}<button class="link" data-act="rerec">Записать заново</button>`
-    : `<div class="timer" id="rtime">${mm(REC.sec)}</div><div class="bar"><i id="rbar" style="width:${REC.sec/90*100}%"></i></div><button class="recbtn${REC.st==='rec'?' on':''}" data-act="rec" aria-label="${REC.st==='rec'?'Остановить':'Записать'}">${ic(REC.st==='rec'?'stop':'mic')}</button><div class="faint">${REC.st==='rec'?'Идёт запись · нажмите, чтобы остановить':'Нажмите и говорите · до 90 секунд'}</div>`;
-  return `<div class="page white">${backHdr('Написать '+r.dat,'/lk')}<div class="wrap loose">${composeTabs('/lk/voice')}
-  <div class="rec">${inner}</div>
-  <div class="info">${ic('info')}<span>${r.first} послушает его на видеотерминале в отряде после проверки учреждением.</span></div></div>
-  <div class="stick"><div class="sum"><span class="muted">С моего счёта</span><b>${rub(PRICE.voice)}</b></div><button class="btn" data-act="sendmedia" data-ch="1"${REC.st==='done'?'':' disabled'}>Отправить голосовое</button></div></div>`;
-}
+
+/* ---------- видеосообщение ---------- */
 let VID={url:null,sec:0};
 function pgVideo(){
-  const r=rel(); if(!r.vt) return pgWrite();
-  return `<div class="page white">${backHdr('Написать '+r.dat,'/lk')}<div class="wrap loose">${composeTabs('/lk/video')}
-  ${VID.url?`<video controls playsinline src="${VID.url}"></video><label class="link" style="cursor:pointer">Снять заново<input type="file" accept="video/*" capture="user" id="vfile" hidden></label>`
+  const r=rel(); if(!r.vt) return pgChat();
+  return `<div class="page white">${backHdr('Видеосообщение','/lk/chat')}<div class="wrap loose">
+  ${VID.url?`<div style="display:flex;justify-content:center"><div class="circle" style="width:240px;height:240px"><video src="${VID.url}" playsinline controls></video></div></div><label class="link" style="cursor:pointer;align-self:center">Снять заново<input type="file" accept="video/*" capture="user" id="vfile" hidden></label>`
   :`<label class="rec" style="cursor:pointer"><span class="recbtn">${ic('video')}</span><b style="color:var(--ink)">Снять видео</b><span class="faint">Откроется камера телефона · до 90 секунд</span><input type="file" accept="video/*" capture="user" id="vfile" hidden></label>`}
   ${VID.sec>90?`<div class="info warn">${ic('info')}<span>Видео длиннее 90 секунд — учреждение примет только первые полторы минуты.</span></div>`:''}
-  <div class="info">${ic('info')}<span>${r.first} посмотрит видео на видеотерминале в отряде после проверки учреждением.</span></div></div>
-  <div class="stick"><div class="sum"><span class="muted">С моего счёта</span><b>${rub(PRICE.video)}</b></div><button class="btn" data-act="sendmedia" data-ch="2"${VID.url?'':' disabled'}>Отправить видео</button></div></div>`;
+  <div class="info">${ic('info')}<span>Это <b>запись</b>: ${r.first} посмотрит её на терминале после проверки. Поговорить вживую — <a href="#" data-act="vvisitsheet">видеосвидание</a>.</span></div></div>
+  <div class="stick"><div class="sum"><span class="muted">С моего счёта</span><b>${rub(PRICE.video)}</b></div><button class="btn" data-act="sendvideo"${VID.url?'':' disabled'}>Отправить в переписку</button></div></div>`;
 }
+
+/* ---------- голосовое: запись ---------- */
+let REC={st:'idle',sec:0,url:null,timer:null,mr:null,stream:null};
+function resetRec(){clearInterval(REC.timer);try{REC.mr&&REC.mr.state!=='inactive'&&(REC.mr.onstop=null,REC.mr.stop())}catch(e){}if(REC.stream)REC.stream.getTracks().forEach(t=>t.stop());REC={st:'idle',sec:0,url:null,timer:null,mr:null,stream:null}}
 function startRec(){
-  const tick=()=>{REC.sec++;const t=document.getElementById('rtime'),b=document.getElementById('rbar');if(t)t.textContent=Math.floor(REC.sec/60)+':'+String(REC.sec%60).padStart(2,'0');if(b)b.style.width=(REC.sec/90*100)+'%';if(REC.sec>=90)stopRec()};
+  const tick=()=>{REC.sec++;const t=document.getElementById('rtime');if(t)t.textContent=Math.floor(REC.sec/60)+':'+String(REC.sec%60).padStart(2,'0');if(REC.sec>=90)stopRec()};
   const begin=()=>{REC.st='rec';REC.sec=0;rerender();REC.timer=setInterval(tick,1000)};
   if(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia&&window.MediaRecorder){
     navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
       REC.stream=stream;const chunks=[];REC.mr=new MediaRecorder(stream);
       REC.mr.ondataavailable=e=>chunks.push(e.data);
-      REC.mr.onstop=()=>{REC.blob=new Blob(chunks,{type:REC.mr.mimeType||'audio/webm'});REC.url=URL.createObjectURL(REC.blob);stream.getTracks().forEach(t=>t.stop());REC.st='done';rerender()};
+      REC.mr.onstop=()=>{REC.url=URL.createObjectURL(new Blob(chunks,{type:REC.mr.mimeType||'audio/webm'}));stream.getTracks().forEach(t=>t.stop());REC.st='done';rerender()};
       REC.mr.start();begin();
-    }).catch(()=>{REC.sim=true;toast('Микрофон недоступен — покажем запись без звука');begin()});
-  } else {REC.sim=true;begin()}
+    }).catch(()=>{toast('Микрофон недоступен — покажем запись без звука');begin()});
+  } else begin();
 }
 function stopRec(){clearInterval(REC.timer);if(REC.mr&&REC.mr.state!=='inactive'){REC.mr.stop()}else{REC.st='done';rerender()}}
 
@@ -802,18 +993,18 @@ function pgVisit(){
   const kinds=Object.keys(VISIT).map(k=>{const v=VISIT[k],off=v.vt&&!r.vt;return `<button class="kind${VS.type===k?' on':''}${off?' off':''}" data-act="${off?'whyvt':'vtype'}" data-k="${k}"><div class="ic" style="background:${k==='video'?'var(--purple-l);color:var(--purple-d)':'var(--green-l);color:var(--green-d)'}">${ic(off?'lock':k==='video'?'video':'cal')}</div><div class="grow"><b>${v.t}</b><small>${v.s}</small></div><span class="r">${v.price?v.price+' ₽':'бесплатно'}</span></button>`}).join('');
   const dateOk=d=>VS.type==='video'||(d.getDay()!==0&&d.getDay()!==1);
   const slots=['09:00','10:00','11:00','14:00','15:00','16:00','17:00','18:00'];
-  return `<div class="page white">${backHdr('Свидание','/lk')}<div class="wrap loose">
+  return `<div class="page white">${backHdr('Свидание','/lk/chat')}<div class="wrap loose">
   <div class="row"><div class="avatar sm soft">${r.ini}</div><div class="grow"><b style="color:var(--ink)">${esc(r.name)}</b><div class="faint">${r.place}</div></div></div>
   <div class="h3">Какое свидание</div>${kinds}
   ${t?`<div class="h3">Дата</div><div class="dates">${days.map(d=>{const k=d.toDateString();return `<button data-act="vdate" data-d="${k}" class="${VS.date===k?'on':''}"${dateOk(d)?'':' disabled'}><small>${WD[d.getDay()]}</small><b>${d.getDate()}</b><small>${MON[d.getMonth()].slice(0,3)}</small></button>`}).join('')}</div>`:''}
-  ${t&&VS.type==='video'&&VS.date?`<div class="h3">Время</div><div class="slots">${slots.map((s,i)=>`<button data-act="vslot" data-s="${s}" class="${VS.slot===s?'on':''}"${(hash(VS.date+s)%3===0)?' disabled':''}>${s}</button>`).join('')}</div>`:''}
+  ${t&&VS.type==='video'&&VS.date?`<div class="h3">Время</div><div class="slots">${slots.map(s=>`<button data-act="vslot" data-s="${s}" class="${VS.slot===s?'on':''}"${(hash(VS.date+s)%3===0)?' disabled':''}>${s}</button>`).join('')}</div>`:''}
   ${t&&VS.type!=='video'?`<div class="info">${ic('info')}<span>Количество свиданий в год зависит от условий содержания. Учреждение ответит обычно в течение 3 дней и подтвердит время.</span></div>`:''}
   </div><div class="stick">${t?`<div class="sum"><span class="muted">${t.price?'С моего счёта':'Стоимость'}</span><b>${t.price?rub(t.price):'бесплатно'}</b></div>`:''}<button class="btn" data-act="bookvisit"${t&&VS.date&&(VS.type!=='video'||VS.slot)?'':' disabled'}>Отправить заявку</button></div></div>`;
 }
 /* ---------- заявления ---------- */
 function pgApply(type){
   const r=rel();
-  if(!type) return `<div class="page white">${backHdr('Заявление','/lk')}<div class="wrap loose"><h1 class="h1" style="font-size:26px">Что нужно?</h1><p class="muted" style="margin:0">Заявление уйдёт в ${r.inst.short}. Ответ и документы придут сюда.</p>
+  if(!type) return `<div class="page white">${backHdr('Заявление','/lk/requests')}<div class="wrap loose"><h1 class="h1" style="font-size:26px">Что нужно?</h1><p class="muted" style="margin:0">Заявление уйдёт в ${r.inst.short}. Ответ и документы придут сюда, а в переписке появится отметка.</p>
   ${Object.keys(APPLY).map(k=>`<a class="item bordered" href="#/lk/apply/${k}"><div class="ic" style="background:var(--blue-l);color:#0052CC">${ic(APPLY[k].ic)}</div><div class="grow"><b>${APPLY[k].t}</b><small>${APPLY[k].s} · до ${APPLY[k].days} дней</small></div>${ic('chev')}</a>`).join('')}
   <a class="item bordered" href="#/lk/visit"><div class="ic" style="background:var(--green-l);color:var(--green-d)">${ic('cal')}</div><div class="grow"><b>Свидание</b><small>краткосрочное, длительное${r.vt?', видео':''}</small></div>${ic('chev')}</a></div></div>`;
   const a=APPLY[type]; if(!a) return pgApply();
@@ -842,43 +1033,53 @@ function pgReq(id){
   const names=q.kind==='visit'?['Заявка отправлена','Зарегистрирована в учреждении','Рассмотрена','Свидание подтверждено']:['Заявление отправлено','Зарегистрировано','На рассмотрении','Ответ готов'];
   const n=q.steps?q.steps.length:1;
   return `<div class="page white">${backHdr(reqTitle(q),'/lk/requests')}<div class="wrap loose">
-  <div class="card flat" style="display:flex;flex-direction:column;gap:6px"><div class="row between"><span class="muted">Учреждение</span><b style="color:var(--ink)">${r.inst.short}</b></div><div class="row between"><span class="muted">${q.kind==='visit'?'С кем':'О ком'}</span><b style="color:var(--ink)">${esc(r.name.split(' ').slice(0,2).join(' '))}</b></div>${q.kind==='visit'?`<div class="row between"><span class="muted">Когда</span><b style="color:var(--ink)">${q.dateTxt}${q.slot?', '+q.slot:''}</b></div>`:''}</div>
+  <div class="card flat" style="display:flex;flex-direction:column;gap:6px"><div class="row between"><span class="muted">Учреждение</span><b style="color:var(--ink)">${r.inst.short}</b></div><div class="row between"><span class="muted">${q.kind==='visit'?'С кем':'О ком'}</span><b style="color:var(--ink)">${esc(r.short)}</b></div>${q.kind==='visit'?`<div class="row between"><span class="muted">Когда</span><b style="color:var(--ink)">${q.dateTxt}${q.slot?', '+q.slot:''}</b></div>`:''}</div>
   <div class="card flat"><div class="h3" style="margin-bottom:14px">Статус</div><div class="tl">${names.map((s,i)=>`<div class="ts ${i<n?'done':i===n?'cur':'todo'}"><div class="c">${i<n?ic('check',3):''}</div><div><b>${s}</b>${i<n?`<span class="faint">${q.steps[i]}</span>`:i===n?'<span class="faint">ждём ответа учреждения</span>':''}</div></div>`).join('')}</div></div>
   ${q.status==='done'&&q.kind==='apply'?`<button class="item bordered" data-toast="Откроется PDF со справкой"><div class="ic" style="background:var(--green-l);color:var(--green-d)">${ic('doc')}</div><div class="grow"><b>Справка.pdf</b><small>подписана учреждением</small></div>${ic('chev')}</button>`:''}
-  ${q.kind==='visit'&&q.type!=='video'&&q.status!=='no'?`<div class="info">${ic('info')}<span>Возьмите паспорт. Список того, что можно пронести, — в <a href="#/lk/place">справке об учреждении</a>.</span></div>`:''}
+  ${q.kind==='visit'&&q.type!=='video'?`<div class="info">${ic('info')}<span>Возьмите паспорт. Что можно пронести — в <a href="#/lk/place">справке об учреждении</a>.</span></div>`:''}
+  ${q.kind==='visit'&&q.type==='video'?`<div class="info">${ic('video')}<span>В назначенное время откройте переписку с ${r.ins} — кнопка видеосвидания станет зелёной.</span></div>`:''}
   </div></div>`;
 }
 function pgPlace(){
   const r=rel(), i=r.inst;
-  return `<div class="page white">${backHdr(i.short,'/lk')}<div class="wrap loose"><h1 class="h1" style="font-size:24px">${esc(i.full)}</h1><div class="faint">${esc(i.parent)}</div>
+  return `<div class="page white">${backHdr(i.short,'/lk/rel')}<div class="wrap loose"><h1 class="h1" style="font-size:24px">${esc(i.full)}</h1><div class="faint">${esc(i.parent)}</div>
   <div class="list" style="border:1px solid var(--line)">
   <div class="item"><div class="ic" style="background:var(--bg);color:var(--ink)">${ic('pin')}</div><div class="grow"><b>${esc(i.city)}</b><small>[точный адрес — у заказчика]</small></div></div>
   <div class="item"><div class="ic" style="background:var(--bg);color:var(--ink)">${ic('clock')}</div><div class="grow"><b>Приём передач</b><small>вт–сб, 9:00–16:00 · [уточнить]</small></div></div>
-  <div class="item"><div class="ic" style="background:var(--bg);color:var(--ink)">${ic('video')}</div><div class="grow"><b>Видеотерминалы</b><small>${i.отрядыСТерминалом.join(', ').replace(/Отряд /g,'отряд ')}</small></div></div>
-  <a class="item" href="tel:88000000000"><div class="ic" style="background:var(--bg);color:var(--ink)">${ic('phone')}</div><div class="grow"><b>Справочная</b><small>через поддержку ZT · круглосуточно</small></div></a></div>
+  <div class="item"><div class="ic" style="background:var(--bg);color:var(--ink)">${ic('terminal')}</div><div class="grow"><b>Видеотерминалы</b><small>${i.отрядыСТерминалом.join(', ').replace(/Отряд /g,'отряд ')}</small></div></div></div>
   <div class="card" style="background:var(--green-l)"><b style="color:var(--green-d)">Можно передать</b><ul class="bul" style="margin-top:10px"><li>Продукты в заводской упаковке</li><li>Одежду по сезону без металлических деталей</li><li>Лекарства — только по заявлению</li></ul></div>
   <div class="card" style="background:var(--red-l)"><b style="color:var(--red)">Нельзя</b><ul class="bul" style="margin-top:10px"><li>Телефоны и сим-карты</li><li>Спиртное и лекарства без назначения</li><li>Колющие и режущие предметы</li></ul></div></div></div>`;
 }
 function pgRules(){
-  return `<div class="page white">${backHdr('Чтобы письмо пропустили','/lk/write')}<div class="wrap loose"><div class="card" style="background:var(--green-l)"><b style="color:var(--green-d)">Можно</b><ul class="bul" style="margin-top:10px"><li>Новости семьи, здоровье, планы</li><li>Фото родных, дома, природы</li><li>Слова поддержки</li></ul></div>
+  return `<div class="page white">${backHdr('Чтобы сообщение пропустили','/lk/chat')}<div class="wrap loose"><div class="card" style="background:var(--green-l)"><b style="color:var(--green-d)">Можно</b><ul class="bul" style="margin-top:10px"><li>Новости семьи, здоровье, планы</li><li>Фото родных, дома, природы</li><li>Слова поддержки</li></ul></div>
   <div class="card" style="background:var(--red-l)"><b style="color:var(--red)">Нельзя</b><ul class="bul" style="margin-top:10px"><li>Подробности уголовного дела</li><li>Номера карт, счетов и телефонов</li><li>Сведения о других людях в учреждении</li><li>Шифр, условные знаки</li></ul></div>
-  <p class="muted" style="margin:0">Если письмо не пропустят, вы увидите причину, а деньги вернутся на счёт.</p></div><div class="stick"><a class="btn" href="#/lk/write">Понятно</a></div></div>`;
+  <p class="muted" style="margin:0">Если сообщение не пропустят, вы увидите причину, а деньги вернутся на счёт.</p></div><div class="stick"><a class="btn" href="#/lk/chat">Понятно</a></div></div>`;
 }
 
 /* ---------- деньги ---------- */
-function pgMoney(){
-  return `<div class="page white">${backHdr('Помочь деньгами','/lk')}<div class="wrap loose"><h1 class="h1" style="font-size:26px">Куда отправить деньги?</h1>
-  <a class="item bordered" href="#/lk/transfer"><div class="ic" style="background:var(--purple-l);color:var(--purple-d)">${ic('bank')}</div><div class="grow"><b>На его счёт в учреждении</b><small>на магазин и передачи</small></div>${ic('chev')}</a>
-  <a class="item bordered" href="#/lk/card"><div class="ic" style="background:var(--green-l);color:var(--green-d)">${ic('phone')}</div><div class="grow"><b>На звонки</b><small>ваша карта для звонков · ${rub(S.card)}</small></div>${ic('chev')}</a>
-  <div class="faint">Деньги списываются с вашего счёта. Сейчас на нём ${rub(S.account)} · <a href="#/lk/account">пополнить</a></div></div></div>`;
-}
 const amt={card:500,transfer:1000,account:1000};
 const amounts=(key,list)=>`<div class="choices" data-key="${key}">${list.map(v=>`<button data-act="amt" data-v="${v}" class="${amt[key]===v?'on':''}" aria-pressed="${amt[key]===v}">${v.toLocaleString('ru-RU')} ₽</button>`).join('')}</div>`;
+let hf='all';
+function pgMoney(){
+  const r=rel();
+  const ops=S.ops.filter(o=>hf==='all'||o.k===hf).sort((a,b)=>b.t-a.t);
+  let html='',day=null;
+  ops.forEach(o=>{const dd=dayLabel(o.t);if(dd!==day){day=dd;html+=`<div class="day">${day}</div>`}
+    html+=`<div class="op"><div class="ic" style="background:${o.a>0?'var(--green-l);color:var(--green-d)':'var(--bg);color:var(--muted)'}">${ic(o.k==='call'?'phone':o.k==='in'?'plus':o.k==='transfer'?'bank':o.k==='visit'?'video':'chat')}</div><div class="grow"><b>${o.title}</b><span class="faint">${o.s||''}</span></div><span class="amt${o.a>0?' plus':''}">${o.a>0?'+':''}${rub(o.a)}</span></div>`});
+  const f=[['all','Все'],['in','Пополнения'],['out','Сообщения'],['call','Звонки'],['transfer','Переводы']];
+  return `<div class="page tabbed">${lkHdr('Счёт')}<div class="wrap"><div class="balance"><small>Мой счёт</small><div class="v">${rub(S.account)}</div><small>Для сообщений, переводов, звонков и видеосвиданий</small></div>
+  <div><div class="h3" style="margin:6px 0 10px">Пополнить на</div>${amounts('account',[500,1000,3000])}</div>
+  <button class="btn" data-act="pay" data-what="account">Пополнить на ${rub(amt.account)} через СБП</button>
+  <div class="list"><a class="item" href="#/lk/card"><div class="ic" style="background:var(--green-l);color:var(--green-d)">${ic('phone')}</div><div class="grow"><b>Карта для звонков</b><small>${r.first} звонит с неё сам</small></div><b>${rub(S.card)}</b>${ic('chev')}</a>
+  <a class="item" href="#/lk/transfer"><div class="ic" style="background:var(--purple-l);color:var(--purple-d)">${ic('bank')}</div><div class="grow"><b>Перевести ${r.dat}</b><small>на счёт в учреждении</small></div>${ic('chev')}</a></div>
+  <div class="sec">История</div><div class="filters">${f.map(x=>`<button data-act="hf" data-f="${x[0]}" class="${hf===x[0]?'on':''}" aria-pressed="${hf===x[0]}">${x[1]}</button>`).join('')}</div>
+  <div class="list" style="padding-bottom:4px">${html||'<div class="op faint">Здесь пока пусто</div>'}</div></div>${tabbar('/lk/money')}</div>`;
+}
 function pgCard(){
   const r=rel(), short=amt.card>S.account;
   return `<div class="page white">${backHdr('Карта для звонков','/lk/money')}<div class="wrap loose"><div class="balance" style="background:var(--green-d)"><small>Карта для звонков ${r.dat}</small><div class="v">${rub(S.card)}</div><small>Хватит примерно на ${Math.floor(S.card/12)} мин</small></div>
   <div><div class="h3" style="margin-bottom:10px">Сколько положить</div>${amounts('card',[300,500,1000])}</div><div class="faint">Эту карту видите и пополняете только вы. ${r.first} звонит с неё сам.</div></div>
-  <div class="stick"><div class="sum"><span class="muted">С моего счёта (${rub(S.account)})</span><b>${rub(amt.card)}</b></div>${short?'<a class="btn" href="#/lk/account">Сначала пополнить счёт</a>':`<button class="btn" data-act="pay" data-what="card">Пополнить на ${rub(amt.card)}</button>`}</div></div>`;
+  <div class="stick"><div class="sum"><span class="muted">С моего счёта (${rub(S.account)})</span><b>${rub(amt.card)}</b></div>${short?'<a class="btn" href="#/lk/money">Сначала пополнить счёт</a>':`<button class="btn" data-act="pay" data-what="card">Пополнить на ${rub(amt.card)}</button>`}</div></div>`;
 }
 function pgTransfer(){
   const r=rel(), fee=Math.round(amt.transfer*COMMISSION), total=amt.transfer+fee, short=total>S.account;
@@ -886,62 +1087,44 @@ function pgTransfer(){
   <div><div class="h3" style="margin-bottom:10px">Сколько перевести</div>${amounts('transfer',[500,1000,2000])}</div>
   <div class="card flat" style="display:flex;flex-direction:column;gap:6px"><div class="row between"><span class="muted">Придёт ${r.dat}</span><b style="color:var(--ink)">${rub(amt.transfer)}</b></div><div class="row between"><span class="muted">Комиссия ${Math.round(COMMISSION*100)}%</span><span>${rub(fee)}</span></div></div>
   <div class="row faint" style="gap:8px"><span style="color:var(--green-d);display:flex">${ic('shield')}</span>Вы подтверждены через Госуслуги</div></div>
-  <div class="stick"><div class="sum"><span class="muted">С моего счёта (${rub(S.account)})</span><b>${rub(total)}</b></div>${short?'<a class="btn" href="#/lk/account">Сначала пополнить счёт</a>':`<button class="btn" data-act="pay" data-what="transfer">Перевести ${rub(amt.transfer)}</button>`}</div></div>`;
-}
-let hf='all';
-function pgAccount(){
-  const ops=S.ops.filter(o=>hf==='all'||o.k===hf);
-  let html='',day=null;
-  ops.forEach(o=>{const dd=o.d===0?'Сегодня':fmt(dAgo(o.d));if(dd!==day){day=dd;html+=`<div class="day">${day}</div>`}
-    html+=`<div class="op"><div class="ic" style="background:${o.a>0?'var(--green-l);color:var(--green-d)':'var(--bg);color:var(--muted)'}">${ic(o.k==='call'?'phone':o.k==='in'?'plus':o.k==='transfer'?'bank':o.k==='visit'?'cal':'mail')}</div><div class="grow"><b>${o.t}</b><span class="faint">${o.s||''}</span></div><span class="amt${o.a>0?' plus':''}">${o.a>0?'+':''}${rub(o.a)}</span></div>`});
-  const f=[['all','Все'],['in','Пополнения'],['out','Сообщения'],['call','Звонки'],['transfer','Переводы']];
-  return `<div class="page white">${backHdr('Мой счёт','/lk')}<div class="wrap"><div class="balance"><small>На счёте</small><div class="v">${rub(S.account)}</div><small>Для писем, сообщений, переводов и звонков</small></div>
-  <div><div class="h3" style="margin:6px 0 10px">Пополнить на</div>${amounts('account',[500,1000,3000])}</div>
-  <button class="btn" data-act="pay" data-what="account">Пополнить на ${rub(amt.account)} через СБП</button>
-  <div class="sec">История</div><div class="filters">${f.map(x=>`<button data-act="hf" data-f="${x[0]}" class="${hf===x[0]?'on':''}" aria-pressed="${hf===x[0]}">${x[1]}</button>`).join('')}</div>
-  <div class="list" style="padding-bottom:4px">${html||'<div class="op faint">Здесь пока пусто</div>'}</div></div></div>`;
+  <div class="stick"><div class="sum"><span class="muted">С моего счёта (${rub(S.account)})</span><b>${rub(total)}</b></div>${short?'<a class="btn" href="#/lk/money">Сначала пополнить счёт</a>':`<button class="btn" data-act="pay" data-what="transfer">Перевести ${rub(amt.transfer)}</button>`}</div></div>`;
 }
 function pgProfile(){
   const r=rel(), m=me();
   return `<div class="page tabbed">${lkHdr('Профиль')}<div class="wrap"><div class="card row"><div class="avatar soft">${m.ini}</div><div class="grow"><b style="font-size:18px;color:var(--ink)">${esc(m.call)}</b><div class="faint">${m.roleTxt} ${r.gen}</div><div style="margin-top:6px">${m.verified?'<span class="pill s-ok">Госуслуги ✓</span>':'<span class="pill s-wait">Госуслуги не подтверждены</span>'}</div></div></div>
-  <div class="sec">Мои близкие</div><div class="list">
-  <div class="item"><div class="avatar sm">${r.ini}</div><div class="grow"><b>${esc(r.name)}</b><small>${r.place}</small></div></div>
-  <button class="item" data-toast="Поиск близкого: ФИО, дата рождения, учреждение"><div class="ic" style="background:var(--purple-l);color:var(--purple-d)">${ic('plus')}</div><div class="grow"><b style="color:var(--purple)">Добавить близкого</b></div></button></div>
   <div class="sec">Мой телефон</div><div class="list"><div class="item"><div class="grow"><b>${esc(m.phone)}</b><small>в списке разрешённых у ${r.gen}</small></div><span class="pill s-ok">Разрешён</span></div></div>
   <div class="sec">Уведомления</div><div class="card" style="padding:4px 16px">
-  <label class="opt"><span class="grow">Пришёл ответ</span><span class="sw"><input type="checkbox" checked><i></i></span></label>
+  <label class="opt"><span class="grow">Новое сообщение</span><span class="sw"><input type="checkbox" checked><i></i></span></label>
+  <label class="opt"><span class="grow">Сообщение прочитано</span><span class="sw"><input type="checkbox" checked><i></i></span></label>
   <label class="opt"><span class="grow">Ответ на заявку</span><span class="sw"><input type="checkbox" checked><i></i></span></label>
-  <label class="opt"><span class="grow">Сообщение не пропустили</span><span class="sw"><input type="checkbox" checked><i></i></span></label>
   <label class="opt"><span class="grow">На карте для звонков мало денег</span><span class="sw"><input type="checkbox" checked><i></i></span></label></div>
-  <div class="list" style="margin-top:8px"><a class="item" href="#/lk/account"><div class="ic" style="background:var(--bg);color:var(--ink)">${ic('wallet')}</div><div class="grow"><b>Мой счёт и история</b><small>${rub(S.account)}</small></div>${ic('chev')}</a>
-  <a class="item" href="#/lk/help"><div class="ic" style="background:var(--bg);color:var(--ink)">${ic('help')}</div><div class="grow"><b>Помощь</b><small>вопросы и поддержка</small></div>${ic('chev')}</a>
+  <div class="list" style="margin-top:8px"><a class="item" href="#/lk/support"><div class="ic" style="background:var(--bg);color:var(--ink)">${ic('help')}</div><div class="grow"><b>Поддержка</b><small>чат, круглосуточно</small></div>${ic('chev')}</a>
   <button class="item" data-act="logout"><div class="ic" style="background:var(--bg);color:var(--ink)">${ic('logout')}</div><div class="grow"><b>Выйти</b><small>и войти другим родственником</small></div></button></div>
   </div>${tabbar('/lk/profile')}</div>`;
 }
 function pgHelp(){
   const r=rel();
   return `<div class="page white">${backHdr('Помощь','/lk')}<div class="wrap loose"><h1 class="h1" style="font-size:26px">Чем помочь?</h1>
-  <details><summary>Письмо долго на проверке</summary><p>Учреждение проверяет письма до 3 дней. Если прошло больше — напишите нам, мы уточним.</p></details>
+  <details><summary>Что значат значки у сообщения?</summary><p>🕓 — на проверке в учреждении. ✓ — проверено. ✓✓ — доставлено на терминал, зелёные ✓✓ — прочитано. Значок принтера — распечатано и вручено на бумаге.</p></details>
+  <details><summary>Чем звонок отличается от видеосвидания и видеосообщения?</summary><p>Звонок и видеосвидание — живой разговор: голосом или с видео. Видеосообщение и голосовое — запись: вы записываете сейчас, ${r.first} смотрит после проверки.</p></details>
   <details><summary>Почему нет голосовых и видео?</summary><p>Они доступны, когда в отряде близкого стоит видеотерминал и учреждение подтвердило его личность. ${r.vt?'У '+r.gen+' всё есть.':'У '+r.gen+': '+esc(r.why)+'.'}</p></details>
-  <details><summary>Как ему позвонить?</summary><p>Позвонить в учреждение нельзя — ${r.first} звонит вам сам. Пополните карту для звонков, чтобы ему хватило минут.</p></details>
-  <details><summary>Близкого перевели</summary><p>Новое учреждение появится в кабинете само, как только его отметят. Если этого не произошло — напишите нам.</p></details>
-  <a class="item bordered" href="tel:88000000000"><div class="ic" style="background:var(--green-l);color:var(--green-d)">${ic('phone')}</div><div class="grow"><b>Позвонить в поддержку</b><small>8 800 000-00-00 · круглосуточно</small></div></a>
-  <button class="item bordered" data-toast="Откроется чат с поддержкой"><div class="ic" style="background:var(--purple-l);color:var(--purple-d)">${ic('chat')}</div><div class="grow"><b>Написать в чат</b><small>отвечаем за 5 минут</small></div></button></div></div>`;
+  <details><summary>Как он отвечает от руки?</summary><p>Пишет на бланке. Учреждение проверяет, сканирует, текст распознаётся и приходит к вам в переписку. Скан можно открыть.</p></details>
+  <a class="item bordered" href="#/lk/support"><div class="ic" style="background:var(--purple-l);color:var(--purple-d)">${ic('chat')}</div><div class="grow"><b>Написать в поддержку</b><small>отвечаем за 5 минут</small></div></a>
+  <a class="item bordered" href="tel:88000000000"><div class="ic" style="background:var(--green-l);color:var(--green-d)">${ic('phone')}</div><div class="grow"><b>Позвонить</b><small>8 800 000-00-00 · круглосуточно</small></div></a></div></div>`;
 }
 const JOY=[['📷','Фото','напечатаем и передадим',PRICE.photo,'var(--purple-l)','photo'],['🔢','Судоку','10 штук, три уровня',60,'var(--green-l)'],['✏️','Кроссворды','10 штук',60,'var(--orange-l)'],['💌','Открытка','к празднику',50,'var(--blue-l)']];
 function pgJoy(){
   const r=rel();
-  return `<div class="page white">${backHdr('Порадовать','/lk')}<div class="wrap loose"><h1 class="h1" style="font-size:26px">Порадуйте ${r.gen}</h1><p class="muted" style="margin:0">Придёт вместе с письмом.</p>
+  return `<div class="page white">${backHdr('Порадовать','/lk/chat')}<div class="wrap loose"><h1 class="h1" style="font-size:26px">Порадуйте ${r.gen}</h1><p class="muted" style="margin:0">${r.vt?'Придёт на терминал вместе с сообщением.':'Распечатаем и вручим вместе с сообщением.'}</p>
   <div class="grid2">${JOY.map((j,i)=>`<button class="tile" style="background:${j[4]}" data-act="joy" data-i="${i}"><span class="em" aria-hidden="true">${j[0]}</span><div><b>${j[1]}</b><br><span>${j[2]} · ${j[3]} ₽</span></div></button>`).join('')}</div>
-  ${r.vt?`<a class="item bordered" href="#/lk/video"><div class="ic" style="background:var(--purple-l);color:var(--purple-d)">${ic('video')}</div><div class="grow"><b>Видеопривет</b><small>запишите короткое видео · ${PRICE.video} ₽</small></div>${ic('chev')}</a>`:''}
   <div class="promo" style="background:var(--ink)"><span class="em" style="font-size:28px" aria-hidden="true">🎄</span><div><b>Новогодние открытки</b><div style="color:#A9ABBD;font-size:14px">со скидкой 20% до 31 декабря</div></div></div></div></div>`;
 }
 function pgDone(){
   const f=S.flash||{t:'Готово',s:''};
   return `<div class="page white"><div class="wrap loose center" style="flex:1;justify-content:center;padding-top:60px"><div class="done-ic">${ic('check',2.5)}</div><h1 class="h1" style="font-size:26px">${f.t}</h1><p class="muted" style="margin:0;max-width:30ch">${f.s}</p></div>
-  <div class="stick">${f.to?`<a class="btn" href="#${f.to[0]}">${f.to[1]}</a>`:''}<a class="btn ${f.to?'line':''}" href="#/lk">На главную</a></div></div>`;
+  <div class="stick"><a class="btn" href="#/lk/chat">Вернуться в переписку</a></div></div>`;
 }
-function pgLoading(){return '<div class="page white"><div class="loading"><div class="spin"></div>Загружаем кабинет…</div></div>'}
+function pgLoading(){return '<div class="page white"><div class="loading"><div class="spin"></div>Открываем ZT Рядом…</div></div>'}
 
 /* ================= окна снизу ================= */
 function sheet(html){document.getElementById('sheet').innerHTML=`<div class="sheet-bg" data-act="closesheet"><div class="sheet" role="dialog" aria-modal="true"><div class="grab"></div>${html}</div></div>`;document.body.style.overflow='hidden'}
@@ -955,77 +1138,87 @@ function confirmPay(what,sumTxt){
   setTimeout(()=>{const i=document.getElementById('pc');if(i)i.focus()},250);
 }
 function doPay(){
-  const w=pending,r=rel(); pending=null; closeSheet();
-  if(w==='card'){S.account-=amt.card;S.card+=amt.card;S.ops.unshift({d:0,t:'Карта для звонков '+r.dat,s:'пополнение',a:-amt.card,k:'call'});S.flash={t:'Карта пополнена',s:`На карте для звонков ${rub(S.card)}. ${r.first} может звонить.`,to:['/app','Как принять звонок']}}
-  if(w==='transfer'){const fee=Math.round(amt.transfer*COMMISSION);S.account-=amt.transfer+fee;S.ops.unshift({d:0,t:'Перевод '+r.dat,s:'на счёт в учреждении · комиссия '+rub(fee),a:-(amt.transfer+fee),k:'transfer'});S.flash={t:'Деньги отправлены',s:`Учреждение зачислит ${rub(amt.transfer)} на счёт ${r.gen} в течение 1–2 рабочих дней.`}}
-  if(w==='account'){S.account+=amt.account;S.ops.unshift({d:0,t:'Пополнение счёта',s:'СБП',a:amt.account,k:'in'});S.flash={t:'Счёт пополнен',s:`На счёте ${rub(S.account)}.`,to:['/lk/write','Написать']}}
+  const w=pending,r=rel(),now=Date.now(); pending=null; closeSheet();
+  if(w==='card'){S.account-=amt.card;S.card+=amt.card;S.ops.push({pid:r.id,t:now,title:'Карта для звонков '+r.dat,s:'пополнение',a:-amt.card,k:'call',ev:'card',sum:amt.card});S.flash={t:'Карта пополнена',s:`На карте ${rub(S.card)}. ${r.first} может звонить — отметка появится в переписке.`}}
+  if(w==='transfer'){const fee=Math.round(amt.transfer*COMMISSION);S.account-=amt.transfer+fee;S.ops.push({pid:r.id,t:now,title:'Перевод '+r.dat,s:'на счёт в учреждении · комиссия '+rub(fee),a:-(amt.transfer+fee),k:'transfer',ev:'transfer',sum:amt.transfer});S.flash={t:'Деньги отправлены',s:`Учреждение зачислит ${rub(amt.transfer)} на счёт ${r.gen} в течение 1–2 рабочих дней.`}}
+  if(w==='account'){S.account+=amt.account;S.ops.push({pid:r.id,t:now,title:'Пополнение счёта',s:'СБП',a:amt.account,k:'in'});save();toast('Счёт пополнен: '+rub(S.account));rerender();return}
   save(); go('/lk/done');
 }
-function charge(sum){if(sum>S.account){toast('На счёте не хватает денег');go('/lk/account');return false}S.account-=sum;return true}
-function send(){
-  const r=rel(), d=S.draft, t=draftTotal(); if(!charge(t)) return;
+function charge(sum){if(sum>S.account){toast('На счёте не хватает денег — пополните');go('/lk/money');return false}S.account-=sum;return true}
+function sendText(){
+  const r=rel(), d=DRAFT; if(!(d.text.trim()||d.photos.length)) return;
+  const sum=PRICE.letter+d.photos.length*PRICE.photo+(!r.vt&&S.replyBlank?PRICE.reply:0); if(!charge(sum)) return;
   const id='s'+Date.now();
-  S.sent.push({id,pid:r.id,t:Date.now(),when:today(),ch:0,photos:d.photos.length,reply:d.reply,text:d.text||'(только фото)'});
-  S.ops.unshift({d:0,t:'Письмо '+r.dat,s:[d.photos.length?d.photos.length+' фото':'',d.reply?'с бланком ответа':'',d.extras.map(x=>x.t.toLowerCase()).join(', ')].filter(Boolean).join(' · '),a:-t,k:'out'});
-  S.draft={text:'',photos:[],reply:true,extras:[]};
-  S.flash={t:'Письмо отправлено',s:`Учреждение проверит его — обычно до 3 дней. Мы сообщим, когда ${r.first} его получит.`,to:['/lk/letter/'+id,'Где письмо']};
-  save(); go('/lk/done');
+  S.sent.push({id,pid:r.id,t:Date.now(),ch:0,text:d.text.trim(),photos:d.photos.length,photosData:d.photos.slice()});
+  S.ops.push({pid:r.id,t:Date.now(),title:'Сообщение '+r.dat,s:[d.photos.length?d.photos.length+' фото':'',!r.vt&&S.replyBlank?'с бланком ответа':''].filter(Boolean).join(' · '),a:-sum,k:'out'});
+  DRAFT={text:'',photos:[]}; save(); rerender(); setTimeout(scrollBottom,30);
 }
-function sendMedia(ch){
-  const r=rel(), price=ch===1?PRICE.voice:PRICE.video; if(!charge(price)) return;
-  const id='s'+Date.now(), url=ch===1?REC.url:VID.url, dur=ch===1?REC.sec:Math.min(90,Math.round(VID.sec)||40);
-  S.sent.push({id,pid:r.id,t:Date.now(),when:today(),ch,dur,url});
-  S.ops.unshift({d:0,t:(ch===1?'Голосовое ':'Видеосообщение ')+r.dat,s:'0:'+String(dur).padStart(2,'0'),a:-price,k:'out'});
-  if(ch===1){REC.url=null;resetRec()}else VID={url:null,sec:0};
-  S.flash={t:ch===1?'Голосовое отправлено':'Видео отправлено',s:`После проверки ${r.first} ${ch===1?'послушает':'посмотрит'} его на видеотерминале в отряде.`,to:['/lk/letter/'+id,'Где сообщение']};
-  // url живёт до перезагрузки страницы — в хранилище не сохраняется
-  save(); S.sent.find(x=>x.id===id).url=url; go('/lk/done');
+function sendVoice(){
+  const r=rel(); if(!charge(PRICE.voice)) return;
+  const id='s'+Date.now();
+  S.sent.push({id,pid:r.id,t:Date.now(),ch:1,dur:Math.max(1,REC.sec),url:REC.url,noReply:true});
+  S.ops.push({pid:r.id,t:Date.now(),title:'Голосовое '+r.dat,s:'0:'+String(REC.sec).padStart(2,'0'),a:-PRICE.voice,k:'out'});
+  REC.url=null; resetRec(); save(); rerender(); setTimeout(scrollBottom,30);
+}
+function sendVideo(){
+  const r=rel(); if(!charge(PRICE.video)) return;
+  const id='s'+Date.now(), dur=Math.min(90,Math.round(VID.sec)||40);
+  S.sent.push({id,pid:r.id,t:Date.now(),ch:2,dur,url:VID.url,noReply:true});
+  S.ops.push({pid:r.id,t:Date.now(),title:'Видеосообщение '+r.dat,s:'0:'+String(dur).padStart(2,'0'),a:-PRICE.video,k:'out'});
+  VID={url:null,sec:0}; save(); go('/lk/chat'); setTimeout(scrollBottom,60);
 }
 function bookVisit(){
   const r=rel(), v=VISIT[VS.type]; if(v.price&&!charge(v.price)) return;
   const d=new Date(VS.date);
   const q={id:'q'+Date.now(),pid:r.id,kind:'visit',type:VS.type,date:VS.date,dateTxt:WD[d.getDay()]+', '+fmt(d),slot:VS.type==='video'?VS.slot:null,status:'sent',when:today(),t:Date.now(),steps:[today()]};
   S.reqs.push(q);
-  if(v.price) S.ops.unshift({d:0,t:'Видеосвидание с '+decl(r.first,'i'),s:q.dateTxt+', '+q.slot,a:-v.price,k:'visit'});
-  S.flash={t:'Заявка отправлена',s:`${v.t} ${q.dateTxt}${q.slot?' в '+q.slot:''}. Учреждение ответит обычно в течение 3 дней — статус в «Заявках».`,to:['/lk/req/'+q.id,'Статус заявки']};
+  if(v.price) S.ops.push({pid:r.id,t:Date.now(),title:'Видеосвидание с '+r.ins,s:q.dateTxt+', '+q.slot,a:-v.price,k:'visit'});
+  S.flash={t:'Заявка отправлена',s:`${v.t} ${q.dateTxt}${q.slot?' в '+q.slot:''}. Учреждение ответит обычно в течение 3 дней — статус в «Заявках» и в переписке.`};
   VS={type:null,date:null,slot:null}; save(); go('/lk/done');
 }
 function sendApply(type){
   const r=rel(), a=APPLY[type];
   const q={id:'q'+Date.now(),pid:r.id,kind:'apply',type,status:'sent',when:fmt(new Date()),t:Date.now(),steps:[today()]};
   S.reqs.push(q);
-  S.flash={t:'Заявление отправлено',s:`${a.t}. Ответ — до ${a.days} дней, пришлём уведомление.`,to:['/lk/req/'+q.id,'Статус заявления']};
+  S.flash={t:'Заявление отправлено',s:`${a.t}. Ответ — до ${a.days} дней, отметка появится в переписке.`};
   save(); go('/lk/done');
 }
 
 /* ================= маршруты ================= */
-let keepScroll=false;
+let keepScroll=false, liveT=null;
 function route(){
-  closeSheet();
-  const h=(location.hash||'#/').slice(1)||'/', parts=h.split('/').filter(Boolean);
+  closeSheet(); clearTimeout(liveT);
+  const full=(location.hash||'#/').slice(1)||'/', h=full.split('?')[0], q=full.split('?')[1]||'', parts=h.split('/').filter(Boolean);
   const needData=parts[0]==='lk'||parts[0]==='login'||parts[0]==='code';
   if(needData&&!FAM){document.getElementById('app').innerHTML=pgLoading();loadFam(route);return}
   if(parts[0]==='lk'&&(!S.me||!BY[S.me.pid])){S.me=null;S.next=h;save();location.replace('#/login');return}
-  if(parts[0]!=='lk'||parts[1]!=='voice') {if(REC.st==='rec')stopRec()}
+  if(!(parts[0]==='lk'&&parts[1]==='chat')&&REC.st!=='idle') resetRec();
+  if(parts[1]==='visit'&&q==='video'&&!VS.type) VS={type:rel().vt?'video':null,date:null,slot:null};
   let html;
   if(!parts.length) html=pgLanding();
   else if(parts[0]==='stage') html=pgStage(parts[1]);
   else if(parts[0]==='app') html=pgApp();
-  else if(parts[0]==='login'){if(S.me){location.replace('#/lk');return}html=pgLogin()}
+  else if(parts[0]==='login'){if(S.me){location.replace('#/lk/chat');return}html=pgLogin()}
   else if(parts[0]==='code') html=pgCode();
   else if(parts[0]==='lk'){
     const p=parts[1]||'';
-    const M={'':pgHome,letters:pgLetters,write:pgWrite,voice:pgVoice,video:pgVideo,rules:pgRules,money:pgMoney,card:pgCard,transfer:pgTransfer,account:pgAccount,history:pgAccount,profile:pgProfile,help:pgHelp,joy:pgJoy,done:pgDone,visit:pgVisit,requests:pgRequests,place:pgPlace};
-    html=p==='letter'?pgLetter(parts[2]):p==='req'?pgReq(parts[2]):p==='apply'?pgApply(parts[2]):(M[p]||pgHome)();
+    const M={'':pgChats,chat:pgChat,support:pgSupport,rel:pgRel,video:pgVideo,rules:pgRules,money:pgMoney,card:pgCard,transfer:pgTransfer,profile:pgProfile,help:pgHelp,joy:pgJoy,done:pgDone,visit:pgVisit,requests:pgRequests,place:pgPlace};
+    html=p==='req'?pgReq(parts[2]):p==='apply'?pgApply(parts[2]):(M[p]||pgChats)();
   } else html=pgLanding();
   document.getElementById('app').innerHTML=html;
-  document.title=parts[0]==='lk'?'Кабинет ZT':'ZT — связь с близким';
-  if(!keepScroll) window.scrollTo(0,0); keepScroll=false;
+  document.title=parts[0]==='lk'?'ZT Рядом':'ZT Рядом — связь с близким';
+  const isChat=parts[0]==='lk'&&(parts[1]==='chat'||parts[1]==='support');
+  if(isChat&&!keepScroll){setTimeout(scrollBottom,0);setTimeout(scrollBottom,250)} else if(!keepScroll) window.scrollTo(0,0);
+  keepScroll=false;
   const c=document.getElementById('code'); if(c) setTimeout(()=>c.focus(),200);
+  autoGrow();
   initLanding();
+  // пока сообщения «идут» — обновляем ленту, чтобы галочки менялись на глазах
+  if(parts[1]==='chat'&&pendingDemo()&&REC.st==='idle') liveT=setTimeout(()=>{if(document.activeElement&&document.activeElement.id==='cin'){liveT=setTimeout(()=>route(),3000);return}const atBottom=window.innerHeight+window.scrollY>=document.body.scrollHeight-80;keepScroll=!atBottom;route();if(atBottom)setTimeout(scrollBottom,0)},3000);
 }
 function rerender(){keepScroll=true;route()}
 window.addEventListener('hashchange',route);
+function autoGrow(){const t=document.getElementById('cin')||document.getElementById('sin');if(t){t.style.height='auto';t.style.height=Math.min(140,t.scrollHeight+2)+'px'}}
 
 let io1,io2;
 function initLanding(){
@@ -1044,45 +1237,63 @@ document.addEventListener('click',e=>{
   const a=t.dataset.act;
   if(t.dataset.toast){e.preventDefault();toast(t.dataset.toast);return}
   if(a==='closesheet'){if(e.target===t||t.tagName==='BUTTON')closeSheet();return}
-  if(a==='notifyvt'){S.notify[rel().id]=t.checked;save();toast(t.checked?'Пришлём СМС, когда откроется':'Не будем присылать');return}
+  if(a==='notifyvt'){S.notify[rel().id]=t.checked;save();toast(t.checked?'Пришлём уведомление, когда откроется':'Не будем присылать');return}
+  if(!a) return;
+  if(a==='toast'){e.preventDefault();e.stopPropagation();toast(t.dataset.msg);return}
   e.preventDefault();
   if(a==='scroll'){const el=document.getElementById(t.dataset.to);if(el)el.scrollIntoView({behavior:'smooth',block:'start'})}
   else if(a==='demo'){S.phone=formatPhone(t.dataset.phone);save();go('/code')}
   else if(a==='getcode'){go('/code')}
   else if(a==='gosu'){if(!S.phone)S.phone=formatPhone(BY[FAM.демо.сТерминалом.pid][8][FAM.демо.сТерминалом.ci][2]);toast('Вход через Госуслуги');login()}
   else if(a==='whyvt'){whyVtSheet()}
-  else if(a==='switch'){const r=rel();sheet(`<h2 class="h2">Кому</h2><div class="list" style="border:1px solid var(--line)"><button class="item" data-act="closesheet"><div class="avatar sm">${r.ini}</div><div class="grow"><b>${esc(r.name)}</b><small>${r.place}</small></div><span style="color:var(--purple);display:flex">${ic('check')}</span></button><button class="item" data-toast="Поиск близкого: ФИО, дата рождения, учреждение"><div class="ic" style="background:var(--purple-l);color:var(--purple-d)">${ic('plus')}</div><div class="grow"><b style="color:var(--purple)">Добавить близкого</b></div></button></div>`)}
+  else if(a==='minfo'){msgInfo(t.dataset.id)}
+  else if(a==='callsheet'){callSheet()}
+  else if(a==='vvisitsheet'){vvisitSheet()}
+  else if(a==='attach'){attachSheet()}
+  else if(a==='govideo'){closeSheet();go('/lk/video')}
+  else if(a==='gojoy'){closeSheet();go('/lk/joy')}
+  else if(a==='gomoney'){closeSheet();go('/lk/rel')}
+  else if(a==='govisit'){closeSheet();go('/lk/visit')}
+  else if(a==='goapply'){closeSheet();go('/lk/apply')}
+  else if(a==='sendtext'){sendText()}
+  else if(a==='recstart'){startRec()}
+  else if(a==='recstop'){stopRec()}
+  else if(a==='reccancel'){resetRec();rerender()}
+  else if(a==='sendvoice'){sendVoice()}
+  else if(a==='sendvideo'){sendVideo()}
+  else if(a==='supsend'){const i=document.getElementById('sin');const v=(i.value||'').trim();if(!v)return;S.support.push({out:true,text:v,t:Date.now()});save();rerender();setTimeout(()=>{S.support.push({out:false,text:'Спасибо! Оператор уже смотрит ваш вопрос и ответит здесь в течение 5 минут.',t:Date.now()});save();if(location.hash.indexOf('/lk/support')>=0){rerender();setTimeout(scrollBottom,30)}},1500);setTimeout(scrollBottom,30)}
   else if(a==='amt'){amt[t.parentNode.dataset.key]=+t.dataset.v;rerender()}
   else if(a==='pay'){const w=t.dataset.what;confirmPay(w,rub(w==='transfer'?amt.transfer+Math.round(amt.transfer*COMMISSION):amt[w]))}
-  else if(a==='send'){send()}
-  else if(a==='sendmedia'){sendMedia(+t.dataset.ch)}
-  else if(a==='rec'){REC.st==='rec'?stopRec():startRec()}
-  else if(a==='rerec'){resetRec();rerender()}
-  else if(a==='rmph'){S.draft.photos.splice(+t.dataset.i,1);rerender()}
-  else if(a==='rmex'){S.draft.extras.splice(+t.dataset.i,1);save();rerender()}
+  else if(a==='rmph'){DRAFT.photos.splice(+t.dataset.i,1);rerender()}
   else if(a==='hf'){hf=t.dataset.f;rerender()}
   else if(a==='vtype'){VS={type:t.dataset.k,date:null,slot:null};rerender()}
   else if(a==='vdate'){VS.date=t.dataset.d;VS.slot=null;rerender()}
   else if(a==='vslot'){VS.slot=t.dataset.s;rerender()}
   else if(a==='bookvisit'){bookVisit()}
   else if(a==='sendapply'){sendApply(t.dataset.type)}
-  else if(a==='joy'){const j=JOY[+t.dataset.i];if(j[5]==='photo'){go('/lk/write');setTimeout(()=>{const f=document.getElementById('phfile');if(f)f.click()},300);return}S.draft.extras.push({t:j[1],p:j[3]});save();toast(j[1]+' добавлены к письму');go('/lk/write')}
-  else if(a==='logout'){resetRec();try{localStorage.removeItem(KEY)}catch(x){}S=fresh();go('/login')}
+  else if(a==='joy'){const j=JOY[+t.dataset.i];if(j[5]==='photo'){go('/lk/chat');setTimeout(attachSheet,200);return}DRAFT.text=(DRAFT.text?DRAFT.text+'\n':'')+'['+j[1]+' — '+j[3]+' ₽]';toast(j[1]+' — добавлено к сообщению');go('/lk/chat')}
+  else if(a==='logout'){resetRec();try{localStorage.removeItem(KEY)}catch(x){}S=fresh();DRAFT={text:'',photos:[]};go('/login')}
 });
+function refreshComposer(){
+  const r=rel(), has=DRAFT.text.trim()||DRAFT.photos.length;
+  const h=document.getElementById('hint'); if(h) h.innerHTML=composerHint();
+  const c=document.getElementById('cact'); if(c) c.innerHTML=has?`<button class="cbtn send" data-act="sendtext" aria-label="Отправить">${ic('send')}</button>`:(r.vt?`<button class="cbtn" data-act="recstart" aria-label="Записать голосовое">${ic('mic')}</button>`:`<button class="cbtn lockd" data-act="whyvt" aria-label="Голосовые недоступны">${ic('mic')}<span class="lk">${ic('lock')}</span></button>`);
+}
 document.addEventListener('input',e=>{
   const t=e.target;
   if(t.id==='ph'){const f=formatPhone(t.value);t.value=f;S.phone=f;const b=document.getElementById('getcode');if(b)b.disabled=digits(f).length<11}
   if(t.id==='code'){t.value=digits(t.value);if(t.value.length===4){t.blur();setTimeout(login,250)}}
   if(t.id==='pc'){t.value=digits(t.value);if(t.value.length===4){t.blur();setTimeout(doPay,250)}}
-  if(t.id==='lt'){S.draft.text=t.value;document.getElementById('total').textContent=rub(draftTotal());document.getElementById('sendbtn').disabled=!(t.value.trim()||S.draft.photos.length||S.draft.extras.length);clearTimeout(t._s);t._s=setTimeout(save,400)}
+  if(t.id==='cin'){DRAFT.text=t.value;autoGrow();refreshComposer()}
+  if(t.id==='sin'){autoGrow()}
 });
 document.addEventListener('change',e=>{
   const t=e.target;
-  if(t.id==='reply'){S.draft.reply=t.checked;document.getElementById('total').textContent=rub(draftTotal());save()}
-  if(t.id==='phfile'){const files=[].slice.call(t.files||[]);let n=files.length;if(!n)return;files.forEach(f=>{const r=new FileReader();r.onload=()=>{S.draft.photos.push(r.result);if(--n===0)rerender()};r.readAsDataURL(f)})}
+  if(t.id==='blank'){S.replyBlank=t.checked;save();refreshComposer()}
+  if(t.id==='phfile'){closeSheet();const files=[].slice.call(t.files||[]);let n=files.length;if(!n)return;if(location.hash.indexOf('/lk/chat')<0)go('/lk/chat');files.forEach(f=>{const r=new FileReader();r.onload=()=>{DRAFT.photos.push(r.result);if(--n===0){rerender();setTimeout(scrollBottom,30)}};r.readAsDataURL(f)})}
   if(t.id==='vfile'){const f=t.files&&t.files[0];if(!f)return;if(VID.url)URL.revokeObjectURL(VID.url);VID={url:URL.createObjectURL(f),sec:0};const v=document.createElement('video');v.preload='metadata';v.onloadedmetadata=()=>{VID.sec=v.duration||0;rerender()};v.src=VID.url;rerender()}
 });
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet();if(e.key==='Enter'&&!e.shiftKey&&e.target.id==='cin'&&window.matchMedia('(pointer:fine)').matches){e.preventDefault();sendText()}});
 
 route();
 })();
