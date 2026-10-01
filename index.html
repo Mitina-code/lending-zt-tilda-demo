@@ -591,7 +591,7 @@ document.documentElement.classList.add('js');
    Люди, учреждение и переписка — из общего набора проекта цензора (MVP_ZT).
    Те же люди, что видит цензор; без статьи, риска и досье. */
 /* ?v= — номер версии набора: меняйте при каждом обновлении data-family.js, иначе браузер до 10 минут держит старую копию */
-const DATA_URL='https://mitina-code.github.io/osnova-demo/data-family.js?v=7';
+const DATA_URL='https://mitina-code.github.io/osnova-demo/data-family.js?v=8';
 /* запасной мини-набор в том же формате — если общий не загрузился.
    переписка: [id, днейНазад, человек, контакт, от родственника(1), канал 0/1/2, решение 0/1/2, цифра(1)/бумага(0)] */
 const FALLBACK={
@@ -700,6 +700,7 @@ let DRAFT={text:'',photos:[]};   // черновик живёт до перез�
 function rel(){
   const p=BY[S.me.pid]; const parts=p[1].split(' '); const first=parts[1];
   return {id:p[0],name:p[1],short:parts[0]+' '+first,first,dat:decl(first,'d'),gen:decl(first,'g'),ins:decl(first,'i'),ini:parts[0][0]+first[0],dob:p[2],unit:p[3],since:p[4],confirmed:!!p[5],vt:!!p[6],why:p[7],
+    dobOpen:!!p[10],   // дату рождения близкий открыл сам
     sizo:!!p[9],cell:p[9]?p[9][0]:null,status:p[9]?p[9][1]:null,permit:p[9]?!!p[9][2]:null,
     /* только учреждение: отряд, камеру, статью и срок родственнику не показываем никогда (152-ФЗ, ст. 7, 10) */
     where:p[9]?(FAM.сизо||{}).name:FAM.учреждение.name,
@@ -793,7 +794,6 @@ function seedFor(pid,ci){
   S.ops.push({pid,t:dAgo(21).setHours(19,5),title:'Перевод '+decl(first,'d'),s:'на счёт в учреждении',a:-1030,k:'transfer',ev:'transfer',sum:1000});
   S.ops.push({pid,t:dAgo(25).setHours(9,40),title:'Пополнение счёта',s:'СБП',a:3000,k:'in'});
   seedStream(pid,ci);
-  S.bday={[pid]:r[2]};   // демо: как будто родственник сам указал дату
 }
 
 /* ================= шапки и меню ================= */
@@ -943,7 +943,7 @@ function dashboard(){
   <a class="relcard" href="#/lk/chat"><div class="row"><div class="avatar">${r.ini}</div><div class="grow"><b>${esc(r.short)}</b><small>${r.place} · ${r.vt?'видеотерминал есть':'сообщения на бумаге'}</small></div>${un?`<span class="ubadge">${un}</span>`:''}</div>
   <div class="lastmsg">${esc(lastTxt.replace(/\n+/g,' ').slice(0,110))}</div><span class="btn sm" style="align-self:flex-start">${un?'Прочитать':'Написать'}</span></a>
   <div class="quick3"><a href="#/lk/stream">${ic('heart')}<b>Забота</b><small>${st?(ss.next?'выпуск '+daysTo(ss.next.t):'идёт'):'не подключена'}</small></a><a href="#/lk/requests">${ic('list')}<b>Заявки</b><small>${open.length?open.length+' в работе':'свидание, справка'}</small></a><a href="#/lk/money">${ic('wallet')}<b>Счёт</b><small>${rub(S.account)}</small></a></div>
-  ${(()=>{const b=birthday();if(!b)return `<div class="bday ask"><span class="em" aria-hidden="true">🎂</span><span class="grow"><b>Когда у ${esc(r.gen)} день рождения?</b><small>Напомним заранее — чтобы успеть порадовать</small><input type="date" id="bdayin" aria-label="Дата рождения"></span></div>`;return b.days<=60?`<a class="bday" href="#/lk/stream"><span class="em" aria-hidden="true">🎂</span><span class="grow"><b>${b.days===0?'Сегодня':'Через '+b.days+' '+(b.days%10===1&&b.days!==11?'день':(b.days%10>=2&&b.days%10<=4&&(b.days<12||b.days>14))?'дня':'дней')} — день рождения ${esc(r.gen)}</b><small>${b.date} · ${b.age} ${b.age%10===1&&b.age!==11?'год':(b.age%10>=2&&b.age%10<=4&&(b.age<12||b.age>14))?'года':'лет'}. Порадуйте: открытка и неделя заботы — от вас${isFriend()?' и друзей':''}</small></span>${ic('chev')}</a>`:''})()}
+  ${(()=>{const b=birthday();if(!b)return `<div class="bday ask"><span class="em" aria-hidden="true">🎂</span><span class="grow"><b>Когда у ${esc(r.gen)} день рождения?</b><small>${esc(r.first)} не открыл свою дату рождения. Если знаете — укажите, напомним заранее</small><input type="date" id="bdayin" aria-label="Дата рождения"></span></div>`;return b.days<=60?`<a class="bday" href="#/lk/stream"><span class="em" aria-hidden="true">🎂</span><span class="grow"><b>${b.days===0?'Сегодня':'Через '+b.days+' '+(b.days%10===1&&b.days!==11?'день':(b.days%10>=2&&b.days%10<=4&&(b.days<12||b.days>14))?'дня':'дней')} — день рождения ${esc(r.gen)}</b><small>${b.date} · ${b.age} ${b.age%10===1&&b.age!==11?'год':(b.age%10>=2&&b.age%10<=4&&(b.age<12||b.age>14))?'года':'лет'}. Порадуйте: открытка и неделя заботы — от вас${isFriend()?' и друзей':''}${r.dobOpen?' · дату открыл сам '+esc(r.first):''}</small></span>${ic('chev')}</a>`:''})()}
   ${isFriend()?`<div class="sec" style="margin:6px 4px 0">Не знаете, о чём писать?</div>
   <button class="item bordered" data-act="topicsgo"><div class="ic" style="background:var(--purple-l);color:var(--purple-d)">${ic('help')}</div><div class="grow"><b>Подсказки: о чём написать</b><small>пара строк — и он знает, что его помнят</small></div>${ic('chev')}</button>
   <div class="sec" style="margin:6px 4px 0">Или поддержите без слов</div>
@@ -1450,9 +1450,9 @@ const FAMILY_ROLES=['мать','отец','жена','сестра','брат','
 function isFriend(){return S.me&&!FAMILY_ROLES.includes(me().role)}
 function fem(){return ['мать','жена','сестра','дочь','знакомая'].includes(me().role)}
 const g=(m,f)=>fem()?f:m;
-/* дату рождения близкого из наших данных не показываем — её вводит родственник сам (в демо — как будто уже ввёл) */
+/* дату рождения показываем, только если близкий сам сделал её видимой; иначе — только ту, что ввёл родственник */
 function birthday(){
-  const r=rel(),src=(S.bday||{})[r.id];if(!src)return null;
+  const r=rel(),src=r.dobOpen?r.dob:(S.bday||{})[r.id];if(!src)return null;
   const [dd,mm,yy]=src.split('.').map(Number),now=new Date();now.setHours(0,0,0,0);
   let b=new Date(now.getFullYear(),mm-1,dd);if(b<now)b=new Date(now.getFullYear()+1,mm-1,dd);
   return {days:Math.round((b-now)/864e5),age:b.getFullYear()-yy,date:fmt(b)};
