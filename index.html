@@ -438,6 +438,82 @@ audio{background:transparent}
 .legend svg{width:18px;height:18px}
 .scanfull{background:#FFFDF7 repeating-linear-gradient(transparent 0 27px,#E7E0CC 27px 28px);border:1px solid #EFE6CF;border-radius:14px;padding:14px 18px;font-family:'Caveat',cursive;font-size:24px;line-height:28px;color:#2B3A67;white-space:pre-wrap;min-height:240px}
 .scanfull .redact{background:#111}
+
+/* ===== Ручеёк заботы ===== */
+.sh-hero{position:relative;overflow:hidden;border-radius:24px;padding:22px 20px 24px;background:linear-gradient(150deg,#5E32BE 0%,#683DCC 45%,#00A47A 130%);color:#E9E2FF;display:flex;flex-direction:column;gap:10px}
+.sh-hero p{margin:0;font-size:16px;line-height:1.5}
+.sh-hero.on{background:linear-gradient(150deg,#05A660 0%,#0B8F6A 50%,#5E32BE 140%)}
+.sh-drops{position:absolute;right:-10px;top:-10px;width:120px;height:120px;opacity:.35}
+.sh-drops i{position:absolute;width:14px;height:20px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:#fff}
+.sh-drops i:nth-child(1){left:20px;top:20px}.sh-drops i:nth-child(2){left:60px;top:44px;transform:scale(.7)}.sh-drops i:nth-child(3){left:36px;top:76px;transform:scale(.9)}.sh-drops i:nth-child(4){left:84px;top:84px;transform:scale(.6)}.sh-drops i:nth-child(5){left:92px;top:16px;transform:scale(.8)}
+@media (prefers-reduced-motion:no-preference){.sh-drops i{animation:fall 3.2s ease-in infinite}.sh-drops i:nth-child(2){animation-delay:-.8s}.sh-drops i:nth-child(3){animation-delay:-1.6s}.sh-drops i:nth-child(4){animation-delay:-2.4s}.sh-drops i:nth-child(5){animation-delay:-1.2s}@keyframes fall{0%{transform:translateY(-20px);opacity:0}20%{opacity:1}100%{transform:translateY(60px);opacity:0}}}
+.plea{background:#FFFDF7;border:1px solid #EFE6CF;border-radius:18px;padding:14px 16px;box-shadow:0 2px 0 #EFE6CF}
+.plea .lab{display:flex;gap:6px;align-items:center;font-size:12px;font-weight:600;color:var(--orange-d);margin-bottom:6px}
+.plea .lab svg{width:14px;height:14px}
+.plea-t{font-family:'Caveat',cursive;font-size:24px;line-height:1.2;color:#2B3A67}
+.why{background:var(--card);border-radius:18px;padding:14px 16px;font-size:15px;color:var(--muted);line-height:1.5}
+.why b{color:var(--ink)}
+.env{position:relative;height:250px;margin:4px 0 8px}
+.env.sm{height:210px}
+.sheetp{position:absolute;left:50%;top:10px;width:220px;height:220px;margin-left:-110px;background:#FFFDF7;border:1px solid #EFE6CF;border-radius:6px;box-shadow:0 8px 20px rgba(28,28,40,.12);padding:12px;display:flex;flex-direction:column;gap:8px;font-size:11px;color:var(--ink)}
+.env.sm .sheetp{width:190px;height:190px;margin-left:-95px}
+.sheetp.s0{transform:rotate(-9deg) translate(-46px,6px)}
+.sheetp.s1{transform:rotate(7deg) translate(44px,4px)}
+.sheetp.s2{transform:rotate(-2deg) translate(0,-6px)}
+.sheetp.front{transform:rotate(1deg)}
+.sp-h{display:flex;justify-content:space-between;align-items:center;font-weight:600;color:var(--purple-d)}
+.qr{width:22px;height:22px;background:repeating-linear-gradient(90deg,#1C1C28 0 3px,transparent 3px 5px),repeating-linear-gradient(0deg,#1C1C28 0 3px,transparent 3px 5px);background-blend-mode:multiply;opacity:.75;border-radius:2px}
+.sp-to{font-size:11px;color:var(--muted)}
+.sp-note{font-family:'Caveat',cursive;font-size:22px;line-height:1.15;color:#2B3A67;flex:1}
+.sp-note span{font-size:18px}
+.sp-list{display:flex;flex-wrap:wrap;gap:4px}
+.sp-list span{font-size:10px;background:var(--purple-l);color:var(--purple-d);padding:2px 6px;border-radius:6px}
+.mini-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:2px;flex:1}
+.mini-grid i{border:1px solid #C9C2AE;border-radius:1px}
+.mini-grid.half i:nth-child(6n+4),.mini-grid.half i:nth-child(6n+5),.mini-grid.half i:nth-child(6n+6){background:#FFE7CC}
+.mini-lines{display:flex;flex-direction:column;gap:6px;flex:1}
+.mini-lines i{height:4px;border-radius:2px;background:#D9D2BF}
+.mini-lines i:nth-child(2n){width:80%}
+.mini-ch{font-size:12px;color:var(--muted)}
+.mini-ticks{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;flex:1}
+.mini-ticks i{border:1px solid #C9C2AE;border-radius:3px;aspect-ratio:1}
+.mini-ticks i:nth-child(-n+11){background:var(--green-l);border-color:var(--green-d)}
+.fmts{display:flex;flex-direction:column;gap:8px}
+.fmt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:12px 14px;border-radius:16px;border:1.5px solid var(--line);background:#fff;color:var(--text)}
+.fmt .ic{width:44px;height:44px;border-radius:14px}
+.fmt b{display:block;color:var(--ink);font-size:16px}
+.fmt small{display:block;color:var(--faint);font-size:13px;line-height:1.35;margin-top:2px}
+.fmt .pr{font-weight:700;color:var(--ink);text-align:right;white-space:nowrap;font-size:15px}
+.fmt .pr small{font-weight:500}
+.fmt .tick{width:26px;height:26px;border-radius:50%;border:2px solid #C7C9D9;display:flex;align-items:center;justify-content:center;color:transparent;flex-shrink:0}
+.fmt .tick svg{width:15px;height:15px}
+.fmt.on{border-color:var(--purple);background:#FBF9FF}
+.fmt.on .tick{background:var(--purple);border-color:var(--purple);color:#fff}
+.phr{display:flex;flex-wrap:wrap;gap:8px}
+.phr button{min-height:44px;padding:8px 14px;border-radius:22px;border:1.5px solid var(--line);background:#fff;font-size:15px;color:var(--ink)}
+.phr button.on{border-color:var(--purple);background:var(--purple-l);color:var(--purple-d);font-weight:600}
+.stickybuy{position:fixed;z-index:29;left:50%;transform:translateX(-50%);bottom:calc(64px + var(--sb));width:100%;max-width:480px;padding:12px 16px;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line2);box-shadow:0 -6px 20px rgba(28,28,40,.06)}
+.river{position:relative;background:#fff;border-radius:20px;padding:6px 16px}
+.drop{display:flex;align-items:center;gap:12px;padding:12px 0;position:relative}
+.drop+.drop{border-top:1px solid var(--bg)}
+.drop .dot{width:26px;height:26px;border-radius:50%;border:2px dashed var(--purple);flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff}
+.drop .dot svg{width:14px;height:14px}
+.drop .dot.done{background:var(--green-d);border:0}
+.drop b{display:block;color:var(--ink);font-size:15px}
+.drop small{color:var(--faint);font-size:13px}
+.drop.next{background:linear-gradient(90deg,#FBF9FF,transparent);margin:0 -16px;padding:12px 16px}
+@media (prefers-reduced-motion:no-preference){.drop.next .dot{animation:spin 6s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}}
+.drop.old small{font-style:italic}
+.members{display:flex;gap:-6px;align-items:center}
+.mem{width:44px;height:44px;border-radius:50%;background:var(--purple-l);color:var(--purple-d);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;border:3px solid #fff;margin-left:-8px}
+.mem:first-child{margin-left:0}
+.mem.me{background:var(--purple);color:#fff}
+.mem.add{background:var(--bg);color:var(--purple);border-style:solid;cursor:pointer}
+.mem.add svg{width:20px;height:20px}
+.b .plea-btn{margin-top:8px;display:inline-flex;min-height:40px;align-items:center;gap:6px;padding:0 14px;border-radius:12px;background:var(--purple);color:#fff;font-weight:600;font-size:14px}
+.b .plea-btn.done{background:var(--green-l);color:var(--green-d)}
+.ev.issue svg{color:#00A47A}
+.land .stream-demo{display:flex;flex-direction:column;gap:10px}
 </style>
 </head>
 <body>
@@ -454,7 +530,7 @@ document.documentElement.classList.add('js');
    Люди, учреждение и переписка — из общего набора проекта цензора (MVP_ZT).
    Те же люди, что видит цензор; без статьи, риска и досье. */
 /* ?v= — номер версии набора: меняйте при каждом обновлении data-family.js, иначе браузер до 10 минут держит старую копию */
-const DATA_URL='https://mitina-code.github.io/osnova-demo/data-family.js?v=4';
+const DATA_URL='https://mitina-code.github.io/osnova-demo/data-family.js?v=5';
 /* запасной мини-набор в том же формате — если общий не загрузился.
    переписка: [id, днейНазад, человек, контакт, от родственника(1), канал 0/1/2, решение 0/1/2, цифра(1)/бумага(0)] */
 const FALLBACK={
@@ -483,6 +559,7 @@ function loadFam(cb){
 
 /* ================= иконки ================= */
 const P={
+  book:'M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 21V5M8 7h7M8 11h7',grid:'M4 4h16v16H4zM4 9.3h16M4 14.6h16M9.3 4v16M14.6 4v16',globe:'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18',drop:'M12 3s6.5 6.6 6.5 11.3a6.5 6.5 0 0 1-13 0C5.5 9.6 12 3 12 3z',
   back:'M15 5l-7 7 7 7',chev:'M9 6l6 6-6 6',close:'M6 6l12 12M18 6L6 18',
   home:'M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z',
   mail:'M3 7l9 6 9-6M5 5h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z',
@@ -552,7 +629,7 @@ const ROLE={мать:'мама',отец:'папа',жена:'жена',сест
 
 /* ================= состояние ================= */
 const KEY='zt-ryadom-v1';
-function fresh(){return {me:null,phone:'',account:1250,card:340,sent:[],reqs:[],ops:[],read:{},flash:null,notify:{},replyBlank:true,support:[]}}
+function fresh(){return {me:null,phone:'',account:1250,card:340,sent:[],reqs:[],ops:[],read:{},flash:null,notify:{},replyBlank:true,support:[],streams:{}}}
 let S; try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}
 if(!S||!('reqs' in S)) S=fresh();
 function save(){try{const c=JSON.parse(JSON.stringify(S));c.sent.forEach(x=>{delete x.url;x.photosData=[]});localStorage.setItem(KEY,JSON.stringify(c))}catch(e){}}
@@ -615,6 +692,9 @@ function feed(){
   if(r.confirmed){for(let d=3+hash(r.id)%5;d<FAM.окноДней;d+=8+hash(r.id+d)%5){const t=dAgo(d);t.setHours(18+d%3,10+d%40);items.push({kind:'ev',type:'call',t:t.getTime(),min:4+hash(r.id+'c'+d)%11})}}
   S.ops.filter(o=>o.pid===r.id&&o.ev).forEach(o=>items.push({kind:'ev',type:o.ev,t:o.t,o}));
   S.reqs.filter(q=>q.pid===r.id).forEach(q=>items.push({kind:'ev',type:'req',t:q.t,q}));
+  streamEvents(r).forEach(e=>items.push(e));
+  const pq=request();
+  if(pq){const t=dAgo(pq.days);t.setHours(11,5);const txt=addressMe()+', если можно — подключи мне '+(FMT_ACC[pq.fmt]||'что-нибудь почитать')+'. Тут очень длинные дни.';items.push({kind:'msg',id:'plea',t:t.getTime(),out:false,ch:0,dec:0,how:'paper',route:'paper',parts:[txt],text:txt+'\n\n'+r.first,plea:true,status:S.read.plea?'seen':'new',h:1})}
   return items.sort((a,b)=>a.t-b.t);
 }
 function unreadCount(){return feed().filter(m=>m.kind==='msg'&&!m.out&&m.status==='new').length}
@@ -645,6 +725,7 @@ function seedFor(pid,ci){
   });
   S.ops.push({pid,t:dAgo(21).setHours(19,5),title:'Перевод '+decl(first,'d'),s:'на счёт в учреждении',a:-1030,k:'transfer',ev:'transfer',sum:1000});
   S.ops.push({pid,t:dAgo(25).setHours(9,40),title:'Пополнение счёта',s:'СБП',a:3000,k:'in'});
+  seedStream(pid,ci);
 }
 
 /* ================= шапки и меню ================= */
@@ -652,7 +733,7 @@ function siteHdr(){return `<header class="hdr"><a href="#/" aria-label="ZT Ря�
 function backHdr(title,to,right){return `<header class="hdr back"><a class="ib" href="#${to}" aria-label="Назад">${ic('back')}</a><div class="title">${title}</div>${right||''}</header>`}
 function lkHdr(title){return `<header class="hdr"><div class="title" style="font-size:22px;font-weight:700">${title}</div><a class="ib" href="#/lk/help" aria-label="Помощь">${ic('help')}</a></header>`}
 function tabbar(cur){
-  const t=[['/lk','Чаты','chat'],['/lk/requests','Заявки','list'],['/lk/money','Счёт','wallet'],['/lk/profile','Профиль','user']];
+  const t=[['/lk','Чаты','chat'],['/lk/stream','Ручеёк','drop'],['/lk/requests','Заявки','list'],['/lk/profile','Профиль','user']];
   const un=unreadCount();
   return '<nav class="tabbar" aria-label="Разделы">'+t.map(x=>`<a href="#${x[0]}" class="${x[0]===cur?'on':''}"${x[0]===cur?' aria-current="page"':''}>${ic(x[2])}${x[1]}${x[0]==='/lk'&&un?'<span class="dot" aria-label="есть новое"></span>':''}</a>`).join('')+'</nav>';
 }
@@ -662,7 +743,7 @@ const STAGES={
   zaderzhan:{t:'Только что задержали',sub:'Не знаю, где он и что делать',h:'Близкого задержали. Что делать в первые дни',
     li:['Узнайте, где он сейчас: в отделе полиции или изоляторе временного содержания. Спросите у следователя или адвоката.','Через 1–3 дня его обычно переводят в СИЗО. Как только станет известно куда — найдите его в ZT Рядом.','Первое сообщение можно отправить сразу после перевода. Оно придёт быстрее обычной почты.'],cta:'Начать'},
   sizo:{t:'Он в СИЗО',sub:'Сообщения, деньги, передачи',h:'Близкий в СИЗО. Чем вы можете помочь',
-    li:['Сообщения — самый быстрый способ связи. Их проверяет учреждение, обычно до 3 дней.','Деньги на лицевой счёт — чтобы он мог купить продукты и вещи в магазине СИЗО.','Звонки и свидания в СИЗО — только с разрешения следователя. Заявление можно подать онлайн.'],cta:'Написать'},
+    li:['Сообщения — самый быстрый способ связи. Их проверяет учреждение, обычно до 3 дней.','Деньги на лицевой счёт — чтобы он мог купить продукты и вещи в магазине СИЗО.','Звонки и свидания в СИЗО — только с разрешения следователя. Заявление можно подать онлайн.','Чем занять голову: первые месяцы — самые тяжёлые. Ручеёк заботы — выпуск на бумаге каждую неделю, подписанный вами.'],cta:'Написать'},
   kolonia:{t:'Он в колонии',sub:'Переписка, звонки, свидания',h:'Близкий в колонии. Как быть на связи',
     li:['Переписка как в мессенджере: если в отряде есть видеотерминал — он читает там, если нет — ему распечатают и вручат.','Он отвечает на терминале или от руки — бумажное письмо сканируют, и оно приходит к вам в переписку.','Звонки, видеосвидания и заявления — тоже здесь.'],cta:'Начать'}
 };
@@ -679,6 +760,7 @@ function pgLanding(){
   const eco=[
     ['chat','Переписка','Как в привычном мессенджере',['Сообщения и фото','Голосовые*','Видеосообщения*','Ответы от руки — сканом'],'var(--purple-l)','var(--purple-d)'],
     ['phone','Живая связь','Голос и лицо',['Он звонит вам сам','Видеосвидание*'],'var(--green-l)','var(--green-d)'],
+    ['drop','Ручеёк заботы','Выпуск от вас каждую неделю',['Повесть с продолжением','Задачник','Рабочая тетрадь','Марафон «30 дней»','Пополам с ребёнком'],'linear-gradient(150deg,#683DCC,#00A47A)','#fff'],
     ['wallet','Помочь','Деньгами и вещами',['На счёт в учреждении','На звонки','Лекарства'],'var(--orange-l)','var(--orange-d)'],
     ['cal','Решить вопрос','Без поездок и очередей',['Запись на свидание','Справки и заявления','Обращение к начальнику'],'var(--blue-l)','#0052CC'],
     ['info','Узнать','Что делать на вашем этапе',['Памятки','Справочник учреждений','Что можно передать'],'#FFEFF5','#C2185B']
@@ -693,7 +775,7 @@ function pgLanding(){
   <section class="dark2 reveal"><div class="eyebrow2 light">Мы понимаем</div>
   <h2 class="big2">Когда близкий там, связь рвётся <em>первой</em></h2>
   <div class="pains">${pains.map(p=>`<div class="pain"><b>${p[0]}</b><span>${p[1]}</span></div>`).join('')}</div>
-  <p class="after">ZT Рядом возвращает разговор. Одна переписка — и в ней всё: слова, голос, фото, звонки и свидания.</p></section>
+  <p class="after">ZT Рядом возвращает разговор. Одна переписка — и в ней всё: слова, голос, фото, звонки, свидания и ручеёк заботы, который идёт сам, даже когда вы заняты.</p></section>
 
   <section class="band2 soft2 reveal" id="how"><div class="eyebrow2">Как это работает</div><h2 class="big2 ink">Вы пишете — он <em>читает</em>. Он отвечает — вы видите</h2>
   <div class="card tlcard"><div class="tl">
@@ -712,11 +794,19 @@ function pgLanding(){
   <div class="feat"><div class="fic" style="background:var(--green-l);color:var(--green-d)">${ic('video')}</div><div><b>Видеосвидание</b><span>Разговор вживую через терминал, 20 минут. Выберите время — учреждение подтвердит.</span></div></div>
   <div class="feat"><div class="fic" style="background:var(--orange-l);color:var(--orange-d)">${ic('phone')}</div><div><b>Звонок</b><span>Он звонит вам сам с карты для звонков, которую вы пополняете.</span></div></div></div></section>
 
+  <section class="band2 soft2 reveal"><div class="eyebrow2">Ручеёк заботы</div><h2 class="big2 ink">Еда — для тела, адвокат — для дела. А для <em>головы</em>?</h2>
+  <p class="lead2" style="margin:0">Человеку в СИЗО не скучно — ему страшно: суд неизвестно когда, дни одинаковые. Ручеёк — это выпуск на бумаге каждую неделю, подписанный вами: повесть с продолжением, задачи, рабочая тетрадь, марафон. Даже когда вы заняты, он знает, что о нём помнят.</p>
+  <div class="feats">
+  <div class="feat"><div class="fic" style="background:var(--purple-l);color:var(--purple-d)">${ic('book')}</div><div><b>Каждый четверг — от вас</b><span>В каждом выпуске ваши слова и подпись. Настраиваете один раз.</span></div></div>
+  <div class="feat"><div class="fic" style="background:var(--green-l);color:var(--green-d)">${ic('user')}</div><div><b>Вместе с родными</b><span>Позовите семью скинуться — каждый платит меньше, а он видит, что помнят все.</span></div></div>
+  <div class="feat"><div class="fic" style="background:var(--orange-l);color:var(--orange-d)">${ic('shield')}</div><div><b>Одобрено учреждением</b><span>Выпуски проверены заранее и не задерживаются. Ответы проверяет учреждение — вам приходит «засчитано».</span></div></div></div>
+  <p class="faint" style="margin:0">От 130 ₽ в месяц · первые два выпуска бесплатно</p></section>
+
   <section class="band2 reveal"><div class="eyebrow2">С чего начать</div><h2 class="big2 ink">Где сейчас ваш близкий?</h2><p class="lead2" style="margin:0">Подскажем, что делать именно на вашем этапе. Коротко и по шагам.</p>
   ${Object.keys(STAGES).map(k=>`<a class="item bordered" href="#/stage/${k}"><div class="grow"><b>${STAGES[k].t}</b><small>${STAGES[k].sub}</small></div>${ic('chev')}</a>`).join('')}</section>
 
   <section class="band2 soft2 reveal"><div class="eyebrow2">Честные цены</div><h2 class="big2 ink">Сколько это стоит</h2>
-  <div class="prices">${[['Сообщение','до 2 страниц',PRICE.letter],['Фото','за каждое',PRICE.photo],['Голосовое сообщение','до 90 секунд',PRICE.voice],['Видеосообщение','до 90 секунд',PRICE.video],['Видеосвидание','20 минут',PRICE.vvisit],['Заявления и справки','онлайн','0']].map(p=>`<div class="price"><div class="grow"><b>${p[0]}</b><small>${p[1]}</small></div><span>${p[2]==='0'?'бесплатно':p[2]+' ₽'}</span></div>`).join('')}</div>
+  <div class="prices">${[['Сообщение','до 2 страниц',PRICE.letter],['Фото','за каждое',PRICE.photo],['Голосовое сообщение','до 90 секунд',PRICE.voice],['Видеосообщение','до 90 секунд',PRICE.video],['Видеосвидание','20 минут',PRICE.vvisit],['Ручеёк заботы','выпуск каждую неделю','от 130'],['Заявления и справки','онлайн','0']].map(p=>`<div class="price"><div class="grow"><b>${p[0]}</b><small>${p[1]}</small></div><span>${p[2]==='0'?'бесплатно':p[2]+' ₽'+(String(p[2]).startsWith('от')?'/мес':'')}</span></div>`).join('')}</div>
   <p class="faint" style="margin:0">Если учреждение не пропустит сообщение — деньги вернутся на ваш счёт.</p></section>
 
   <section class="dark2 reveal"><div class="eyebrow2 light">Почему ZT</div><h2 class="big2">Мы на связи с учреждениями <em>15 лет</em></h2>
@@ -788,6 +878,7 @@ function pgChats(){
   <a class="item" href="#/lk/chat"><div class="avatar">${r.ini}</div><div class="grow"><b>${esc(r.short)}</b><small style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(pv)}</small></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px"><span class="tm">${tm}</span>${un?`<span class="ubadge">${un}</span>`:''}</div></a>
   <a class="item" href="#/lk/support"><div class="avatar" style="background:var(--green-l);color:var(--green-d)">${ic('help')}</div><div class="grow"><b>Поддержка ZT Рядом</b><small style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(sp)}</small></div></a></div>
   <button class="item bordered" data-toast="Поиск близкого: ФИО, дата рождения, учреждение"><div class="ic" style="background:var(--purple-l);color:var(--purple-d)">${ic('plus')}</div><div class="grow"><b style="color:var(--purple)">Найти ещё близкого</b><small>если он добавил ваш номер</small></div></button>
+  ${!stream()?`<a class="promo" href="#/lk/stream" style="background:linear-gradient(150deg,#5E32BE,#00A47A)">${ic('drop')}<b style="flex:1;font-size:15px;line-height:1.35">${request()?r.first+' просит подключить ему чтение — ':''}Пусть каждую неделю ему приходит что-то от вас</b><span class="btn sm white">Ручеёк</span></a>`:''}
   <a class="promo" href="#/app">${ic('phone')}<b style="flex:1;font-size:15px;line-height:1.35">Звонки ${r.gen} — в приложении ZT Рядом</b><span class="btn sm white">Скачать</span></a>
   </div>${tabbar('/lk')}</div>`;
 }
@@ -824,10 +915,12 @@ function bubble(m){
     const ph=m.photos?`<div class="photos">${(m.photosData&&m.photosData.length?m.photosData.map(s=>`<img src="${s}" alt="">`):Array.from({length:m.photos},()=>'<span></span>')).join('')}</div>`:'';
     body=lab+ph+(m.text?`<div class="tx">${m.out?esc(m.text):redactText(m)}</div>`:'')+(m.cut?`<div class="rnote">${ic('info')}${m.cut==='paper'?'Часть вымарана на бланке до сканирования':'Часть текста закрыта учреждением'}</div>`:'');
   }
+  if(m.plea) body+=stream()?`<span class="plea-btn done">${ic('check',3)}Ручеёк подключён</span>`:`<a class="plea-btn" href="#/lk/stream" data-act="gostream">${ic('drop')}Подключить ему</a>`;
   return `<div class="b ${cls}" role="button" tabindex="0" data-act="minfo" data-id="${m.id}">${body}<div class="meta">${m.out&&m.route==='paper'&&m.status==='handed'?'вручено · ':''}${time} ${m.out?ticks(m):''}</div></div>`;
 }
 function event(e){
   const r=rel();
+  if(e.type==='issue') return `<a class="ev issue" href="#/lk/stream">${ic('drop')}<span>Ручеёк: выпуск №${e.n} вручён ${r.dat}${e.zach?' · бланк засчитан':''} <small>${hm(e.t)}</small></span></a>`;
   if(e.type==='call') return `<button class="ev green" data-act="callsheet">${ic('phone')}<span>${r.first} звонил · ${e.min} мин <small>${hm(e.t)}</small></span></button>`;
   if(e.type==='transfer') return `<a class="ev" href="#/lk/money">${ic('bank')}<span>Вы перевели ${rub(e.o.sum)} на счёт ${r.gen} <small>${hm(e.t)}</small></span></a>`;
   if(e.type==='card') return `<a class="ev green" href="#/lk/card">${ic('phone')}<span>Карта для звонков +${rub(e.o.sum)} <small>${hm(e.t)}</small></span></a>`;
@@ -915,7 +1008,7 @@ function attachSheet(){
   sheet(`<div class="attach">
   <label><span class="ci" style="background:var(--purple-l);color:var(--purple-d)">${ic('photo')}</span>Фото<input type="file" accept="image/*" multiple id="phfile" hidden></label>
   <button data-act="${r.vt?'govideo':'whyvt'}" class="${lock}"><span class="ci" style="background:#FFEFF5;color:#C2185B">${ic('video')}</span>Видео&shy;сообщение</button>
-  <button data-act="gojoy"><span class="ci" style="background:var(--orange-l);color:var(--orange-d)">${ic('gift')}</span>Порадовать</button>
+  <button data-act="gostream"><span class="ci" style="background:linear-gradient(150deg,#683DCC,#00A47A);color:#fff">${ic('drop')}</span>Ручеёк</button>
   <button data-act="gomoney"><span class="ci" style="background:var(--green-l);color:var(--green-d)">${ic('wallet')}</span>Деньги</button>
   <button data-act="govisit"><span class="ci" style="background:var(--blue-l);color:#0052CC">${ic('cal')}</span>Свидание</button>
   <button data-act="goapply"><span class="ci" style="background:var(--bg);color:var(--ink)">${ic('doc')}</span>Заявление</button></div>
@@ -946,7 +1039,7 @@ function pgRel(){
   <div class="relhead"><div class="avatar">${r.ini}</div><h1 class="h2">${esc(r.name)}</h1><div class="faint">${r.place}</div>
   ${r.vt?`<span class="badge s-new">${ic('terminal')}Видеотерминал в отряде</span>`:`<button class="badge s-wait" data-act="whyvt" style="border:0">${ic('print')}Сообщения — на бумаге</button>`}
   <div class="quick"><a href="#/lk/chat">${ic('chat')}Написать</a><button data-act="callsheet">${ic('phone')}Звонок</button><button data-act="${r.vt?'vvisitsheet':'whyvt'}" class="${r.vt?'':'off'}">${ic('video')}Видео&shy;свидание</button></div></div>
-  <div class="wrap"><div class="list">
+  <div class="wrap"><a class="item" href="#/lk/stream" style="background:linear-gradient(150deg,#5E32BE,#00A47A);color:#fff;border-radius:20px"><div class="ic" style="background:rgba(255,255,255,.2);color:#fff">${ic('drop')}</div><div class="grow"><b style="color:#fff">Ручеёк заботы</b><small style="color:#E6DCFF">${stream()?'выпуск каждый четверг — от вас':'каждую неделю — что-то от вас'}</small></div>${ic('chev')}</a><div class="list">
   <a class="item" href="#/lk/card"><div class="ic" style="background:var(--green-l);color:var(--green-d)">${ic('phone')}</div><div class="grow"><b>Карта для звонков</b><small>${r.first} звонит с неё сам</small></div><b>${rub(S.card)}</b>${ic('chev')}</a>
   <a class="item" href="#/lk/transfer"><div class="ic" style="background:var(--purple-l);color:var(--purple-d)">${ic('bank')}</div><div class="grow"><b>Перевести на его счёт</b><small>на магазин и передачи</small></div>${ic('chev')}</a>
   <a class="item" href="#/lk/visit"><div class="ic" style="background:var(--blue-l);color:#0052CC">${ic('cal')}</div><div class="grow"><b>Свидание</b><small>краткосрочное, длительное${r.vt?', видео':''}</small></div>${ic('chev')}</a>
@@ -1098,7 +1191,8 @@ function pgProfile(){
   <label class="opt"><span class="grow">Сообщение прочитано</span><span class="sw"><input type="checkbox" checked><i></i></span></label>
   <label class="opt"><span class="grow">Ответ на заявку</span><span class="sw"><input type="checkbox" checked><i></i></span></label>
   <label class="opt"><span class="grow">На карте для звонков мало денег</span><span class="sw"><input type="checkbox" checked><i></i></span></label></div>
-  <div class="list" style="margin-top:8px"><a class="item" href="#/lk/support"><div class="ic" style="background:var(--bg);color:var(--ink)">${ic('help')}</div><div class="grow"><b>Поддержка</b><small>чат, круглосуточно</small></div>${ic('chev')}</a>
+  <div class="list" style="margin-top:8px"><a class="item" href="#/lk/money"><div class="ic" style="background:var(--purple-l);color:var(--purple-d)">${ic('wallet')}</div><div class="grow"><b>Счёт и история</b><small>${rub(S.account)} · карта для звонков ${rub(S.card)}</small></div>${ic('chev')}</a>
+  <a class="item" href="#/lk/support"><div class="ic" style="background:var(--bg);color:var(--ink)">${ic('help')}</div><div class="grow"><b>Поддержка</b><small>чат, круглосуточно</small></div>${ic('chev')}</a>
   <button class="item" data-act="logout"><div class="ic" style="background:var(--bg);color:var(--ink)">${ic('logout')}</div><div class="grow"><b>Выйти</b><small>и войти другим родственником</small></div></button></div>
   </div>${tabbar('/lk/profile')}</div>`;
 }
@@ -1125,6 +1219,135 @@ function pgDone(){
   <div class="stick"><a class="btn" href="#/lk/chat">Вернуться в переписку</a></div></div>`;
 }
 function pgLoading(){return '<div class="page white"><div class="loading"><div class="spin"></div>Открываем ZT Рядом…</div></div>'}
+
+/* ================= РУЧЕЁК ЗАБОТЫ =================
+   Досуг на бумаге как постоянный поток заботы от родственника.
+   Данные общие с ОСНОВОЙ (data-family.js → досуг): форматы, кто подписан,
+   кто скидывается, бумажные просьбы заключённых «подключите мне».
+   Правила из касдева с ФСИН: ответы близкого видит только машина учреждения,
+   родственнику — лишь отметка «засчитано»; выпуски одобрены заранее. */
+const PHRASES=['Держись. Мы рядом.','Думаю о тебе каждый день.','Мы тебя очень ждём.','Всё будет хорошо. Обнимаю.','Ты не один.','Скучаем. Береги себя.'];
+const FMT_IC={povest:'book',zadachi:'grid',tetrad:'pen',marafon:'check',enc:'globe',pol:'heart'};
+const FMT_BG={povest:'var(--purple-l);color:var(--purple-d)',zadachi:'var(--green-l);color:var(--green-d)',tetrad:'var(--blue-l);color:#0052CC',marafon:'var(--orange-l);color:var(--orange-d)',enc:'#FFEFF5;color:#C2185B',pol:'#FFF3E0;color:#E65100'};
+/* винительный падеж для просьбы «подключи мне …» */
+const FMT_ACC={povest:'повесть с продолжением',zadachi:'задачник',tetrad:'рабочую тетрадь',marafon:'марафон «30 дней»',enc:'энциклопедию по выпускам',pol:'задачи пополам с детьми'};
+const PAL=['Нина Петровна','Костя','Оля','Андрей','Тётя Валя','Дима'];
+function fmts(){return (FAM.досуг&&FAM.досуг.форматы)||[]}
+const fmtById=id=>fmts().find(f=>f[0]===id);
+function weekPrice(ids){return ids.reduce((s,id)=>s+((fmtById(id)||[])[4]||0),0)}
+const monthPrice=ids=>Math.round(weekPrice(ids)*4.3/10)*10;
+function stream(){return S.streams&&S.streams[S.me.pid]}
+function request(){const d=FAM.досуг;if(!d)return null;const q=d.просьбы.find(p=>p[0]===S.me.pid&&p[1]===S.me.ci);return q?{days:q[2],fmt:q[3]}:null}
+function addressMe(){const m=me();return m.role==='мать'?'Мам':m.role==='отец'?'Пап':m.role==='сестра'?'Сестрёнка':m.call.split(' ')[0]}
+function sign(){const m=me();return m.role==='мать'?'мама':m.role==='отец'?'папа':m.call.split(' ')[0]}
+function seedStream(pid,ci){
+  S.streams={};const d=FAM.досуг;if(!d)return;
+  const p=d.подписки.find(x=>x[0]===pid&&x[1]===ci);if(!p)return;
+  const h=hash(pid+'stream'),start=dAgo(p[2]).setHours(10,0);
+  const members=[{name:'Вы',me:true}];for(let i=1;i<p[4];i++)members.push({name:PAL[(h>>>i)%PAL.length]});
+  S.streams[pid]={formats:p[3].slice(),phrase:PHRASES[h%PHRASES.length],members,startT:start,paused:false};
+}
+/* выпуски по четвергам начиная с недели после старта */
+function issues(st){
+  const out=[],first=new Date(st.startT);first.setDate(first.getDate()+((11-first.getDay())%7||7));first.setHours(12,0,0,0);
+  for(let i=0;i<60;i++){const t=new Date(first);t.setDate(first.getDate()+7*i);out.push({n:i+1,t:t.getTime()})}
+  return out;
+}
+function streamState(st){const now=Date.now(),all=issues(st);return {past:all.filter(x=>x.t<=now),next:all.find(x=>x.t>now)}}
+function daysTo(t){const d=Math.ceil((t-Date.now())/864e5);return d<=0?'сегодня':d===1?'завтра':'через '+d+' '+(d<5?'дня':'дней')}
+function streamEvents(r){
+  const st=stream(),ev=[];if(!st)return ev;
+  const {past}=streamState(st);
+  past.forEach(x=>ev.push({kind:'ev',type:'issue',t:x.t,n:x.n,zach:x.n>1&&hash(r.id+x.n)%3!==0}));
+  return ev;
+}
+function paperPreview(ids,phrase,small){
+  const r=rel(),f=ids.slice(0,3);
+  return `<div class="env${small?' sm':''}" aria-hidden="true">${f.map((id,i)=>`<div class="sheetp s${i}"><div class="sp-h"><span>${esc((fmtById(id)||[])[1]||'')}</span><span class="qr"></span></div>${sampleBody(id)}</div>`).join('')}
+  <div class="sheetp front"><div class="sp-h"><b>ZT Рядом · Ручеёк</b><span class="qr"></span></div><div class="sp-to">Кому: ${esc(r.short)}</div><div class="sp-note">«${esc(phrase)}»<br><span>— ${esc(sign())}</span></div><div class="sp-list">${f.map(id=>`<span>${esc((fmtById(id)||[])[1]||'')}</span>`).join('')||'<span>выберите, что ему отправлять</span>'}</div></div></div>`;
+}
+function sampleBody(id){
+  if(id==='zadachi'||id==='pol') return `<div class="mini-grid${id==='pol'?' half':''}">${'<i></i>'.repeat(36)}</div>`;
+  if(id==='povest') return `<div class="mini-lines"><i></i><i></i><i></i><i></i></div><div class="mini-ch">☐ А &nbsp; ☐ Б &nbsp; ☐ В</div>`;
+  if(id==='marafon') return `<div class="mini-ticks">${'<i></i>'.repeat(30)}</div>`;
+  return `<div class="mini-lines"><i></i><i></i><i></i></div><div class="mini-ch">☐ ☐ ☐</div>`;
+}
+let BUILD=null;   // черновик настройки ручейка
+function pgStream(){
+  const r=rel(),st=stream();
+  return st?pgStreamOn(r,st):pgStreamOff(r);
+}
+function pgStreamOff(r){
+  const q=request();
+  if(!BUILD) BUILD={formats:q?[q.fmt]:['povest'],phrase:PHRASES[0],together:false};
+  const b=BUILD, m=monthPrice(b.formats), w=weekPrice(b.formats);
+  const reqCard=q?`<div class="plea"><div class="lab">${ic('pen')}${r.first} просит · письмо от руки · ${q.days<=1?'вчера':q.days+' дня назад'}</div><div class="plea-t">«${addressMe()}, если можно — подключи мне ${esc(FMT_ACC[q.fmt]||'что-нибудь почитать')}. Тут очень длинные дни.»</div></div>`:'';
+  return `<div class="page tabbed stream-page">${lkHdr('Ручеёк')}
+  <div class="wrap">
+  <section class="sh-hero"><div class="sh-drops" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+  <h1 class="h1" style="font-size:28px;color:#fff">Пусть каждую неделю ему приходит что-то от вас</h1>
+  <p>Даже когда вы на работе, в дороге или просто без сил. Настраиваете один раз — ${esc(r.first)} получает выпуск каждый четверг, подписанный вами.</p></section>
+  ${reqCard}
+  <div class="why"><b>Ему сейчас не скучно — ему страшно.</b> Суд неизвестно когда, дни одинаковые. Занятая голова помогает дождаться и не сломаться. Еда — для тела, адвокат — для дела, ручеёк — для головы.</div>
+  <div class="sec">Так это придёт ему</div>
+  ${paperPreview(b.formats,b.phrase)}
+  <div class="sec">Что отправлять <span class="faint" style="font-weight:500">— можно несколько</span></div>
+  <div class="fmts">${fmts().filter(f=>f[0]!=='pol'||me().role==='жена'||me().role==='мать').map(f=>{const on=b.formats.includes(f[0]);return `<button class="fmt${on?' on':''}" data-act="bfmt" data-id="${f[0]}" aria-pressed="${on}"><span class="ic" style="background:${FMT_BG[f[0]]}">${ic(FMT_IC[f[0]])}</span><span class="grow"><b>${esc(f[1])}</b><small>${esc(f[2])}</small></span><span class="pr">${f[4]} ₽<small>в неделю</small></span><span class="tick">${ic('check',3)}</span></button>`}).join('')}</div>
+  <div class="sec">Ваши слова в каждом выпуске</div>
+  <div class="phr">${PHRASES.map(p=>`<button data-act="bphr" data-p="${esc(p)}" class="${b.phrase===p?'on':''}">${esc(p)}</button>`).join('')}</div>
+  <div class="faint" style="padding:0 4px">Подпись: «— ${esc(sign())}». Слова проверены заранее — их не задержат.</div>
+  <label class="card opt" style="padding:6px 16px"><div class="grow"><b style="color:var(--ink)">Позвать родных скинуться</b><div class="faint">пришлём ссылку — каждый платит меньше, а ${r.first} видит, что о нём помнят все</div></div><span class="sw"><input type="checkbox" data-act="btog"${b.together?' checked':''}><i></i></span></label>
+  <div class="info">${ic('shield')}<span>Всё одобрено учреждением заранее. Ответы ${r.gen} видит только проверка учреждения — вам придёт отметка «засчитано», если он согласен.</span></div>
+  <div style="height:90px"></div></div>
+  <div class="stickybuy"><div class="row between"><div><b style="font-size:20px;color:var(--ink)">${b.formats.length?rub(m):'—'}</b><span class="faint"> в месяц${b.together?' на всех':''}</span><div class="faint" style="color:var(--green-d);font-weight:600">первые 2 выпуска бесплатно${w?` · потом ≈ ${w} ₽ в неделю`:''}</div></div>
+  <button class="btn sm" data-act="startstream"${b.formats.length?'':' disabled'} style="min-height:52px;padding:0 20px">Запустить</button></div></div>
+  ${tabbar('/lk/stream')}</div>`;
+}
+function pgStreamOn(r,st){
+  const {past,next}=streamState(st), m=monthPrice(st.formats), share=st.members.length>1?Math.round(m/st.members.length/10)*10:m;
+  const weeks=past.length, last=past.slice(-4).reverse();
+  return `<div class="page tabbed stream-page">${lkHdr('Ручеёк')}
+  <div class="wrap">
+  <section class="sh-hero on"><div class="sh-drops" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="eyebrow2 light" style="color:#D9FFF0">${st.paused?'На паузе':'Ручеёк течёт'}${weeks?` · ${weeks} ${weeks===1?'неделя':weeks<5?'недели':'недель'}`:''}</div>
+  <h1 class="h1" style="font-size:26px;color:#fff">${next?`Следующий выпуск — ${daysTo(next.t)}`:'Выпуски идут'}</h1>
+  <p>${next?`Выпуск №${next.n} придёт ${esc(r.dat)} в ${WD[new Date(next.t).getDay()]==='чт'?'четверг':WD[new Date(next.t).getDay()]}, ${fmt(new Date(next.t))}. `:''}${weeks?`Уже вручено выпусков: ${weeks}.`:'Первый выпуск уже собирается.'}</p></section>
+  <div class="river">
+  ${next?`<div class="drop next"><span class="dot"></span><div class="grow"><b>Выпуск №${next.n} · ${fmt(new Date(next.t))}</b><small>${st.formats.map(id=>(fmtById(id)||[])[1]).join(', ')} · «${esc(st.phrase)}»</small></div><span class="pill s-new">собирается</span></div>`:''}
+  ${last.map(x=>`<div class="drop"><span class="dot done">${ic('check',3)}</span><div class="grow"><b>Выпуск №${x.n} вручён</b><small>${fmt(new Date(x.t))}${x.n>1&&hash(r.id+x.n)%3!==0?` · бланк №${x.n-1} засчитан`:''}</small></div></div>`).join('')}
+  ${weeks>4?`<div class="drop old"><span class="dot done"></span><div class="grow"><small>и ещё ${weeks-4} ${weeks-4<5?'выпуска':'выпусков'} раньше</small></div></div>`:''}
+  ${!weeks?`<div class="drop old"><span class="dot"></span><div class="grow"><small>Здесь появятся вручённые выпуски</small></div></div>`:''}
+  </div>
+  <div class="sec">Вместе</div>
+  <div class="card"><div class="members">${st.members.map(x=>`<span class="mem${x.me?' me':''}" title="${esc(x.name)}">${esc(x.name.split(' ').map(w=>w[0]).join('').slice(0,2))}</span>`).join('')}<button class="mem add" data-act="invite" aria-label="Позвать ещё">${ic('plus')}</button></div>
+  <div style="margin-top:10px;color:var(--ink)">${st.members.length>1?`Скидываетесь вчетвером`.replace('вчетвером',st.members.length===2?'вдвоём':st.members.length===3?'втроём':'вчетвером')+`: ${st.members.map(x=>x.me?'вы':x.name).join(', ')}.`:'Пока ручеёк ведёте только вы.'}</div>
+  <div class="faint">${st.members.length>1?`С вас ≈ ${rub(share)} в месяц из ${rub(m)}.`:`Позовите родных — каждый будет платить меньше.`}</div></div>
+  <div class="sec">Что приходит ${esc(r.dat)}</div>
+  ${paperPreview(st.formats,st.phrase,true)}
+  <div class="fmts">${fmts().map(f=>{const on=st.formats.includes(f[0]);return `<button class="fmt${on?' on':''}" data-act="sfmt" data-id="${f[0]}" aria-pressed="${on}"><span class="ic" style="background:${FMT_BG[f[0]]}">${ic(FMT_IC[f[0]])}</span><span class="grow"><b>${esc(f[1])}</b><small>${on?'идёт в каждом выпуске':esc(f[2])}</small></span><span class="pr">${on?'':'+'}${f[4]} ₽<small>в неделю</small></span><span class="tick">${ic('check',3)}</span></button>`}).join('')}</div>
+  <div class="sec">Ваши слова</div>
+  <div class="phr">${PHRASES.map(p=>`<button data-act="sphr" data-p="${esc(p)}" class="${st.phrase===p?'on':''}">${esc(p)}</button>`).join('')}</div>
+  <div class="info">${ic('shield')}<span>Ответы ${r.gen} проверяет только машина учреждения — вам приходит отметка «засчитано», если он согласен. Так безопаснее для него.</span></div>
+  <div class="list"><div class="item"><div class="grow"><b>${rub(m)} в месяц</b><small>списывается с вашего счёта${st.members.length>1?' — ваша часть ≈ '+rub(share):''}</small></div></div>
+  <button class="item" data-act="pausestream"><div class="ic" style="background:var(--bg);color:var(--ink)">${ic(st.paused?'play':'stop')}</div><div class="grow"><b>${st.paused?'Продолжить':'Поставить на паузу'}</b><small>прогресс ${r.gen} сохранится</small></div></button></div>
+  </div>${tabbar('/lk/stream')}</div>`;
+}
+function startStream(){
+  const r=rel(),b=BUILD;if(!b||!b.formats.length)return;
+  S.streams=S.streams||{};
+  const members=[{name:'Вы',me:true}];
+  S.streams[r.id]={formats:b.formats.slice(),phrase:b.phrase,members,startT:Date.now(),paused:false};
+  BUILD=null;save();
+  S.flash={t:'Ручеёк запущен',s:`Первый выпуск придёт ${r.dat} в четверг — с вашими словами «${b.phrase}». Первые два выпуска бесплатно.`};
+  if(b.together){S.flash=null;save();rerender();window.scrollTo(0,0);setTimeout(inviteSheet,150);return}
+  go('/lk/done');
+}
+function inviteSheet(){
+  const r=rel();
+  sheet(`<h2 class="h2">Позвать родных</h2><p class="muted" style="margin:0">Отправьте ссылку тем, кто тоже хочет поддержать ${esc(r.gen)}. Каждый выберет, сколько может, — сумма разделится.</p>
+  <div class="card flat" style="font-size:14px;color:var(--ink);word-break:break-all">zt.ru/r/${hash(r.id).toString(36).slice(0,6)}</div>
+  <div class="grid2"><button class="btn soft" data-toast="Откроется WhatsApp / Telegram">Отправить в мессенджер</button><button class="btn line" data-toast="Ссылка скопирована">Скопировать</button></div>`);
+}
 
 /* ================= окна снизу ================= */
 function sheet(html){document.getElementById('sheet').innerHTML=`<div class="sheet-bg" data-act="closesheet"><div class="sheet" role="dialog" aria-modal="true"><div class="grab"></div>${html}</div></div>`;document.body.style.overflow='hidden'}
@@ -1202,7 +1425,7 @@ function route(){
   else if(parts[0]==='code') html=pgCode();
   else if(parts[0]==='lk'){
     const p=parts[1]||'';
-    const M={'':pgChats,chat:pgChat,support:pgSupport,rel:pgRel,video:pgVideo,rules:pgRules,money:pgMoney,card:pgCard,transfer:pgTransfer,profile:pgProfile,help:pgHelp,joy:pgJoy,done:pgDone,visit:pgVisit,requests:pgRequests,place:pgPlace};
+    const M={stream:pgStream,'':pgChats,chat:pgChat,support:pgSupport,rel:pgRel,video:pgVideo,rules:pgRules,money:pgMoney,card:pgCard,transfer:pgTransfer,profile:pgProfile,help:pgHelp,joy:pgJoy,done:pgDone,visit:pgVisit,requests:pgRequests,place:pgPlace};
     html=p==='req'?pgReq(parts[2]):p==='apply'?pgApply(parts[2]):(M[p]||pgChats)();
   } else html=pgLanding();
   document.getElementById('app').innerHTML=html;
@@ -1238,7 +1461,7 @@ document.addEventListener('click',e=>{
   if(t.dataset.toast){e.preventDefault();toast(t.dataset.toast);return}
   if(a==='closesheet'){if(e.target===t||t.tagName==='BUTTON')closeSheet();return}
   if(a==='notifyvt'){S.notify[rel().id]=t.checked;save();toast(t.checked?'Пришлём уведомление, когда откроется':'Не будем присылать');return}
-  if(!a) return;
+  if(!a||a==='btog') return;
   if(a==='toast'){e.preventDefault();e.stopPropagation();toast(t.dataset.msg);return}
   e.preventDefault();
   if(a==='scroll'){const el=document.getElementById(t.dataset.to);if(el)el.scrollIntoView({behavior:'smooth',block:'start'})}
@@ -1252,6 +1475,14 @@ document.addEventListener('click',e=>{
   else if(a==='attach'){attachSheet()}
   else if(a==='govideo'){closeSheet();go('/lk/video')}
   else if(a==='gojoy'){closeSheet();go('/lk/joy')}
+  else if(a==='gostream'){closeSheet();go('/lk/stream')}
+  else if(a==='bfmt'){const f=t.dataset.id,l=BUILD.formats;BUILD.formats=l.includes(f)?l.filter(x=>x!==f):l.concat(f);rerender()}
+  else if(a==='bphr'){BUILD.phrase=t.dataset.p;rerender()}
+  else if(a==='startstream'){startStream()}
+  else if(a==='sfmt'){const st=stream(),f=t.dataset.id;if(st.formats.includes(f)&&st.formats.length===1){toast('Нужен хотя бы один формат — или поставьте паузу');return}st.formats=st.formats.includes(f)?st.formats.filter(x=>x!==f):st.formats.concat(f);save();toast(st.formats.includes(f)?'Добавлено — придёт со следующим выпуском':'Убрано из следующих выпусков');rerender()}
+  else if(a==='sphr'){stream().phrase=t.dataset.p;save();rerender()}
+  else if(a==='pausestream'){const st=stream();st.paused=!st.paused;save();toast(st.paused?'Пауза. Прогресс сохранится':'Ручеёк снова течёт');rerender()}
+  else if(a==='invite'){inviteSheet()}
   else if(a==='gomoney'){closeSheet();go('/lk/rel')}
   else if(a==='govisit'){closeSheet();go('/lk/visit')}
   else if(a==='goapply'){closeSheet();go('/lk/apply')}
@@ -1289,6 +1520,7 @@ document.addEventListener('input',e=>{
 });
 document.addEventListener('change',e=>{
   const t=e.target;
+  if(t.dataset&&t.dataset.act==='btog'){BUILD.together=t.checked;rerender();return}
   if(t.id==='blank'){S.replyBlank=t.checked;save();refreshComposer()}
   if(t.id==='phfile'){closeSheet();const files=[].slice.call(t.files||[]);let n=files.length;if(!n)return;if(location.hash.indexOf('/lk/chat')<0)go('/lk/chat');files.forEach(f=>{const r=new FileReader();r.onload=()=>{DRAFT.photos.push(r.result);if(--n===0){rerender();setTimeout(scrollBottom,30)}};r.readAsDataURL(f)})}
   if(t.id==='vfile'){const f=t.files&&t.files[0];if(!f)return;if(VID.url)URL.revokeObjectURL(VID.url);VID={url:URL.createObjectURL(f),sec:0};const v=document.createElement('video');v.preload='metadata';v.onloadedmetadata=()=>{VID.sec=v.duration||0;rerender()};v.src=VID.url;rerender()}
