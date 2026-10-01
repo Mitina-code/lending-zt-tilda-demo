@@ -449,6 +449,32 @@ audio{background:transparent}
 .card.flat .row.between > .muted{white-space:nowrap;flex-shrink:0}
 .ptitle{padding:14px 20px 2px;font-size:26px;font-weight:700;color:var(--ink);letter-spacing:-.01em}
 
+/* ===== связаться с близким законно ===== */
+.paths{display:flex;flex-direction:column;gap:10px}
+.pathc{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:16px;border:1px solid var(--line);background:#fff;color:var(--text)}
+.pathc.go{border-color:var(--purple)}
+.pathc .pn{width:30px;height:30px;border-radius:50%;background:var(--purple-l);color:var(--purple-d);font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pathc b{display:block;color:var(--ink);font-size:16px}
+.pathc small{display:block;color:var(--muted);font-size:14px;line-height:1.45;margin-top:2px}
+.pathc .link{padding:6px 0 0;font-size:15px}
+.pathc>svg{margin-left:auto;align-self:center;width:20px;height:20px;color:#C7C9D9;flex-shrink:0}
+select.inp{appearance:auto;font-size:16px}
+.bday.ask input{margin-top:8px;min-height:44px;border:1px solid var(--line);border-radius:12px;padding:0 10px;font-size:16px;background:#fff;width:100%}
+
+/* ===== друзья, подсказки, день рождения ===== */
+.tchips{display:flex;gap:8px;overflow-x:auto;padding:0 6px 8px;scrollbar-width:none}
+.tchips::-webkit-scrollbar{display:none}
+.tchips button{flex:0 0 auto;display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 12px;border-radius:18px;border:1px solid var(--line);background:#fff;font-size:14px;font-weight:500;color:var(--purple-d)}
+.tchips svg{width:16px;height:16px}
+.topics{display:flex;flex-direction:column;gap:8px}
+.topics button{text-align:left;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:#fff}
+.topics b{display:block;color:var(--ink);font-size:16px}
+.topics small{display:block;color:var(--faint);font-size:14px;margin-top:2px}
+.bday{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:18px;background:linear-gradient(135deg,#FFF3E0,#FFE7F0);color:var(--ink);border:1px solid #F7D9C4}
+.bday .em{font-size:30px}
+.bday b{display:block;font-size:16px}
+.bday small{display:block;font-size:13px;color:var(--muted);margin-top:2px}
+
 /* ===== Главная после входа и знакомство ===== */
 .dash{padding:20px 16px 8px;display:flex;flex-direction:column;gap:12px;background:linear-gradient(180deg,#F6F1FF 0%,#FFFFFF 100%)}
 .relcard{display:flex;flex-direction:column;gap:10px;background:#fff;border:1px solid var(--line2);border-radius:20px;padding:16px;box-shadow:0 6px 18px rgba(40,20,90,.06);color:var(--text)}
@@ -565,7 +591,7 @@ document.documentElement.classList.add('js');
    Люди, учреждение и переписка — из общего набора проекта цензора (MVP_ZT).
    Те же люди, что видит цензор; без статьи, риска и досье. */
 /* ?v= — номер версии набора: меняйте при каждом обновлении data-family.js, иначе браузер до 10 минут держит старую копию */
-const DATA_URL='https://mitina-code.github.io/osnova-demo/data-family.js?v=6';
+const DATA_URL='https://mitina-code.github.io/osnova-demo/data-family.js?v=7';
 /* запасной мини-набор в том же формате — если общий не загрузился.
    переписка: [id, днейНазад, человек, контакт, от родственника(1), канал 0/1/2, решение 0/1/2, цифра(1)/бумага(0)] */
 const FALLBACK={
@@ -661,7 +687,7 @@ function decl(n,c){
   if(last==='я') return stem+({d:(stem.slice(-1)==='и'?'и':'е'),g:'и',i:'ей'}[c]);
   const b=IRREG[n]||n; return b+({d:'у',g:'а',i:'ом'}[c]);
 }
-const ROLE={мать:'мама',отец:'папа',жена:'жена',сестра:'сестра',брат:'брат',дочь:'дочь',знакомая:'знакомая'};
+const ROLE={мать:'мама',отец:'папа',жена:'жена',сестра:'сестра',брат:'брат',дочь:'дочь',знакомая:'подруга'};
 
 /* ================= состояние ================= */
 const KEY='zt-ryadom-v1';
@@ -673,7 +699,12 @@ let DRAFT={text:'',photos:[]};   // черновик живёт до перез�
 
 function rel(){
   const p=BY[S.me.pid]; const parts=p[1].split(' '); const first=parts[1];
-  return {id:p[0],name:p[1],short:parts[0]+' '+first,first,dat:decl(first,'d'),gen:decl(first,'g'),ins:decl(first,'i'),ini:parts[0][0]+first[0],dob:p[2],unit:p[3],since:p[4],confirmed:!!p[5],vt:!!p[6],why:p[7],place:FAM.учреждение.short+' · '+p[3].replace('Отряд','отряд'),inst:FAM.учреждение};
+  return {id:p[0],name:p[1],short:parts[0]+' '+first,first,dat:decl(first,'d'),gen:decl(first,'g'),ins:decl(first,'i'),ini:parts[0][0]+first[0],dob:p[2],unit:p[3],since:p[4],confirmed:!!p[5],vt:!!p[6],why:p[7],
+    sizo:!!p[9],cell:p[9]?p[9][0]:null,status:p[9]?p[9][1]:null,permit:p[9]?!!p[9][2]:null,
+    /* только учреждение: отряд, камеру, статью и срок родственнику не показываем никогда (152-ФЗ, ст. 7, 10) */
+    where:p[9]?(FAM.сизо||{}).name:FAM.учреждение.name,
+    place:p[9]?(FAM.сизо||{}).short+', '+(FAM.сизо||{}).city:FAM.учреждение.short+', '+FAM.учреждение.city,
+    inst:p[9]&&FAM.сизо?FAM.сизо:FAM.учреждение};
 }
 function me(){const c=S.me.ci<0?S.meContact:BY[S.me.pid][8][S.me.ci];const parts=c[0].split(' ');return {name:c[0],call:parts.slice(1).join(' '),ini:parts[0][0]+(parts[1]||'')[0],role:c[1],roleTxt:ROLE[c[1]]||c[1],phone:c[2],verified:!!c[3]}}
 
@@ -762,6 +793,7 @@ function seedFor(pid,ci){
   S.ops.push({pid,t:dAgo(21).setHours(19,5),title:'Перевод '+decl(first,'d'),s:'на счёт в учреждении',a:-1030,k:'transfer',ev:'transfer',sum:1000});
   S.ops.push({pid,t:dAgo(25).setHours(9,40),title:'Пополнение счёта',s:'СБП',a:3000,k:'in'});
   seedStream(pid,ci);
+  S.bday={[pid]:r[2]};   // демо: как будто родственник сам указал дату
 }
 
 /* ================= шапки и меню ================= */
@@ -777,11 +809,11 @@ function tabbar(cur){
 /* ================= САЙТ zt.ru ================= */
 const STAGES={
   zaderzhan:{t:'Только что задержали',sub:'Не знаю, где он и что делать',h:'Близкого задержали. Что делать в первые дни',
-    li:['Узнайте, где он сейчас: в отделе полиции или изоляторе временного содержания. Спросите у следователя или адвоката.','Через 1–3 дня его обычно переводят в СИЗО. Как только станет известно куда — найдите его в ZT Рядом.','Первое сообщение можно отправить сразу после перевода. Оно придёт быстрее обычной почты.'],cta:'Начать'},
+    li:['Узнайте, где он сейчас: в отделе полиции или изоляторе временного содержания. Спросите у следователя или адвоката.','Через 1–3 дня его обычно переводят в СИЗО. Как только станет известно куда — отправьте запрос в ZT Рядом: если он согласится, переписка откроется.','Первое сообщение можно отправить сразу после перевода. Оно придёт быстрее обычной почты.'],cta:'Начать'},
   sizo:{t:'Он в СИЗО',sub:'Сообщения, деньги, передачи',h:'Близкий в СИЗО. Чем вы можете помочь',
     li:['Сообщения — самый быстрый способ связи. Их проверяет учреждение, обычно до 3 дней.','Деньги на лицевой счёт — чтобы он мог купить продукты и вещи в магазине СИЗО.','Звонки и свидания в СИЗО — только с разрешения следователя. Заявление можно подать онлайн.','Чем занять голову: первые месяцы — самые тяжёлые. «Забота каждый день» — лист на каждый день, подписанный вами; приходят выпуском раз в неделю.'],cta:'Написать'},
-  kolonia:{t:'Он в колонии',sub:'Переписка, звонки, свидания',h:'Близкий в колонии. Как быть на связи',
-    li:['Переписка как в мессенджере: если в отряде есть видеотерминал — он читает там, если нет — ему распечатают и вручат.','Он отвечает на терминале или от руки — бумажное письмо сканируют, и оно приходит к вам в переписку.','Звонки, видеосвидания и заявления — тоже здесь.'],cta:'Начать'}
+  kolonia:{t:'Он в колонии',sub:'Как не потерять связь за годы',h:'Близкий в колонии. Как не потерять связь за годы',
+    li:['Срок долгий, и самое тяжёлое там — почувствовать, что про тебя забыли. Важнее не размер письма, а то, что оно приходит регулярно.','Забота каждый день: лист от вас на каждый день, выпуском раз в неделю. Настраиваете один раз — хоть на год.','Переписка как в мессенджере: если в отряде есть видеотерминал — он читает там, если нет — ему распечатают и вручат. Ответ от руки придёт сканом.','Друзьям не нужно писать длинные письма: пара строк, фото со двора, 300 ₽ на звонки — и он знает, что его помнят. Можно скинуться вместе.','Звонки, длительные свидания, видеосвидания и заявления — тоже здесь.'],cta:'Начать'}
 };
 function pgLanding(){
   const phone=`<div class="mock" aria-hidden="true"><div class="mock-scr" style="background:#EFEAF8">
@@ -838,6 +870,13 @@ function pgLanding(){
   <div class="feat"><div class="fic" style="background:var(--orange-l);color:var(--orange-d)">${ic('shield')}</div><div><b>Одобрено учреждением</b><span>Выпуски проверены заранее и не задерживаются. Ответы проверяет учреждение — вам приходит «засчитано».</span></div></div></div>
   <p class="faint" style="margin:0">От 130 ₽ в месяц · первые два выпуска бесплатно</p></section>
 
+  <section class="band2 reveal"><div class="eyebrow2">Друг или приятель в колонии?</div><h2 class="big2 ink">Не знаете, о чём писать? <em>Не страшно</em></h2>
+  <p class="lead2" style="margin:0">Срок идёт годами, и письма от друзей приходят всё реже. Не потому, что забыли, — просто непонятно, что сказать. Мы подскажем.</p>
+  <div class="feats">
+  <div class="feat"><div class="fic" style="background:var(--purple-l);color:var(--purple-d)">${ic('help')}</div><div><b>Подсказки, о чём написать</b><span>Новости города, «помню, как мы…», спорт, анекдот. Выбираете начало — пара строк, и готово.</span></div></div>
+  <div class="feat"><div class="fic" style="background:var(--green-l);color:var(--green-d)">${ic('phone')}</div><div><b>Поддержать без слов</b><span>300 ₽ на звонки, 500 ₽ на счёт или лист заботы на каждый день — в одно нажатие.</span></div></div>
+  <div class="feat"><div class="fic" style="background:var(--orange-l);color:var(--orange-d)">${ic('user')}</div><div><b>Скинуться всей компанией</b><span>Каждый по чуть-чуть — а он видит, что помнят все.</span></div></div></div></section>
+
   <section class="band2 reveal"><div class="eyebrow2">С чего начать</div><h2 class="big2 ink">Где сейчас ваш близкий?</h2><p class="lead2" style="margin:0">Подскажем, что делать именно на вашем этапе. Коротко и по шагам.</p>
   ${Object.keys(STAGES).map(k=>`<a class="item bordered" href="#/stage/${k}"><div class="grow"><b>${STAGES[k].t}</b><small>${STAGES[k].sub}</small></div>${ic('chev')}</a>`).join('')}</section>
 
@@ -892,7 +931,7 @@ function dashboard(){
   if(!S.me) return `<section class="dash"><div class="eyebrow2"><span class="pulse"></span>${hello()}</div>
   <h1 class="h1" style="font-size:28px">Добро пожаловать в ZT Рядом</h1>
   <p class="muted" style="margin:0">Здесь вы переписываетесь с близким, помогаете ему и решаете вопросы с учреждением. Начните с одного шага.</p>
-  <a class="nextstep" href="#/lk/find"><span class="num">1</span><span class="grow"><b>Найдите близкого</b><small>фамилия и дата рождения — этого достаточно</small></span>${ic('chev')}</a>
+  ${S.pending?`<div class="relcard"><div class="row"><div class="avatar" style="background:var(--orange-l);color:var(--orange-d)">${ic('clock')}</div><div class="grow"><b>Запрос отправлен</b><small>${esc(S.pending.fio)} · ${esc(S.pending.when)}</small></div></div><div class="lastmsg">Если он в этом учреждении и согласится, переписка откроется здесь. Мы не сообщаем, находится ли человек в учреждении, — так требует закон.</div></div>`:`<a class="nextstep" href="#/lk/find"><span class="num">1</span><span class="grow"><b>Свяжитесь с близким</b><small>он добавит ваш номер — или вы отправите запрос</small></span>${ic('chev')}</a>`}
   <div class="nextstep off"><span class="num">2</span><span class="grow"><b>Напишите первое сообщение</b><small>он получит его после проверки учреждением</small></span></div>
   <div class="nextstep off"><span class="num">3</span><span class="grow"><b>Пополните счёт</b><small>для сообщений, звонков и заботы каждый день</small></span></div>
   <a class="item bordered" href="#/lk/support"><div class="ic" style="background:var(--green-l);color:var(--green-d)">${ic('chat')}</div><div class="grow"><b>Не знаете, с чего начать?</b><small>напишите нам — ответим за 5 минут, круглосуточно</small></div>${ic('chev')}</a>
@@ -904,67 +943,103 @@ function dashboard(){
   <a class="relcard" href="#/lk/chat"><div class="row"><div class="avatar">${r.ini}</div><div class="grow"><b>${esc(r.short)}</b><small>${r.place} · ${r.vt?'видеотерминал есть':'сообщения на бумаге'}</small></div>${un?`<span class="ubadge">${un}</span>`:''}</div>
   <div class="lastmsg">${esc(lastTxt.replace(/\n+/g,' ').slice(0,110))}</div><span class="btn sm" style="align-self:flex-start">${un?'Прочитать':'Написать'}</span></a>
   <div class="quick3"><a href="#/lk/stream">${ic('heart')}<b>Забота</b><small>${st?(ss.next?'выпуск '+daysTo(ss.next.t):'идёт'):'не подключена'}</small></a><a href="#/lk/requests">${ic('list')}<b>Заявки</b><small>${open.length?open.length+' в работе':'свидание, справка'}</small></a><a href="#/lk/money">${ic('wallet')}<b>Счёт</b><small>${rub(S.account)}</small></a></div>
-  ${!st?`<a class="promo" href="#/lk/stream" style="background:linear-gradient(150deg,#5E32BE,#00A47A)">${ic('heart')}<b style="flex:1;font-size:15px;line-height:1.35">${request()?r.first+' просит подключить заботу каждый день':'Пусть каждый день у '+esc(r.gen)+' будет что-то от вас'}</b><span class="btn sm white">Подключить</span></a>`:''}
+  ${(()=>{const b=birthday();if(!b)return `<div class="bday ask"><span class="em" aria-hidden="true">🎂</span><span class="grow"><b>Когда у ${esc(r.gen)} день рождения?</b><small>Напомним заранее — чтобы успеть порадовать</small><input type="date" id="bdayin" aria-label="Дата рождения"></span></div>`;return b.days<=60?`<a class="bday" href="#/lk/stream"><span class="em" aria-hidden="true">🎂</span><span class="grow"><b>${b.days===0?'Сегодня':'Через '+b.days+' '+(b.days%10===1&&b.days!==11?'день':(b.days%10>=2&&b.days%10<=4&&(b.days<12||b.days>14))?'дня':'дней')} — день рождения ${esc(r.gen)}</b><small>${b.date} · ${b.age} ${b.age%10===1&&b.age!==11?'год':(b.age%10>=2&&b.age%10<=4&&(b.age<12||b.age>14))?'года':'лет'}. Порадуйте: открытка и неделя заботы — от вас${isFriend()?' и друзей':''}</small></span>${ic('chev')}</a>`:''})()}
+  ${isFriend()?`<div class="sec" style="margin:6px 4px 0">Не знаете, о чём писать?</div>
+  <button class="item bordered" data-act="topicsgo"><div class="ic" style="background:var(--purple-l);color:var(--purple-d)">${ic('help')}</div><div class="grow"><b>Подсказки: о чём написать</b><small>пара строк — и он знает, что его помнят</small></div>${ic('chev')}</button>
+  <div class="sec" style="margin:6px 4px 0">Или поддержите без слов</div>
+  <div class="quick3"><a href="#/lk/card?300">${ic('phone')}<b>300 ₽</b><small>на звонки — позвонит, когда сможет</small></a><a href="#/lk/transfer?500">${ic('bank')}<b>500 ₽</b><small>на счёт — чай, сигареты, магазин</small></a><a href="#/lk/stream">${ic('heart')}<b>Забота</b><small>лист от вас на каждый день</small></a></div>
+  <button class="item bordered" data-act="invite"><div class="ic" style="background:var(--green-l);color:var(--green-d)">${ic('user')}</div><div class="grow"><b>Скинуться с друзьями</b><small>каждый по чуть-чуть — а он видит, что помнят все</small></div>${ic('chev')}</button>`:''}
+  ${!st?`<a class="promo" href="#/lk/stream" style="background:linear-gradient(150deg,#5E32BE,#00A47A)">${ic('heart')}<b style="flex:1;font-size:15px;line-height:1.35">${request()?r.first+' просит подключить заботу каждый день':r.sizo?'Пусть каждый день у '+esc(r.gen)+' будет что-то от вас':'Срок идёт. Пусть каждый день у '+esc(r.gen)+' будет что-то от вас'}</b><span class="btn sm white">Подключить</span></a>`:''}
   <div class="eyebrow2" style="margin-top:14px">Полезно знать</div></section>`;
 }
 
-/* ---------- новичок: знакомство и поиск близкого ---------- */
+/* ---------- новичок: как связаться с близким законно ----------
+   Справка: research/legal-finding/poisk-blizkogo.md. Списка людей и поиска по фамилии нет.
+   Путь A — близкий сам вписал номер родственника и согласился (тогда он появляется сам при входе).
+   Путь B — родственник знает учреждение: ФИО + дата рождения + учреждение → запрос; система не
+            подтверждает и не опровергает, что человек там; связь — только после «да» близкого.
+   Путь C — не знает, где он: подсказываем, куда обратиться; запрос отправляет сам родственник. */
 function pgStart(){
-  if(S.me){return pgHomeMkt()}
-  return `<div class="page white"><div class="wrap loose" style="padding-top:32px"><a href="#/lk/home" aria-label="ZT Рядом — на главную" style="align-self:flex-start">${BRAND}</a>
+  if(S.me) return pgHomeMkt();
+  return `<div class="page white"><div class="wrap loose" style="padding-top:28px"><a href="#/lk/home" aria-label="ZT Рядом — на главную" style="align-self:flex-start">${BRAND}</a>
   <h1 class="h1">Вы на месте. Здесь проще, чем кажется</h1>
   <p class="lead2" style="margin:0">ZT Рядом — переписка с близким, как в мессенджере, и всё остальное, что нужно, пока он там.</p>
   <div class="intro">
   <div><span style="background:var(--purple-l);color:var(--purple-d)">${ic('chat')}</span><b>Писать и получать ответы</b><small>как в мессенджере — с фото, голосом и видео</small></div>
   <div><span style="background:var(--green-l);color:var(--green-d)">${ic('heart')}</span><b>Заботиться каждый день</b><small>даже когда вы заняты — выпуск от вас каждую неделю</small></div>
   <div><span style="background:var(--blue-l);color:#0052CC">${ic('list')}</span><b>Решать вопросы без поездок</b><small>свидания, справки, заявления, деньги</small></div></div></div>
-  <div class="stick"><a class="btn" href="#/lk/find">Найти близкого</a><a class="btn line" href="#/lk/home">Сначала осмотрюсь</a><a class="link" href="#/lk/support" style="text-align:center">Нужна помощь? Напишите нам</a></div></div>`;
+  <div class="stick"><a class="btn" href="#/lk/find">Связаться с близким</a><a class="btn line" href="#/lk/home">Сначала осмотрюсь</a><a class="link" href="#/lk/support" style="text-align:center">Нужна помощь? Напишите нам</a></div></div>`;
 }
-let FIND={q:''};
 function pgFind(){
-  const q=FIND.q.trim().toLowerCase();
-  const res=q.length<2?[]:FAM.люди.filter(p=>p[1].toLowerCase().startsWith(q)).slice(0,8);
-  return `<div class="page white">${backHdr('Найти близкого',S.me?'/lk/home':'/lk/start')}<div class="wrap loose">
-  <p class="muted" style="margin:0">Начните вводить фамилию. Мы покажем, кто с такой фамилией есть в учреждениях, где работает ZT.</p>
-  <div class="field"><label for="fq">Фамилия</label><input class="inp" id="fq" type="text" autocomplete="off" placeholder="Например, Петров" value="${esc(FIND.q)}"></div>
-  <div id="fres">${findList(res,q)}</div>
-  <div class="faint">Для демонстрации попробуйте «Иванов» или «Петров».</div></div></div>`;
+  const p=S.pending;
+  return `<div class="page white">${backHdr('Связаться с близким','/lk/home')}<div class="wrap loose">
+  ${p?`<div class="info">${ic('clock')}<span>Запрос для <b>${esc(p.fio)}</b> уже отправлен ${esc(p.when)}. Ждём его ответа.</span></div>`:''}
+  <p class="muted" style="margin:0">Мы не ищем людей и не показываем, кто где находится: это личные данные, их охраняет закон. Связь появляется, когда <b style="color:var(--ink)">близкий сам согласен</b>.</p>
+  <div class="paths">
+  <div class="pathc"><span class="pn">A</span><div><b>Он сам добавит ваш номер</b><small>Ваш близкий указывает ваш номер на терминале или в заявлении и соглашается на ZT Рядом. Тогда он появится здесь сам — просто войдите с этим номером: ${esc(S.phone||'')}.</small><button class="link" data-act="whattowrite">Что ему написать, чтобы он добавил</button></div></div>
+  <a class="pathc go" href="#/lk/find/request"><span class="pn">B</span><div><b>Я знаю, где он</b><small>Укажите ФИО, дату рождения и учреждение. Мы передадим ваш запрос — если он там и согласится, переписка откроется.</small></div>${ic('chev')}</a>
+  <a class="pathc go" href="#/lk/find/where"><span class="pn">C</span><div><b>Не знаю, где он</b><small>Подскажем, куда обратиться: следователь, адвокат, УФСИН. И поможем составить запрос.</small></div>${ic('chev')}</a></div></div></div>`;
 }
-function findList(res,q){
-  if(q.length<2) return '';
-  if(!res.length) return `<div class="info warn">${ic('info')}<span>Никого не нашли. Проверьте фамилию — или он ещё не подключён к ZT. <a href="#/lk/support">Напишите нам</a>, поможем найти.</span></div>`;
-  return '<div class="list" style="border:1px solid var(--line)">'+res.map(p=>{const pr=p[1].split(' ');return `<a class="item" href="#/lk/find/${p[0]}"><div class="avatar sm soft">${pr[0][0]+pr[1][0]}</div><div class="grow"><b>${esc(p[1])}</b><small>${p[2]} г. р. · ${FAM.учреждение.short} · ${p[3].replace('Отряд','отряд')}</small></div>${ic('chev')}</a>`}).join('')+'</div>';
-}
-let ADD={role:null,name:''};
-const ROLES_ADD=[['мать','Мама'],['отец','Папа'],['жена','Жена'],['сестра','Сестра'],['брат','Брат'],['дочь','Дочь'],['знакомая','Другое']];
-function pgFindOne(pid){
-  const p=BY[pid]; if(!p) return pgFind();
-  const pr=p[1].split(' ');
-  return `<div class="page white">${backHdr('Это он?','/lk/find')}<div class="wrap loose">
-  <div class="card flat row"><div class="avatar">${pr[0][0]+pr[1][0]}</div><div class="grow"><b style="font-size:18px;color:var(--ink)">${esc(p[1])}</b><div class="faint">${p[2]} г. р.</div><div class="faint">${esc(FAM.учреждение.full)}, ${esc(FAM.учреждение.city)}</div></div></div>
+let RF={fio:'',dob:'',inst:'',role:null,name:'',ok:false};
+const INSTS=()=>[['ik',FAM.учреждение.full+', '+FAM.учреждение.city],['sizo',FAM.сизо?FAM.сизо.full+', '+FAM.сизо.city:'']].filter(x=>x[1]);
+function rfReady(){return RF.fio.trim().split(/\s+/).length>=2&&RF.dob&&RF.inst&&RF.role&&RF.name.trim().split(/\s+/).length>=2&&RF.ok}
+function pgFindReq(){
+  return `<div class="page white">${backHdr('Я знаю, где он','/lk/find')}<div class="wrap loose">
+  <div class="field"><label for="rf_fio">ФИО близкого полностью</label><input class="inp" id="rf_fio" type="text" autocomplete="off" placeholder="Фамилия Имя Отчество" value="${esc(RF.fio)}"></div>
+  <div class="field"><label for="rf_dob">Дата рождения</label><input class="inp" id="rf_dob" type="date" value="${esc(RF.dob)}"></div>
+  <div class="field"><label for="rf_inst">Учреждение</label><select class="inp" id="rf_inst"><option value="">Выберите регион и учреждение</option>${INSTS().map(x=>`<option value="${x[0]}"${RF.inst===x[0]?' selected':''}>${esc(x[1])}</option>`).join('')}</select></div>
   <div class="h3">Кем вы ему приходитесь?</div>
-  <div class="phr">${ROLES_ADD.map(r=>`<button data-act="addrole" data-r="${r[0]}" class="${ADD.role===r[0]?'on':''}">${r[1]}</button>`).join('')}</div>
-  <div class="field"><label for="an">Как вас зовут</label><input class="inp" id="an" type="text" autocomplete="name" placeholder="Фамилия Имя Отчество" value="${esc(ADD.name)}"></div>
+  <div class="phr">${ROLES_ADD.map(r=>`<button data-act="rrole" data-r="${r[0]}" class="${RF.role===r[0]?'on':''}">${r[1]}</button>`).join('')}</div>
+  <div class="field"><label for="rf_name">Как вас зовут</label><input class="inp" id="rf_name" type="text" autocomplete="name" placeholder="Фамилия Имя Отчество" value="${esc(RF.name)}"></div>
   <button class="link" data-act="gosuname" style="align-self:flex-start">Подставить из Госуслуг</button>
-  <div class="info">${ic('info')}<span>Писать ему можно сразу. Чтобы он мог вам звонить, он добавит ваш номер в разрешённые — мы отправим ему запрос.</span></div></div>
-  <div class="stick"><button class="btn" data-act="addrel" data-pid="${pid}"${ADD.role&&ADD.name.trim().split(/\s+/).length>=2?'':' disabled'} id="addbtn">Добавить и написать</button></div></div>`;
+  <label class="opt" style="align-items:flex-start"><input type="checkbox" id="rf_ok" style="width:22px;height:22px;accent-color:var(--purple);margin-top:2px"${RF.ok?' checked':''}><span class="faint" style="color:var(--muted)">Согласен(на) передать моё ФИО, телефон и кем я прихожусь в учреждение и близкому — чтобы он мог ответить на запрос</span></label>
+  <div class="info">${ic('shield')}<span>Мы не подтверждаем и не опровергаем, что человек находится в учреждении. Если он там и согласится — вы увидите его в «Чатах». Если нет — запрос просто останется без ответа.</span></div>
+  <button class="link" data-act="rfill" style="align-self:flex-start">Для демонстрации: заполнить пример</button></div>
+  <div class="stick"><button class="btn" id="rfsend" data-act="rsend"${rfReady()?'':' disabled'}>Отправить запрос</button><div class="faint" style="text-align:center">Не больше 3 запросов в сутки</div></div></div>`;
 }
-function addRel(pid){
-  S.me={pid,ci:-1};
-  S.meContact=[ADD.name.trim(),ADD.role,S.phone||NEWBIE_PHONE,1];
-  S.account=0;S.card=0;S.reqs=[];S.ops=[];S.streams={};
-  ADD={role:null,name:''};FIND={q:''};save();
-  S.flash=null;go('/lk/chat');
-  setTimeout(()=>toast(rel().first+' добавлен. Напишите первое сообщение'),300);
+function pgFindWhere(){
+  const tpl='В УФСИН России по [регион]\nот [ваше ФИО], [адрес], [телефон]\n\nПрошу сообщить, в каком учреждении содержится мой [кем приходится] [ФИО близкого], [дата рождения] г. р.\nКопии документов, подтверждающих родство, прилагаю.\n\n[дата], [подпись]';
+  return `<div class="page white">${backHdr('Не знаю, где он','/lk/find')}<div class="wrap loose">
+  <p class="muted" style="margin:0">Где находится человек, сообщают только официально — и только тем, кого он выбрал сам. Мы подскажем, куда обратиться.</p>
+  <div class="paths">
+  <div class="pathc"><span class="pn">1</span><div><b>Только задержали</b><small>Узнайте у следователя или адвоката: задержанный вправе сообщить близким, где он, а следователь обязан уведомить родственников.</small></div></div>
+  <div class="pathc"><span class="pn">2</span><div><b>Перевели из СИЗО в колонию</b><small>Колония в течение 10 дней отправляет уведомление тому родственнику, которого выбрал сам осуждённый. Проверьте почту — или спросите адвоката.</small></div></div>
+  <div class="pathc"><span class="pn">3</span><div><b>Уже давно нет вестей</b><small>Напишите обращение в УФСИН вашего региона или в ФСИН России — через электронную приёмную на fsin.gov.ru. Приложите документы о родстве.</small></div></div></div>
+  <div class="h3">Шаблон обращения</div><div class="card flat" style="white-space:pre-wrap;font-size:14px;color:var(--ink)">${esc(tpl)}</div>
+  <div class="faint">Отправляете вы сами — мы ничего не передаём от вашего имени и не получаем ответ за вас. Когда узнаете учреждение — вернитесь и выберите «Я знаю, где он».</div></div>
+  <div class="stick"><button class="btn" data-act="copytpl">Скопировать шаблон</button></div></div>`;
 }
+function sendFindRequest(){
+  if(!rfReady()) return;
+  const fio=RF.fio.trim().replace(/\s+/g,' '), [y,m,d]=RF.dob.split('-'), dob=d+'.'+m+'.'+y;
+  // совпадение проверяем молча: родственнику ничего не показываем до согласия близкого
+  const match=FAM.люди.find(p=>p[1].toLowerCase()===fio.toLowerCase()&&p[2]===dob&&(!!p[9])===(RF.inst==='sizo'));
+  S.pending={fio,dob,inst:RF.inst,role:RF.role,name:RF.name.trim(),t:Date.now(),when:today(),match:match?match[0]:null};
+  RF={fio:'',dob:'',inst:'',role:null,name:'',ok:false};save();
+  S.flash={t:'Запрос отправлен',s:'Если он в этом учреждении и согласится, переписка откроется — мы сообщим. Обычно ответ приходит за 1–3 дня. (В демо — примерно через 20 секунд.)'};
+  go('/lk/done');
+}
+/* демо: если данные совпали — через ~20 с близкий «соглашается» на терминале */
+function checkPending(){
+  const p=S.pending; if(!p||S.me||!p.match||Date.now()-p.t<20000) return false;
+  S.me={pid:p.match,ci:-1}; S.meContact=[p.name,p.role,S.phone||NEWBIE_PHONE,1]; S.pending=null; save();
+  setTimeout(()=>toast(rel().first+' согласился переписываться с вами'),300); return true;
+}
+function whatToWrite(){
+  sheet(`<h2 class="h2">Что ему написать</h2><p class="muted" style="margin:0">Отправьте обычное письмо или передайте через адвоката:</p>
+  <div class="card flat" style="font-size:15px;color:var(--ink)">«Добавь, пожалуйста, мой номер ${esc(S.phone||'')} в список на терминале или в заявлении на звонки — и согласись на ZT Рядом. Тогда мы сможем переписываться, а я — помогать тебе».</div>
+  <button class="btn line" data-act="closesheet">Понятно</button>`);
+}
+const ROLES_ADD=[['мать','Мама'],['отец','Папа'],['жена','Жена'],['сестра','Сестра'],['брат','Брат'],['дочь','Дочь'],['знакомая','Друг, подруга']];
 
 /* ================= ВХОД ================= */
 function pgLogin(){
-  const d=FAM.демо, a=d.сТерминалом&&BY[d.сТерминалом.pid], b=d.безТерминала&&BY[d.безТерминала.pid];
+  const d=FAM.демо, a=d.сТерминалом&&BY[d.сТерминалом.pid], b=d.безТерминала&&BY[d.безТерминала.pid], fr=d.друг&&BY[d.друг.pid];
+  const lab=(x,txt)=>x?(x[9]?'сын в СИЗО':'в колонии')+' · '+txt:'';
   const chip=(x,sel,label)=>{if(!x)return '';const c=x[8][sel.ci];return `<button class="item bordered" data-act="demo" data-phone="${esc(c[2])}"><div class="avatar sm soft">${c[0].split(' ').map(w=>w[0]).slice(0,2).join('')}</div><div class="grow"><b>${esc(c[0].split(' ').slice(1).join(' '))}</b><small>${ROLE[c[1]]} · ${label}</small></div></button>`};
   return `<div class="page white">${backHdr('','/')}<div class="wrap loose"><a href="#/" aria-label="ZT Рядом — на главную" style="align-self:flex-start">${BRAND}</a><h1 class="h1">Вход</h1><p class="muted" style="margin:0">Впервые? Всё создастся само. Пароль не нужен.</p>
   <div class="field"><label for="ph">Номер телефона</label><input class="inp" id="ph" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 900 000-00-00" value="${esc(S.phone)}"></div>
-  <div class="demo"><b>Для демонстрации</b>${chip(a,d.сТерминалом,'есть видеотерминал')}${chip(b,d.безТерминала,'нет терминала — на бумаге')}<button class="item bordered" data-act="demo" data-phone="${NEWBIE_PHONE}"><div class="avatar sm" style="background:var(--bg);color:var(--muted)">${ic('user')}</div><div class="grow"><b>Новичок</b><small>только что узнал о ZT Рядом · пока никого нет</small></div></button></div></div>
+  <div class="demo"><b>Для демонстрации</b>${chip(a,d.сТерминалом,lab(a,'есть видеотерминал'))}${chip(b,d.безТерминала,lab(b,'только бумага'))}${chip(fr,d.друг||{},'приятель в колонии · не знает, о чём писать')}<button class="item bordered" data-act="demo" data-phone="${NEWBIE_PHONE}"><div class="avatar sm" style="background:var(--bg);color:var(--muted)">${ic('user')}</div><div class="grow"><b>Новичок</b><small>только что узнал о ZT Рядом · пока никого нет</small></div></button></div></div>
   <div class="stick"><button class="btn" id="getcode" data-act="getcode"${digits(S.phone).length<11?' disabled':''}>Получить код</button><button class="btn line" data-act="gosu">Войти через Госуслуги</button></div></div>`;
 }
 function pgCode(){
@@ -1061,7 +1136,7 @@ function pgChat(){
   const typing=S.sent.some(x=>x.pid===r.id&&x.ch===0&&!x.noReply&&Date.now()-x.t>=DEMO.read&&Date.now()-x.t<DEMO.reply)?`<div class="typing">${r.first} ${r.vt?'пишет на терминале…':'пишет ответ…'}</div>`:'';
   return `<div class="chat-page">
   <header class="chat-hdr"><a class="ib" href="#/lk" aria-label="К списку чатов">${ic('back')}</a>
-  <a class="chat-who" href="#/lk/rel"><div class="avatar">${r.ini}</div><div style="min-width:0"><b>${esc(r.short)}</b><small>${r.inst.name} · ${r.unit.replace('Отряд','отряд')} · ${r.vt?'<i>терминал</i>':'на бумаге'}</small></div></a>
+  <a class="chat-who" href="#/lk/rel"><div class="avatar">${r.ini}</div><div style="min-width:0"><b>${esc(r.short)}</b><small>${r.where} · ${r.vt?'<i>терминал</i>':'на бумаге'}</small></div></a>
   <button class="hbtn" data-act="callsheet" aria-label="Звонок">${ic('phone')}</button>
   <button class="hbtn${r.vt?'':' off'}" data-act="${r.vt?'vvisitsheet':'whyvt'}" aria-label="Видеосвидание">${ic('video')}${r.vt?'':`<span class="lk">${ic('lock')}</span>`}</button></header>
   <div class="msgs" id="msgs">${html||`<div class="emptychat"><div class="avatar">${r.ini}</div><b>Здесь будет ваша переписка с ${esc(r.ins)}</b><span>Напишите первое сообщение. Учреждение проверит его — обычно до 3 дней, — и ${esc(r.first)} ${r.vt?"прочитает его на терминале":"получит его на бумаге"}.</span><span class="faint">Первое сообщение — ${PRICE.letter} ₽. Счёт можно пополнить при отправке.</span></div>`}${typing}</div>
@@ -1084,6 +1159,7 @@ function composer(){
   const has=d.text.trim()||d.photos.length;
   return `<div class="composer" id="composer">${d.photos.length?`<div class="pstrip">${d.photos.map((s,i)=>`<div class="thumb"><img src="${s}" alt=""><button data-act="rmph" data-i="${i}" aria-label="Убрать">×</button></div>`).join('')}</div>`:''}
   <div id="hint">${composerHint()}</div>
+  ${has?'':`<div class="tchips"><button data-act="topics">${ic('help')}О чём написать</button>${isFriend()?'<button data-act="gostream">'+ic('heart')+'Поддержать без слов</button>':''}</div>`}
   <div class="crow"><button class="cbtn" data-act="attach" aria-label="Прикрепить">${ic('plus')}</button>
   <textarea class="cin" id="cin" rows="1" placeholder="Сообщение" aria-label="Сообщение">${esc(d.text)}</textarea>
   <span id="cact">${has?`<button class="cbtn send" data-act="sendtext" aria-label="Отправить">${ic('send')}</button>`:(r.vt?`<button class="cbtn" data-act="recstart" aria-label="Записать голосовое">${ic('mic')}</button>`:`<button class="cbtn lockd" data-act="whyvt" aria-label="Голосовые недоступны">${ic('mic')}<span class="lk">${ic('lock')}</span></button>`)}</span></div></div>`;
@@ -1116,7 +1192,7 @@ function msgInfo(id){
 }
 function callSheet(){
   const r=rel();
-  sheet(`<h2 class="h2">Звонок</h2><p class="muted" style="margin:0">Позвонить в учреждение нельзя — <b style="color:var(--ink)">${r.first} звонит вам сам</b> с карты для звонков. Разговор слушает учреждение.</p>
+  sheet(`<h2 class="h2">Звонок</h2>${r.sizo?`<div class="info ${r.permit?'':'warn'}">${ic('info')}<span>В СИЗО звонки — только с разрешения следователя или суда. ${r.permit?'У '+esc(r.gen)+' разрешение есть.':'У '+esc(r.gen)+' разрешения пока нет — его может запросить адвокат или сам '+esc(r.first)+'.'}</span></div>`:''}<p class="muted" style="margin:0">Позвонить в учреждение нельзя — <b style="color:var(--ink)">${r.first} звонит вам сам</b> с карты для звонков. Разговор слушает учреждение.</p>
   <a class="item bordered" href="#/lk/card"><div class="ic" style="background:var(--green-l);color:var(--green-d)">${ic('phone')}</div><div class="grow"><b>Карта для звонков · ${rub(S.card)}</b><small>хватит примерно на ${Math.floor(S.card/12)} мин</small></div>${ic('chev')}</a>
   <div class="legend"><span style="color:var(--green-d)">${ic('phone')}</span><span><b style="color:var(--ink)">Звонок</b> — живой разговор, голосом</span><span style="color:var(--purple)">${ic('video')}</span><span><b style="color:var(--ink)">Видеосвидание</b> — вживую с видео, по записи</span><span style="color:var(--muted)">${ic('mic')}</span><span><b style="color:var(--ink)">Голосовое</b> — записали сейчас, он послушает после проверки</span></div>
   <a class="btn" href="#/app">Принимать звонки — в приложении</a>`);
@@ -1208,7 +1284,7 @@ function pgVisit(){
   const r=rel();
   const days=[];for(let i=2;i<16;i++){const d=new Date();d.setDate(d.getDate()+i);days.push(d)}
   const t=VS.type&&VISIT[VS.type];
-  const kinds=Object.keys(VISIT).map(k=>{const v=VISIT[k],off=v.vt&&!r.vt;return `<button class="kind${VS.type===k?' on':''}${off?' off':''}" data-act="${off?'whyvt':'vtype'}" data-k="${k}"><div class="ic" style="background:${k==='video'?'var(--purple-l);color:var(--purple-d)':'var(--green-l);color:var(--green-d)'}">${ic(off?'lock':k==='video'?'video':'cal')}</div><div class="grow"><b>${v.t}</b><small>${v.s}</small></div><span class="r">${v.price?v.price+' ₽':'бесплатно'}</span></button>`}).join('');
+  const kinds=Object.keys(VISIT).filter(k=>!(r.sizo&&k==='long')).map(k=>{const v=VISIT[k],off=v.vt&&!r.vt;return `<button class="kind${VS.type===k?' on':''}${off?' off':''}" data-act="${off?'whyvt':'vtype'}" data-k="${k}"><div class="ic" style="background:${k==='video'?'var(--purple-l);color:var(--purple-d)':'var(--green-l);color:var(--green-d)'}">${ic(off?'lock':k==='video'?'video':'cal')}</div><div class="grow"><b>${v.t}</b><small>${v.s}</small></div><span class="r">${v.price?v.price+' ₽':'бесплатно'}</span></button>`}).join('');
   const dateOk=d=>VS.type==='video'||(d.getDay()!==0&&d.getDay()!==1);
   const slots=['09:00','10:00','11:00','14:00','15:00','16:00','17:00','18:00'];
   return `<div class="page white">${backHdr('Свидание','/lk/chat')}<div class="wrap loose">
@@ -1216,6 +1292,7 @@ function pgVisit(){
   <div class="h3">Какое свидание</div>${kinds}
   ${t?`<div class="h3">Дата</div><div class="dates">${days.map(d=>{const k=d.toDateString();return `<button data-act="vdate" data-d="${k}" class="${VS.date===k?'on':''}"${dateOk(d)?'':' disabled'}><small>${WD[d.getDay()]}</small><b>${d.getDate()}</b><small>${MON[d.getMonth()].slice(0,3)}</small></button>`}).join('')}</div>`:''}
   ${t&&VS.type==='video'&&VS.date?`<div class="h3">Время</div><div class="slots">${slots.map(s=>`<button data-act="vslot" data-s="${s}" class="${VS.slot===s?'on':''}"${(hash(VS.date+s)%3===0)?' disabled':''}>${s}</button>`).join('')}</div>`:''}
+  ${r.sizo?`<div class="info warn">${ic('info')}<span>В СИЗО свидания — только с разрешения следователя или суда. Длительных свиданий в СИЗО нет.</span></div>`:''}
   ${t&&VS.type!=='video'?`<div class="info">${ic('info')}<span>Количество свиданий в год зависит от условий содержания. Учреждение ответит обычно в течение 3 дней и подтвердит время.</span></div>`:''}
   </div><div class="stick">${t?`<div class="sum"><span class="muted">${t.price?'С моего счёта':'Стоимость'}</span><b>${t.price?rub(t.price):'бесплатно'}</b></div>`:''}<button class="btn" data-act="bookvisit"${t&&VS.date&&(VS.type!=='video'||VS.slot)?'':' disabled'}>Отправить заявку</button></div></div>`;
 }
@@ -1264,7 +1341,7 @@ function pgPlace(){
   <div class="list" style="border:1px solid var(--line)">
   <div class="item"><div class="ic" style="background:var(--bg);color:var(--ink)">${ic('pin')}</div><div class="grow"><b>${esc(i.city)}</b><small>[точный адрес — у заказчика]</small></div></div>
   <div class="item"><div class="ic" style="background:var(--bg);color:var(--ink)">${ic('clock')}</div><div class="grow"><b>Приём передач</b><small>вт–сб, 9:00–16:00 · [уточнить]</small></div></div>
-  <div class="item"><div class="ic" style="background:var(--bg);color:var(--ink)">${ic('terminal')}</div><div class="grow"><b>Видеотерминалы</b><small>${i.отрядыСТерминалом.join(', ').replace(/Отряд /g,'отряд ')}</small></div></div></div>
+  <div class="item"><div class="ic" style="background:var(--bg);color:var(--ink)">${ic('terminal')}</div><div class="grow"><b>Видеотерминалы</b><small>${i.отрядыСТерминалом?i.отрядыСТерминалом.join(', ').replace(/Отряд /g,'отряд '):(r.vt?'есть у '+esc(r.gen):'нет у '+esc(r.gen))}</small></div></div></div>
   <div class="card" style="background:var(--green-l)"><b style="color:var(--green-d)">Можно передать</b><ul class="bul" style="margin-top:10px"><li>Продукты в заводской упаковке</li><li>Одежду по сезону без металлических деталей</li><li>Лекарства — только по заявлению</li></ul></div>
   <div class="card" style="background:var(--red-l)"><b style="color:var(--red)">Нельзя</b><ul class="bul" style="margin-top:10px"><li>Телефоны и сим-карты</li><li>Спиртное и лекарства без назначения</li><li>Колющие и режущие предметы</li></ul></div></div></div>`;
 }
@@ -1315,7 +1392,7 @@ function pgProfile(){
   <button class="item" data-act="logout"><div class="ic" style="background:var(--bg);color:var(--ink)">${ic('logout')}</div><div class="grow"><b>Выйти</b><small>и войти другим номером</small></div></button></div></div></div>`;
   const r=rel(), m=me();
   return `<div class="page tabbed">${lkHdr('Профиль')}<div class="wrap"><div class="card row"><div class="avatar soft">${m.ini}</div><div class="grow"><b style="font-size:18px;color:var(--ink)">${esc(m.call)}</b><div class="faint">${m.roleTxt} ${r.gen}</div><div style="margin-top:6px">${m.verified?'<span class="pill s-ok">Госуслуги ✓</span>':'<span class="pill s-wait">Госуслуги не подтверждены</span>'}</div></div></div>
-  <div class="sec">Мой телефон</div><div class="list"><div class="item"><div class="grow"><b>${esc(m.phone)}</b><small>${S.me.ci<0?"ждём, когда "+r.first+" добавит его в разрешённые":"в списке разрешённых у "+r.gen}</small></div>${S.me.ci<0?'<span class="pill s-wait">Ждёт</span>':'<span class="pill s-ok">Разрешён</span>'}</div></div>
+  <div class="sec">Мой телефон</div><div class="list"><div class="item"><div class="grow"><b>${esc(m.phone)}</b><small>${S.me.ci<0?"звонки — если "+r.first+" сам добавит ваш номер в список":"в списке разрешённых у "+r.gen}</small></div>${S.me.ci<0?'<span class="pill s-new">Только письма</span>':'<span class="pill s-ok">Разрешён</span>'}</div></div>
   <div class="sec">Уведомления</div><div class="card" style="padding:4px 16px">
   <label class="opt"><span class="grow">Новое сообщение</span><span class="sw"><input type="checkbox" checked><i></i></span></label>
   <label class="opt"><span class="grow">Сообщение прочитано</span><span class="sw"><input type="checkbox" checked><i></i></span></label>
@@ -1369,6 +1446,29 @@ const monthPrice=ids=>Math.round(weekPrice(ids)*4.3/10)*10;
 function stream(){return S.streams&&S.streams[S.me.pid]}
 function request(){const d=FAM.досуг;if(!d)return null;const q=d.просьбы.find(p=>p[0]===S.me.pid&&p[1]===S.me.ci);return q?{days:q[2],fmt:q[3]}:null}
 function addressMe(){const m=me();return m.role==='мать'?'Мам':m.role==='отец'?'Пап':m.role==='сестра'?'Сестрёнка':m.call.split(' ')[0]}
+const FAMILY_ROLES=['мать','отец','жена','сестра','брат','дочь'];
+function isFriend(){return S.me&&!FAMILY_ROLES.includes(me().role)}
+function fem(){return ['мать','жена','сестра','дочь','знакомая'].includes(me().role)}
+const g=(m,f)=>fem()?f:m;
+/* дату рождения близкого из наших данных не показываем — её вводит родственник сам (в демо — как будто уже ввёл) */
+function birthday(){
+  const r=rel(),src=(S.bday||{})[r.id];if(!src)return null;
+  const [dd,mm,yy]=src.split('.').map(Number),now=new Date();now.setHours(0,0,0,0);
+  let b=new Date(now.getFullYear(),mm-1,dd);if(b<now)b=new Date(now.getFullYear()+1,mm-1,dd);
+  return {days:Math.round((b-now)/864e5),age:b.getFullYear()-yy,date:fmt(b)};
+}
+/* о чём написать — для тех, кто не знает, с чего начать (чаще всего друзья) */
+function topics(){return [
+  ['Новости из города','Привет! Рассказываю, что у нас нового. '],
+  ['Помню, как мы…',g('Вспомнил','Вспомнила')+' сегодня, как мы с тобой '],
+  ['Спорт','Видел'+g('','а')+' вчерашний матч? '],
+  ['Просто привет','Привет! Просто '+g('хотел','хотела')+' сказать, что помню о тебе. Держись, мы с тобой.'],
+  ['Что посмотреть и почитать','Тут вышла книга, думаю, тебе понравится: '],
+  ['Анекдот','Держи анекдот, чтобы улыбнулся: ']
+]}
+function topicsSheet(){
+  sheet('<h2 class="h2">О чём написать</h2><p class="muted" style="margin:0">Не нужно длинных писем. Пара строк — и он знает, что его помнят. Выберите начало — дальше допишете сами.</p><div class="topics">'+topics().map((t,i)=>'<button data-act="topic" data-i="'+i+'"><b>'+esc(t[0])+'</b><small>«'+esc(t[1].trim())+'…»</small></button>').join('')+'</div><label class="btn line" style="cursor:pointer">'+ic('photo')+'Или просто фото — двор, город, кот<input type="file" accept="image/*" multiple id="phfile" hidden></label>');
+}
 function sign(){const m=me();return m.role==='мать'?'мама':m.role==='отец'?'папа':m.call.split(' ')[0]}
 function seedStream(pid,ci){
   S.streams={};const d=FAM.досуг;if(!d)return;
@@ -1409,8 +1509,8 @@ function pgStream(){
 }
 function pgStreamOff(r){
   const q=request();
-  if(!BUILD) BUILD={formats:q?[q.fmt]:['povest'],phrase:PHRASES[0],together:false};
-  const b=BUILD, m=monthPrice(b.formats), w=weekPrice(b.formats);
+  if(!BUILD) BUILD={formats:q?[q.fmt]:['povest'],phrase:PHRASES[0],together:isFriend(),period:r.sizo?1:3};
+  const b=BUILD, m=monthPrice(b.formats), w=weekPrice(b.formats), PER=[[1,'Помесячно',0],[3,'3 месяца',10],[12,'Год',20]], per=PER.find(x=>x[0]===b.period)||PER[0], tot=Math.round(m*per[0]*(100-per[2])/100/10)*10;
   const reqCard=q?`<div class="plea"><div class="lab">${ic('pen')}${r.first} просит · письмо от руки · ${q.days<=1?'вчера':q.days+' дня назад'}</div><div class="plea-t">«${addressMe()}, если можно — подключи мне ${esc(FMT_ACC[q.fmt]||'что-нибудь почитать')}. Тут очень длинные дни.»</div></div>`:'';
   return `<div class="page tabbed stream-page">${lkHdr('Забота каждый день')}
   <div class="wrap">
@@ -1418,7 +1518,7 @@ function pgStreamOff(r){
   <h1 class="h1" style="font-size:28px;color:#fff">Пусть каждый день у него будет что-то от вас</h1>
   <p>Даже когда вы на работе, в дороге или просто без сил. Настраиваете один раз — ${esc(r.first)} каждый четверг получает выпуск: по листу на каждый день недели, и на каждом — ваши слова.</p></section>
   ${reqCard}
-  <div class="why"><b>Ему сейчас не скучно — ему страшно.</b> Суд неизвестно когда, дни одинаковые. Занятая голова помогает дождаться и не сломаться. Еда — для тела, адвокат — для дела, забота каждый день — для головы.</div>
+  <div class="why">${r.sizo?'<b>Ему сейчас не скучно — ему страшно.</b> Суд неизвестно когда, дни одинаковые. Занятая голова помогает дождаться и не сломаться. Еда — для тела, адвокат — для дела, забота каждый день — для головы.':isFriend()?'<b>Не обязательно писать длинные письма.</b> Срок долгий, и самое тяжёлое там — почувствовать, что про тебя забыли. Лист от вас на каждый день говорит за вас: «я помню». Можно скинуться с другими друзьями.':'<b>Срок долгий, дни похожи друг на друга.</b> Самое тяжёлое — почувствовать, что про тебя забыли. Лист от вас на каждый день — знак, что на воле помнят и ждут.'}</div>
   <div class="sec">Так это придёт ему</div>
   ${paperPreview(b.formats,b.phrase)}
   <div class="sec">Что отправлять <span class="faint" style="font-weight:500">— можно несколько</span></div>
@@ -1426,10 +1526,12 @@ function pgStreamOff(r){
   <div class="sec">Ваши слова на каждом листе</div>
   <div class="phr">${PHRASES.map(p=>`<button data-act="bphr" data-p="${esc(p)}" class="${b.phrase===p?'on':''}">${esc(p)}</button>`).join('')}</div>
   <div class="faint" style="padding:0 4px">Подпись: «— ${esc(sign())}». Слова проверены заранее — их не задержат.</div>
-  <label class="card opt" style="padding:6px 16px"><div class="grow"><b style="color:var(--ink)">Позвать родных скинуться</b><div class="faint">пришлём ссылку — каждый платит меньше, а ${r.first} видит, что о нём помнят все</div></div><span class="sw"><input type="checkbox" data-act="btog"${b.together?' checked':''}><i></i></span></label>
+  <div class="sec">На какой срок</div><div class="phr">${PER.map(x=>`<button data-act="bper" data-p="${x[0]}" class="${b.period===x[0]?'on':''}">${x[1]}${x[2]?` · −${x[2]}%`:''}</button>`).join('')}</div>
+  <div class="faint" style="padding:0 4px">${r.sizo?'Пока идёт следствие, удобнее помесячно — отменить можно в любой момент.':'На срок дешевле — и не нужно помнить о продлении. Остановить можно в любой момент, остаток вернём.'}</div>
+  <label class="card opt" style="padding:6px 16px"><div class="grow"><b style="color:var(--ink)">${isFriend()?'Скинуться с друзьями':'Позвать родных скинуться'}</b><div class="faint">пришлём ссылку — каждый платит меньше, а ${r.first} видит, что о нём помнят все</div></div><span class="sw"><input type="checkbox" data-act="btog"${b.together?' checked':''}><i></i></span></label>
   <div class="info">${ic('shield')}<span>Всё одобрено учреждением заранее. Ответы ${r.gen} видит только проверка учреждения — вам придёт отметка «засчитано», если он согласен.</span></div>
   <div style="height:90px"></div></div>
-  <div class="stickybuy"><div class="row between"><div><b style="font-size:20px;color:var(--ink)">${b.formats.length?rub(m):'—'}</b><span class="faint"> в месяц${b.together?' на всех':''}</span><div class="faint" style="color:var(--green-d);font-weight:600">первые 2 выпуска бесплатно${w?` · потом ≈ ${w} ₽ в неделю`:''}</div></div>
+  <div class="stickybuy"><div class="row between"><div><b style="font-size:20px;color:var(--ink)">${b.formats.length?rub(per[0]===1?m:tot):'—'}</b><span class="faint"> ${per[0]===1?'в месяц':per[0]===3?'за 3 месяца':'за год'}${b.together?' на всех':''}</span><div class="faint" style="color:var(--green-d);font-weight:600">первые 2 выпуска бесплатно${w?` · потом ≈ ${w} ₽ в неделю`:''}</div></div>
   <button class="btn sm" data-act="startstream"${b.formats.length?'':' disabled'} style="min-height:52px;padding:0 20px">Запустить</button></div></div>
   ${tabbar('/lk/stream')}</div>`;
 }
@@ -1547,9 +1649,12 @@ function route(){
   if(S.me&&!S.auth) S.auth=true;   // сохранённые раньше входы
   if(S.me&&S.me.ci>=0&&!BY[S.me.pid]) S.me=null;
   if(parts[0]==='lk'&&!S.auth){S.next=h;save();location.replace('#/login');return}
+  if(parts[0]==='lk'&&S.auth&&!S.me&&checkPending()){if(location.hash==='#/lk/home')route();else location.replace('#/lk/home');return}
   // без близкого открываются только знакомство, поиск, главная, поддержка и помощь
-  if(parts[0]==='lk'&&!S.me&&!['start','find','home','support','profile'].includes(parts[1]||'')){location.replace('#/lk/start');return}
+  if(parts[0]==='lk'&&!S.me&&!['start','find','home','support','profile','done'].includes(parts[1]||'')){location.replace('#/lk/start');return}
   if(!(parts[0]==='lk'&&parts[1]==='chat')&&REC.st!=='idle') resetRec();
+  if(parts[1]==='card'&&+q) amt.card=+q;
+  if(parts[1]==='transfer'&&+q) amt.transfer=+q;
   if(parts[1]==='visit'&&q==='video'&&!VS.type) VS={type:rel().vt?'video':null,date:null,slot:null};
   let html;
   if(!parts.length&&S.auth){location.replace('#/lk/home');return}
@@ -1560,7 +1665,7 @@ function route(){
   else if(parts[0]==='code') html=pgCode();
   else if(parts[0]==='lk'){
     const p=parts[1]||'';
-    const M={start:pgStart,find:()=>parts[2]?pgFindOne(parts[2]):pgFind(),home:pgHomeMkt,stage:()=>pgStage(parts[2]).replace(backHdr(STAGES[parts[2]]?STAGES[parts[2]].t:'','/'),backHdr(STAGES[parts[2]]?STAGES[parts[2]].t:'','/lk/home')),stream:pgStream,'':pgChats,chat:pgChat,support:pgSupport,rel:pgRel,video:pgVideo,rules:pgRules,money:pgMoney,card:pgCard,transfer:pgTransfer,profile:pgProfile,help:pgHelp,joy:pgJoy,done:pgDone,visit:pgVisit,requests:pgRequests,place:pgPlace};
+    const M={start:pgStart,find:()=>parts[2]==='request'?pgFindReq():parts[2]==='where'?pgFindWhere():pgFind(),home:pgHomeMkt,stage:()=>pgStage(parts[2]).replace(backHdr(STAGES[parts[2]]?STAGES[parts[2]].t:'','/'),backHdr(STAGES[parts[2]]?STAGES[parts[2]].t:'','/lk/home')),stream:pgStream,'':pgChats,chat:pgChat,support:pgSupport,rel:pgRel,video:pgVideo,rules:pgRules,money:pgMoney,card:pgCard,transfer:pgTransfer,profile:pgProfile,help:pgHelp,joy:pgJoy,done:pgDone,visit:pgVisit,requests:pgRequests,place:pgPlace};
     html=p==='req'?pgReq(parts[2]):p==='apply'?pgApply(parts[2]):(M[p]||pgChats)();
   } else html=pgLanding();
   // после входа меню внизу видно всегда: на вложенных экранах подсвечен раздел, к которому они относятся
@@ -1576,6 +1681,8 @@ function route(){
   const c=document.getElementById('code'); if(c) setTimeout(()=>c.focus(),200);
   autoGrow();
   initLanding();
+  // демо: пока ждём согласия близкого — проверяем каждые 4 секунды
+  if(S.auth&&!S.me&&S.pending&&S.pending.match&&parts[0]==='lk') liveT=setTimeout(route,4000);
   // пока сообщения «идут» — обновляем ленту, чтобы галочки менялись на глазах
   if(parts[1]==='chat'&&pendingDemo()&&REC.st==='idle') liveT=setTimeout(()=>{if(document.activeElement&&document.activeElement.id==='cin'){liveT=setTimeout(()=>route(),3000);return}const atBottom=window.innerHeight+window.scrollY>=document.body.scrollHeight-80;keepScroll=!atBottom;route();if(atBottom)setTimeout(scrollBottom,0)},3000);
 }
@@ -1623,9 +1730,16 @@ document.addEventListener('click',e=>{
   else if(a==='sphr'){stream().phrase=t.dataset.p;save();rerender()}
   else if(a==='pausestream'){const st=stream();st.paused=!st.paused;save();toast(st.paused?'Пауза. Прогресс сохранится':'Забота снова идёт');rerender()}
   else if(a==='invite'){inviteSheet()}
-  else if(a==='addrole'){ADD.role=t.dataset.r;rerender()}
-  else if(a==='gosuname'){ADD.name='Смирнова Ольга Викторовна';rerender();toast('Имя подставлено из Госуслуг')}
-  else if(a==='addrel'){addRel(t.dataset.pid)}
+  else if(a==='topics'){topicsSheet()}
+  else if(a==='topicsgo'){go('/lk/chat');setTimeout(topicsSheet,300)}
+  else if(a==='topic'){const tp=topics()[+t.dataset.i];DRAFT.text=tp[1];closeSheet();rerender();setTimeout(()=>{const c=document.getElementById('cin');if(c){c.focus();c.setSelectionRange(c.value.length,c.value.length)}scrollBottom()},50)}
+  else if(a==='bper'){BUILD.period=+t.dataset.p;rerender()}
+  else if(a==='rrole'){RF.role=t.dataset.r;rerender()}
+  else if(a==='gosuname'){RF.name='Смирнова Ольга Викторовна';rerender();toast('Имя подставлено из Госуслуг')}
+  else if(a==='rfill'){const d=new Set(Object.values(FAM.демо).filter(Boolean).map(x=>x.pid));const p=FAM.люди.find(x=>!x[9]&&x[5]&&x[6]&&!d.has(x[0]));if(p){const [dd,mm,yy]=p[2].split('.');RF.fio=p[1];RF.dob=yy+'-'+mm+'-'+dd;RF.inst='ik';if(!RF.role)RF.role='мать';rerender();toast('Пример заполнен — данные выдуманные')}}
+  else if(a==='rsend'){sendFindRequest()}
+  else if(a==='whattowrite'){whatToWrite()}
+  else if(a==='copytpl'){try{navigator.clipboard.writeText(document.querySelector('.card.flat').innerText)}catch(x){}toast('Шаблон скопирован')}
   else if(a==='gomoney'){closeSheet();go('/lk/rel')}
   else if(a==='govisit'){closeSheet();go('/lk/visit')}
   else if(a==='goapply'){closeSheet();go('/lk/apply')}
@@ -1660,12 +1774,18 @@ document.addEventListener('input',e=>{
   if(t.id==='pc'){t.value=digits(t.value);if(t.value.length===4){t.blur();setTimeout(doPay,250)}}
   if(t.id==='cin'){DRAFT.text=t.value;autoGrow();refreshComposer()}
   if(t.id==='sin'){autoGrow()}
-  if(t.id==='fq'){FIND.q=t.value;const q=t.value.trim().toLowerCase();document.getElementById('fres').innerHTML=findList(q.length<2?[]:FAM.люди.filter(p=>p[1].toLowerCase().startsWith(q)).slice(0,8),q)}
-  if(t.id==='an'){ADD.name=t.value;const b=document.getElementById('addbtn');if(b)b.disabled=!(ADD.role&&t.value.trim().split(/\s+/).length>=2)}
+  if(t.id==='rf_fio'){RF.fio=t.value}
+  if(t.id==='rf_name'){RF.name=t.value}
+  if(t.id&&t.id.indexOf('rf_')===0){const b=document.getElementById('rfsend');if(b)b.disabled=!rfReady()}
 });
 document.addEventListener('change',e=>{
   const t=e.target;
   if(t.dataset&&t.dataset.act==='btog'){BUILD.together=t.checked;rerender();return}
+  if(t.id==='rf_dob'){RF.dob=t.value}
+  if(t.id==='rf_inst'){RF.inst=t.value}
+  if(t.id==='rf_ok'){RF.ok=t.checked}
+  if(t.id&&t.id.indexOf('rf_')===0){const b=document.getElementById('rfsend');if(b)b.disabled=!rfReady()}
+  if(t.id==='bdayin'&&t.value){const [y,m,d]=t.value.split('-');S.bday=S.bday||{};S.bday[S.me.pid]=d+'.'+m+'.'+y;save();toast('Напомним заранее');rerender();return}
   if(t.id==='blank'){S.replyBlank=t.checked;save();refreshComposer()}
   if(t.id==='phfile'){closeSheet();const files=[].slice.call(t.files||[]);let n=files.length;if(!n)return;if(location.hash.indexOf('/lk/chat')<0)go('/lk/chat');files.forEach(f=>{const r=new FileReader();r.onload=()=>{DRAFT.photos.push(r.result);if(--n===0){rerender();setTimeout(scrollBottom,30)}};r.readAsDataURL(f)})}
   if(t.id==='vfile'){const f=t.files&&t.files[0];if(!f)return;if(VID.url)URL.revokeObjectURL(VID.url);VID={url:URL.createObjectURL(f),sec:0};const v=document.createElement('video');v.preload='metadata';v.onloadedmetadata=()=>{VID.sec=v.duration||0;rerender()};v.src=VID.url;rerender()}
