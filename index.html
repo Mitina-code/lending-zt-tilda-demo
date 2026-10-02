@@ -458,6 +458,7 @@ audio{background:transparent}
 .card.consent li.y svg{color:var(--green-d)}
 .card.consent li.n{color:var(--faint)}
 .card.consent li.n svg{color:#C7C9D9}
+.card.consent .consent-ch{font-size:14px;color:#8A5A00;background:#FFF8E1;border-radius:10px;padding:8px 10px}
 .card.consent small{color:var(--faint);font-size:13px;line-height:1.4}
 
 /* ===== связаться с близким законно ===== */
@@ -602,7 +603,7 @@ document.documentElement.classList.add('js');
    Люди, учреждение и переписка — из общего набора проекта цензора (MVP_ZT).
    Те же люди, что видит цензор; без статьи, риска и досье. */
 /* ?v= — номер версии набора: меняйте при каждом обновлении data-family.js, иначе браузер до 10 минут держит старую копию */
-const DATA_URL='https://mitina-code.github.io/osnova-demo/data-family.js?v=9';
+const DATA_URL='https://mitina-code.github.io/osnova-demo/data-family.js?v=10';
 /* запасной мини-набор в том же формате — если общий не загрузился.
    переписка: [id, днейНазад, человек, контакт, от родственника(1), канал 0/1/2, решение 0/1/2, цифра(1)/бумага(0)] */
 const FALLBACK={
@@ -1254,7 +1255,8 @@ function consentCard(r){
   const d=dAgo(c[1]);
   return `<div class="card consent"><b>Что ${esc(r.first)} разрешил показывать вам</b>
   <ul>${items.map((t,i)=>`<li class="${c[3][i]?'y':'n'}">${ic(c[3][i]?'check':'close',2.5)}<span>${c[3][i]?'':'не открыл: '}${t}</span></li>`).join('')}</ul>
-  <small>Из его заявления на связь · ${c[0]==='бумага'?'на бумаге':'на терминале'}, ${fmt(d)}. Он может изменить это в любой момент новым заявлением или на терминале.</small></div>`;
+  ${c[4]?`<div class="consent-ch">${(c[5]||[]).slice(-1).map(ch=>'Последнее изменение — '+fmt(dAgo(ch[0]))+(ch[1]==='терминал'?', на терминале':', в заявлении на бумаге')+': '+ch[2].map(i=>(ch[3][i]?'открыл ':'закрыл ')+items[i]).join(', ')).join('')}</div>`:''}
+  <small>Впервые — в его заявлении на связь · ${c[0]==='бумага'?'на бумаге':'на терминале'}, ${fmt(d)}. Он может изменить это в любой момент новым заявлением или на терминале — здесь сразу обновится.</small></div>`;
 }
 function pgRel(){
   const r=rel();
