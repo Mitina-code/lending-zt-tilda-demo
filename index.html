@@ -449,6 +449,17 @@ audio{background:transparent}
 .card.flat .row.between > .muted{white-space:nowrap;flex-shrink:0}
 .ptitle{padding:14px 20px 2px;font-size:26px;font-weight:700;color:var(--ink);letter-spacing:-.01em}
 
+/* ===== согласия близкого ===== */
+.card.consent{display:flex;flex-direction:column;gap:8px}
+.card.consent b{color:var(--ink);font-size:16px}
+.card.consent ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.card.consent li{display:flex;gap:8px;align-items:center;font-size:15px;color:var(--ink)}
+.card.consent li svg{width:18px;height:18px;flex-shrink:0}
+.card.consent li.y svg{color:var(--green-d)}
+.card.consent li.n{color:var(--faint)}
+.card.consent li.n svg{color:#C7C9D9}
+.card.consent small{color:var(--faint);font-size:13px;line-height:1.4}
+
 /* ===== связаться с близким законно ===== */
 .paths{display:flex;flex-direction:column;gap:10px}
 .pathc{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:16px;border:1px solid var(--line);background:#fff;color:var(--text)}
@@ -591,7 +602,7 @@ document.documentElement.classList.add('js');
    Люди, учреждение и переписка — из общего набора проекта цензора (MVP_ZT).
    Те же люди, что видит цензор; без статьи, риска и досье. */
 /* ?v= — номер версии набора: меняйте при каждом обновлении data-family.js, иначе браузер до 10 минут держит старую копию */
-const DATA_URL='https://mitina-code.github.io/osnova-demo/data-family.js?v=8';
+const DATA_URL='https://mitina-code.github.io/osnova-demo/data-family.js?v=9';
 /* запасной мини-набор в том же формате — если общий не загрузился.
    переписка: [id, днейНазад, человек, контакт, от родственника(1), канал 0/1/2, решение 0/1/2, цифра(1)/бумага(0)] */
 const FALLBACK={
@@ -699,8 +710,11 @@ let DRAFT={text:'',photos:[]};   // черновик живёт до перез�
 
 function rel(){
   const p=BY[S.me.pid]; const parts=p[1].split(' '); const first=parts[1];
-  return {id:p[0],name:p[1],short:parts[0]+' '+first,first,dat:decl(first,'d'),gen:decl(first,'g'),ins:decl(first,'i'),ini:parts[0][0]+first[0],dob:p[2],unit:p[3],since:p[4],confirmed:!!p[5],vt:!!p[6],why:p[7],
-    dobOpen:!!p[10],   // дату рождения близкий открыл сам
+  return {id:p[0],name:p[1],short:parts[0]+' '+first,first,dat:decl(first,'d'),gen:decl(first,'g'),ins:decl(first,'i'),ini:parts[0][0]+first[0],dob:p[2],unit:p[3],since:p[4],confirmed:!!p[5],
+    /* что близкий сам разрешил показывать (галочки в заявлении на связь): имя и учреждение, дата рождения, видеотерминал, забота каждый день */
+    consent:p[11]||null,ok:(p[11]&&p[11][3])||[0,0,0,0],
+    vt:!!p[6]&&!!(p[11]&&p[11][3][2]),why:(p[11]&&p[11][3][2])?p[7]:'он не открыл, есть ли у него видеотерминал — пока доступны только письма',
+    dobOpen:!!(p[11]&&p[11][3][1]),   // дату рождения близкий открыл сам — галочка в заявлении
     sizo:!!p[9],cell:p[9]?p[9][0]:null,status:p[9]?p[9][1]:null,permit:p[9]?!!p[9][2]:null,
     /* только учреждение: отряд, камеру, статью и срок родственнику не показываем никогда (152-ФЗ, ст. 7, 10) */
     where:p[9]?(FAM.сизо||{}).name:FAM.учреждение.name,
@@ -1013,7 +1027,7 @@ function sendFindRequest(){
   if(!rfReady()) return;
   const fio=RF.fio.trim().replace(/\s+/g,' '), [y,m,d]=RF.dob.split('-'), dob=d+'.'+m+'.'+y;
   // совпадение проверяем молча: родственнику ничего не показываем до согласия близкого
-  const match=FAM.люди.find(p=>p[1].toLowerCase()===fio.toLowerCase()&&p[2]===dob&&(!!p[9])===(RF.inst==='sizo'));
+  const match=FAM.люди.find(p=>p[1].toLowerCase()===fio.toLowerCase()&&p[2]===dob&&(!!p[9])===(RF.inst==='sizo')&&p[11]&&p[11][3][0]);
   S.pending={fio,dob,inst:RF.inst,role:RF.role,name:RF.name.trim(),t:Date.now(),when:today(),match:match?match[0]:null};
   RF={fio:'',dob:'',inst:'',role:null,name:'',ok:false};save();
   S.flash={t:'Запрос отправлен',s:'Если он в этом учреждении и согласится, переписка откроется — мы сообщим. Обычно ответ приходит за 1–3 дня. (В демо — примерно через 20 секунд.)'};
@@ -1234,13 +1248,21 @@ function pgSupport(){
 }
 
 /* ---------- близкий: карточка-хаб ---------- */
+function consentCard(r){
+  const c=r.consent; if(!c) return '';
+  const items=['имя и учреждение','дату рождения','есть ли видеотерминал','получать «Заботу каждый день»'];
+  const d=dAgo(c[1]);
+  return `<div class="card consent"><b>Что ${esc(r.first)} разрешил показывать вам</b>
+  <ul>${items.map((t,i)=>`<li class="${c[3][i]?'y':'n'}">${ic(c[3][i]?'check':'close',2.5)}<span>${c[3][i]?'':'не открыл: '}${t}</span></li>`).join('')}</ul>
+  <small>Из его заявления на связь · ${c[0]==='бумага'?'на бумаге':'на терминале'}, ${fmt(d)}. Он может изменить это в любой момент новым заявлением или на терминале.</small></div>`;
+}
 function pgRel(){
   const r=rel();
   return `<div class="page">${backHdr('','/lk/chat')}
   <div class="relhead"><div class="avatar">${r.ini}</div><h1 class="h2">${esc(r.name)}</h1><div class="faint">${r.place}</div>
   ${r.vt?`<span class="badge s-new">${ic('terminal')}Видеотерминал в отряде</span>`:`<button class="badge s-wait" data-act="whyvt" style="border:0">${ic('print')}Сообщения — на бумаге</button>`}
   <div class="quick"><a href="#/lk/chat">${ic('chat')}Написать</a><button data-act="callsheet">${ic('phone')}Звонок</button><button data-act="${r.vt?'vvisitsheet':'whyvt'}" class="${r.vt?'':'off'}">${ic('video')}Видео&shy;свидание</button></div></div>
-  <div class="wrap"><a class="item" href="#/lk/stream" style="background:linear-gradient(150deg,#5E32BE,#00A47A);color:#fff;border-radius:20px"><div class="ic" style="background:rgba(255,255,255,.2);color:#fff">${ic('heart')}</div><div class="grow"><b style="color:#fff">Забота каждый день</b><small style="color:#E6DCFF">${stream()?'лист от вас на каждый день':'каждый день — что-то от вас'}</small></div>${ic('chev')}</a><div class="list">
+  <div class="wrap">${consentCard(r)}<a class="item" href="#/lk/stream" style="background:linear-gradient(150deg,#5E32BE,#00A47A);color:#fff;border-radius:20px"><div class="ic" style="background:rgba(255,255,255,.2);color:#fff">${ic('heart')}</div><div class="grow"><b style="color:#fff">Забота каждый день</b><small style="color:#E6DCFF">${stream()?'лист от вас на каждый день':'каждый день — что-то от вас'}</small></div>${ic('chev')}</a><div class="list">
   <a class="item" href="#/lk/card"><div class="ic" style="background:var(--green-l);color:var(--green-d)">${ic('phone')}</div><div class="grow"><b>Карта для звонков</b><small>${r.first} звонит с неё сам</small></div><b>${rub(S.card)}</b>${ic('chev')}</a>
   <a class="item" href="#/lk/transfer"><div class="ic" style="background:var(--purple-l);color:var(--purple-d)">${ic('bank')}</div><div class="grow"><b>Перевести на его счёт</b><small>на магазин и передачи</small></div>${ic('chev')}</a>
   <a class="item" href="#/lk/visit"><div class="ic" style="background:var(--blue-l);color:#0052CC">${ic('cal')}</div><div class="grow"><b>Свидание</b><small>краткосрочное, длительное${r.vt?', видео':''}</small></div>${ic('chev')}</a>
@@ -1508,6 +1530,11 @@ function pgStream(){
   return st?pgStreamOn(r,st):pgStreamOff(r);
 }
 function pgStreamOff(r){
+  if(!r.ok[3]) return `<div class="page tabbed stream-page">${lkHdr('Забота каждый день')}<div class="wrap">
+  <section class="sh-hero"><h1 class="h1" style="font-size:26px;color:#fff">${esc(r.first)} пока не согласился получать выпуски</h1>
+  <p>Выпуски и бланки ответов приходят, только если он сам отметил это в заявлении на связь. Его выбор мы не можем изменить за него.</p></section>
+  <div class="why"><b>Что можно сделать.</b> Напишите ему — пусть отметит «Забота каждый день» в заявлении или на терминале. Как только он согласится, здесь можно будет всё подключить.</div>
+  <a class="btn" href="#/lk/chat">Написать ${esc(r.dat)}</a></div></div>`;
   const q=request();
   if(!BUILD) BUILD={formats:q?[q.fmt]:['povest'],phrase:PHRASES[0],together:isFriend(),period:r.sizo?1:3};
   const b=BUILD, m=monthPrice(b.formats), w=weekPrice(b.formats), PER=[[1,'Помесячно',0],[3,'3 месяца',10],[12,'Год',20]], per=PER.find(x=>x[0]===b.period)||PER[0], tot=Math.round(m*per[0]*(100-per[2])/100/10)*10;
@@ -1736,7 +1763,7 @@ document.addEventListener('click',e=>{
   else if(a==='bper'){BUILD.period=+t.dataset.p;rerender()}
   else if(a==='rrole'){RF.role=t.dataset.r;rerender()}
   else if(a==='gosuname'){RF.name='Смирнова Ольга Викторовна';rerender();toast('Имя подставлено из Госуслуг')}
-  else if(a==='rfill'){const d=new Set(Object.values(FAM.демо).filter(Boolean).map(x=>x.pid));const p=FAM.люди.find(x=>!x[9]&&x[5]&&x[6]&&!d.has(x[0]));if(p){const [dd,mm,yy]=p[2].split('.');RF.fio=p[1];RF.dob=yy+'-'+mm+'-'+dd;RF.inst='ik';if(!RF.role)RF.role='мать';rerender();toast('Пример заполнен — данные выдуманные')}}
+  else if(a==='rfill'){const d=new Set(Object.values(FAM.демо).filter(Boolean).map(x=>x.pid));const p=FAM.люди.find(x=>!x[9]&&x[5]&&x[6]&&!d.has(x[0])&&x[11]&&x[11][3][0]);if(p){const [dd,mm,yy]=p[2].split('.');RF.fio=p[1];RF.dob=yy+'-'+mm+'-'+dd;RF.inst='ik';if(!RF.role)RF.role='мать';rerender();toast('Пример заполнен — данные выдуманные')}}
   else if(a==='rsend'){sendFindRequest()}
   else if(a==='whattowrite'){whatToWrite()}
   else if(a==='copytpl'){try{navigator.clipboard.writeText(document.querySelector('.card.flat').innerText)}catch(x){}toast('Шаблон скопирован')}
