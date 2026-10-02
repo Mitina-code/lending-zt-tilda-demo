@@ -523,7 +523,7 @@ select.inp{appearance:auto;font-size:16px}
 .plea{background:#FFFDF7;border:1px solid #EFE6CF;border-radius:18px;padding:14px 16px;box-shadow:0 2px 0 #EFE6CF}
 .plea .lab{display:flex;gap:6px;align-items:center;font-size:12px;font-weight:600;color:var(--orange-d);margin-bottom:6px}
 .plea .lab svg{width:14px;height:14px}
-.plea-t{font-family:'Caveat',cursive;font-size:24px;line-height:1.2;color:#2B3A67}
+.plea-t{font-size:17px;line-height:1.5;color:var(--ink)}
 .why{background:var(--card);border-radius:18px;padding:14px 16px;font-size:15px;color:var(--muted);line-height:1.5}
 .why b{color:var(--ink)}
 .env{position:relative;height:250px;margin:4px 0 8px}
@@ -727,8 +727,8 @@ function me(){const c=S.me.ci<0?S.meContact:BY[S.me.pid][8][S.me.ci];const parts
 /* ================= лента переписки =================
    Механика: родственник пишет → учреждение проверяет → дальше развилка:
    у близкого есть видеотерминал — читает на терминале, нет — цензор печатает и вручает.
-   Обратно: близкий пишет на терминале или от руки; бумагу сканируют и распознают
-   (вымарать могут на бланке до скана или в распознанном тексте), текст приходит в ленту. */
+   Обратно: близкий пишет на терминале или от руки; бумажное письмо переводят в текст
+   (сканы родственнику не показываем — только машинописный текст), текст приходит в ленту. */
 const OUT_T={
   parent:['{R}, здравствуй! У нас всё хорошо, все здоровы. На даче собрали картошку, яблок в этом году много. Очень ждём от тебя весточки.','Сынок, привет. Получила твоё письмо, спасибо. Не переживай за нас, мы справляемся. Береги себя, пей витамины.','Здравствуй, родной! Была у врача — всё в порядке. Соседка передаёт тебе привет. Пиши, как кормят, что нужно прислать.','Привет! Узнала про свидания — буду записываться на следующий месяц. Скажи, что тебе привезти.'],
   wife:['Любимый, привет! Дети здоровы, Маша пошла в школу — очень гордая. Скучаем по тебе каждый день.','{R}, здравствуй. Получила твоё письмо, перечитала три раза. Мы справляемся, не волнуйся за нас.','Родной мой, как ты? Записалась на свидание, считаю дни. Напиши, что тебе привезти.','Привет! Посылаю фотографии — мы с детьми были у твоей мамы. Все передают тебе привет.'],
@@ -828,12 +828,12 @@ const STAGES={
   sizo:{t:'Он в СИЗО',sub:'Сообщения, деньги, передачи',h:'Близкий в СИЗО. Чем вы можете помочь',
     li:['Сообщения — самый быстрый способ связи. Их проверяет учреждение, обычно до 3 дней.','Деньги на лицевой счёт — чтобы он мог купить продукты и вещи в магазине СИЗО.','Звонки и свидания в СИЗО — только с разрешения следователя. Заявление можно подать онлайн.','Чем занять голову: первые месяцы — самые тяжёлые. «Забота каждый день» — лист на каждый день, подписанный вами; приходят выпуском раз в неделю.'],cta:'Написать'},
   kolonia:{t:'Он в колонии',sub:'Как не потерять связь за годы',h:'Близкий в колонии. Как не потерять связь за годы',
-    li:['Срок долгий, и самое тяжёлое там — почувствовать, что про тебя забыли. Важнее не размер письма, а то, что оно приходит регулярно.','Забота каждый день: лист от вас на каждый день, выпуском раз в неделю. Настраиваете один раз — хоть на год.','Переписка как в мессенджере: если в отряде есть видеотерминал — он читает там, если нет — ему распечатают и вручат. Ответ от руки придёт сканом.','Друзьям не нужно писать длинные письма: пара строк, фото со двора, 300 ₽ на звонки — и он знает, что его помнят. Можно скинуться вместе.','Звонки, длительные свидания, видеосвидания и заявления — тоже здесь.'],cta:'Начать'}
+    li:['Срок долгий, и самое тяжёлое там — почувствовать, что про тебя забыли. Важнее не размер письма, а то, что оно приходит регулярно.','Забота каждый день: лист от вас на каждый день, выпуском раз в неделю. Настраиваете один раз — хоть на год.','Переписка как в мессенджере: если в отряде есть видеотерминал — он читает там, если нет — ему распечатают и вручат. Ответ от руки придёт к вам обычным текстом.','Друзьям не нужно писать длинные письма: пара строк, фото со двора, 300 ₽ на звонки — и он знает, что его помнят. Можно скинуться вместе.','Звонки, длительные свидания, видеосвидания и заявления — тоже здесь.'],cta:'Начать'}
 };
 function pgLanding(){
   const phone=`<div class="mock" aria-hidden="true"><div class="mock-scr" style="background:#EFEAF8">
     <div class="m-top"><span class="m-av">ИП</span><div><b>Иван Петров</b><small>ИК-2 · терминал в отряде</small></div></div>
-    <div class="m-paper" style="align-self:flex-start;max-width:88%"><small>✍ Письмо от руки · скан</small>Мама, здравствуй! Фотографии получил, спасибо. Повесил над кроватью…</div>
+    <div class="m-paper" style="align-self:flex-start;max-width:88%"><small>✍ Написал от руки</small>Мама, здравствуй! Фотографии получил, спасибо. Повесил над кроватью…</div>
     <div class="m-st" style="align-self:flex-end;background:var(--purple);color:#fff;max-width:80%;font-weight:500">Ванечка, мы тебя очень ждём ❤️<br><span style="opacity:.8;font-size:10px">прочитано на терминале ✓✓</span></div>
     <div class="m-st" style="align-self:center;background:#fff;color:var(--ink);font-weight:500">📞 Иван звонил · 8 мин</div>
     <div class="m-btn" style="margin-top:auto;background:#fff;color:var(--faint);text-align:left;font-weight:400">Сообщение…</div></div></div>
@@ -841,7 +841,7 @@ function pgLanding(){
     <div class="float f2" aria-hidden="true">🎙 Голосовое · 0:48</div>`;
   const pains=[['Не знаешь, где он','Задержали — и тишина. Куда писать, что можно передать, кому звонить.'],['Письма идут неделями','Отправила — и не понимаешь, дошло или потерялось по дороге.'],['Всё — через очереди','Свидание, справка, передача — поездки, бланки и ожидание.'],['Ему важно знать, что помнят','Одно сообщение с фото может держать человека неделями.']];
   const eco=[
-    ['chat','Переписка','Как в привычном мессенджере',['Сообщения и фото','Голосовые*','Видеосообщения*','Ответы от руки — сканом'],'var(--purple-l)','var(--purple-d)'],
+    ['chat','Переписка','Как в привычном мессенджере',['Сообщения и фото','Голосовые*','Видеосообщения*','Ответы от руки — текстом'],'var(--purple-l)','var(--purple-d)'],
     ['phone','Живая связь','Голос и лицо',['Он звонит вам сам','Видеосвидание*'],'var(--green-l)','var(--green-d)'],
     ['heart','Забота каждый день','Лист от вас на каждый день',['Повесть с продолжением','Задачник','Рабочая тетрадь','Марафон «30 дней»','Пополам с ребёнком'],'linear-gradient(150deg,#683DCC,#00A47A)','#fff'],
     ['wallet','Помочь','Деньгами и вещами',['На счёт в учреждении','На звонки','Лекарства'],'var(--orange-l)','var(--orange-d)'],
@@ -865,7 +865,7 @@ function pgLanding(){
   <div class="ts done" style="--d:0s"><div class="c">${ic('check',3)}</div><div><b>Вы отправляете сообщение</b><span class="faint">текст, фото, голос или видео</span></div></div>
   <div class="ts done" style="--d:.3s"><div class="c">${ic('check',3)}</div><div><b>Учреждение проверяет</b><span class="faint">так положено по закону · обычно до 3 дней</span></div></div>
   <div class="ts done" style="--d:.6s"><div class="c">${ic('check',3)}</div><div><b>Он читает на терминале</b><span class="faint">а если терминала нет — ему распечатают и вручат</span></div></div>
-  <div class="ts cur" style="--d:.9s"><div class="c"></div><div><b>Ответ приходит в переписку</b><span class="faint">с терминала или от руки — бумагу отсканируют</span></div></div></div></div></section>
+  <div class="ts cur" style="--d:.9s"><div class="c"></div><div><b>Ответ приходит в переписку</b><span class="faint">с терминала или от руки — письмо переведут в текст</span></div></div></div></div></section>
 
   <section class="band2 reveal" id="eco"><div class="eyebrow2">Всё в одном месте</div><h2 class="big2 ink">Одно окно на всё, что нужно близкому</h2>
   <div class="eco">${eco.map(g=>`<div class="eco-g"><div class="hd"><div class="fic" style="background:${g[4]};color:${g[5]}">${ic(g[0])}</div><div><small>${g[1]}</small><b>${g[2]}</b></div></div><div class="tags">${g[3].map(t=>`<span class="${t.endsWith('*')?'vt':''}">${t.replace('*','')}</span>`).join('')}</div></div>`).join('')}</div>
@@ -908,7 +908,7 @@ function pgLanding(){
   <section class="band2 reveal"><h2 class="big2 ink">Частые вопросы</h2>
   <details><summary>Кто читает мои сообщения?</summary><p>Их проверяет сотрудник учреждения — так положено по закону. Кроме него и адресата их не видит никто.</p></details>
   <details><summary>Что если у него нет видеотерминала?</summary><p>Сообщения работают всегда: их распечатают и вручат. Голосовые, видеосообщения и видеосвидания откроются, когда терминал появится.</p></details>
-  <details><summary>Как он ответит, если пишет от руки?</summary><p>Бумажное письмо проверят и отсканируют. Текст распознается и придёт к вам в переписку, а скан можно открыть.</p></details>
+  <details><summary>Как он ответит, если пишет от руки?</summary><p>Бумажное письмо проверят и переведут в текст — оно придёт к вам в переписку, как обычное сообщение.</p></details>
   <details><summary>Что если сообщение не пропустят?</summary><p>Вы увидите причину, а деньги вернутся на ваш счёт.</p></details></section>
 
   <section class="final reveal"><h2 class="big2">Напишите ему <em>сегодня</em></h2><p>Одно сообщение — и он знает, что его ждут.</p><a class="btn white" href="#/login">Начать — нужен только телефон</a><a class="btn ghostw" href="#/app">Скачать приложение ZT Рядом</a></section>
@@ -1125,10 +1125,10 @@ function bubble(m){
   if(m.ch===1) body=`<div class="vbub">${m.url?`<audio controls src="${m.url}"></audio>`:`<span class="pl" data-act="toast" data-msg="Воспроизведение (демо)">${ic('play')}</span><span class="wv"></span>`}<span style="font-size:13px">0:${String(m.dur).padStart(2,'0')}</span></div>`;
   else {
     let lab='';
-    if(!m.out&&m.how==='paper') lab=`<div class="lab">${ic('pen')}Письмо от руки · скан</div><span class="scanthumb" data-t="${esc(m.parts[0])}">${m.cut==='paper'?'<span class="bar"></span>':''}<small>открыть скан</small></span>`;
+    if(!m.out&&m.how==='paper') lab=`<div class="lab">${ic('pen')}Написал от руки</div>`;
     else if(!m.out&&m.how==='terminal') lab=`<div class="lab">${ic('terminal')}С терминала</div>`;
     const ph=m.photos?`<div class="photos">${(m.photosData&&m.photosData.length?m.photosData.map(s=>`<img src="${s}" alt="">`):Array.from({length:m.photos},()=>'<span></span>')).join('')}</div>`:'';
-    body=lab+ph+(m.text?`<div class="tx">${m.out?esc(m.text):redactText(m)}</div>`:'')+(m.cut?`<div class="rnote">${ic('info')}${m.cut==='paper'?'Часть вымарана на бланке до сканирования':'Часть текста закрыта учреждением'}</div>`:'');
+    body=lab+ph+(m.text?`<div class="tx">${m.out?esc(m.text):redactText(m)}</div>`:'')+(m.cut?`<div class="rnote">${ic('info')}Часть текста закрыта учреждением</div>`:'');
   }
   if(m.plea) body+=stream()?`<span class="plea-btn done">${ic('check',3)}Забота подключена</span>`:`<a class="plea-btn" href="#/lk/stream" data-act="gostream">${ic('heart')}Подключить ему</a>`;
   return `<div class="b ${cls}" role="button" tabindex="0" data-act="minfo" data-id="${m.id}">${body}<div class="meta">${m.out&&m.route==='paper'&&m.status==='handed'?'вручено · ':''}${time} ${m.out?ticks(m):''}</div></div>`;
@@ -1199,8 +1199,7 @@ function msgInfo(id){
     }
   } else {
     if(m.how==='paper'){
-      html=`<h2 class="h2">Письмо от руки</h2>${T([[`${r.first} написал письмо`,'на бланке','done'],['Учреждение проверило',m.cut==='paper'?'часть вымарана на бланке':'','done'],['Отсканировано и распознано','','done'],[m.cut==='text'?'Часть распознанного текста закрыта':'Пришло к вам в переписку',when(m.t),'done']])}
-      <div class="scanfull">${redactText(m).replace(/\n\n/,'\n\n')}</div><div class="faint">Так выглядит скан. Почерк распознан автоматически — если что-то не так, откройте скан.</div>`;
+      html=`<h2 class="h2">Письмо от руки</h2>${T([[`${r.first} написал письмо`,'на бланке','done'],['Учреждение проверило',m.cut?'часть текста закрыта':'','done'],['Переведено в текст','','done'],['Пришло к вам в переписку',when(m.t),'done']])}`;
     } else html=`<h2 class="h2">С терминала</h2>${T([[`${r.first} написал на видеотерминале`,'','done'],['Учреждение проверило','','done'],['Пришло к вам',when(m.t),'done']])}`;
   }
   sheet(html+'<button class="btn line" data-act="closesheet">Закрыть</button>');
@@ -1235,7 +1234,7 @@ function whyVtSheet(){
   sheet(`<h2 class="h2">Голос и видео пока недоступны</h2>
   <div class="info warn">${ic('info')}<span>У ${r.gen}: ${esc(r.why||'нет доступа к видеотерминалу')}.</span></div>
   <p class="muted" style="margin:0">Голосовые, видеосообщения и видеосвидания близкий получает через видеотерминал. ${r.confirmed?'Когда терминал появится или его переведут туда, где он есть, всё откроется само.':'Когда учреждение подтвердит его личность, всё откроется само.'}</p>
-  <p class="muted" style="margin:0"><b style="color:var(--ink)">Сообщения работают всегда</b> — их распечатают и вручат, а ответ от руки придёт сканом.</p>
+  <p class="muted" style="margin:0"><b style="color:var(--ink)">Сообщения работают всегда</b> — их распечатают и вручат, а ответ от руки придёт обычным текстом.</p>
   <label class="opt" style="border-top:1px solid var(--bg)"><div class="grow"><b style="color:var(--ink)">Сообщить, когда откроется</b><div class="faint">пришлём уведомление</div></div><span class="sw"><input type="checkbox" data-act="notifyvt"${S.notify[r.id]?' checked':''}><i></i></span></label>
   <button class="btn" data-act="closesheet">Понятно</button>`);
 }
@@ -1433,7 +1432,7 @@ function pgHelp(){
   <details><summary>Что значат значки у сообщения?</summary><p>🕓 — на проверке в учреждении. ✓ — проверено. ✓✓ — доставлено на терминал, зелёные ✓✓ — прочитано. Значок принтера — распечатано и вручено на бумаге.</p></details>
   <details><summary>Чем звонок отличается от видеосвидания и видеосообщения?</summary><p>Звонок и видеосвидание — живой разговор: голосом или с видео. Видеосообщение и голосовое — запись: вы записываете сейчас, ${r.first} смотрит после проверки.</p></details>
   <details><summary>Почему нет голосовых и видео?</summary><p>Они доступны, когда в отряде близкого стоит видеотерминал и учреждение подтвердило его личность. ${r.vt?'У '+r.gen+' всё есть.':'У '+r.gen+': '+esc(r.why)+'.'}</p></details>
-  <details><summary>Как он отвечает от руки?</summary><p>Пишет на бланке. Учреждение проверяет, сканирует, текст распознаётся и приходит к вам в переписку. Скан можно открыть.</p></details>
+  <details><summary>Как он отвечает от руки?</summary><p>Пишет на бланке. Учреждение проверяет, письмо переводят в текст, и оно приходит к вам в переписку.</p></details>
   <a class="item bordered" href="#/lk/support"><div class="ic" style="background:var(--purple-l);color:var(--purple-d)">${ic('chat')}</div><div class="grow"><b>Написать в поддержку</b><small>отвечаем за 5 минут</small></div></a>
   <a class="item bordered" href="tel:88000000000"><div class="ic" style="background:var(--green-l);color:var(--green-d)">${ic('phone')}</div><div class="grow"><b>Позвонить</b><small>8 800 000-00-00 · круглосуточно</small></div></a></div></div>`;
 }
@@ -1540,7 +1539,7 @@ function pgStreamOff(r){
   const q=request();
   if(!BUILD) BUILD={formats:q?[q.fmt]:['povest'],phrase:PHRASES[0],together:isFriend(),period:r.sizo?1:3};
   const b=BUILD, m=monthPrice(b.formats), w=weekPrice(b.formats), PER=[[1,'Помесячно',0],[3,'3 месяца',10],[12,'Год',20]], per=PER.find(x=>x[0]===b.period)||PER[0], tot=Math.round(m*per[0]*(100-per[2])/100/10)*10;
-  const reqCard=q?`<div class="plea"><div class="lab">${ic('pen')}${r.first} просит · письмо от руки · ${q.days<=1?'вчера':q.days+' дня назад'}</div><div class="plea-t">«${addressMe()}, если можно — подключи мне ${esc(FMT_ACC[q.fmt]||'что-нибудь почитать')}. Тут очень длинные дни.»</div></div>`:'';
+  const reqCard=q?`<div class="plea"><div class="lab">${ic('pen')}${r.first} просит · написал от руки · ${q.days<=1?'вчера':q.days+' дня назад'}</div><div class="plea-t">«${addressMe()}, если можно — подключи мне ${esc(FMT_ACC[q.fmt]||'что-нибудь почитать')}. Тут очень длинные дни.»</div></div>`:'';
   return `<div class="page tabbed stream-page">${lkHdr('Забота каждый день')}
   <div class="wrap">
   <section class="sh-hero"><div class="sh-drops" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
