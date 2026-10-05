@@ -1138,7 +1138,7 @@ function event(e){
   if(e.type==='issue') return `<a class="ev issue" href="#/lk/stream">${ic('heart')}<span>Забота каждый день: выпуск №${e.n} вручён ${r.dat}${e.zach?' · бланк засчитан':''} <small>${hm(e.t)}</small></span></a>`;
   if(e.type==='call') return `<button class="ev green" data-act="callsheet">${ic('phone')}<span>${r.first} звонил · ${e.min} мин <small>${hm(e.t)}</small></span></button>`;
   if(e.type==='transfer') return `<a class="ev" href="#/lk/money">${ic('bank')}<span>Вы перевели ${rub(e.o.sum)} на счёт ${r.gen} <small>${hm(e.t)}</small></span></a>`;
-  if(e.type==='card') return `<a class="ev green" href="#/lk/card">${ic('phone')}<span>Карта для звонков +${rub(e.o.sum)} <small>${hm(e.t)}</small></span></a>`;
+  if(e.type==='card') return `<a class="ev green" href="#/lk/card">${ic('phone')}<span>${e.o.all?'Звонки всем родным':'Звонки вам'} +${rub(e.o.sum)} <small>${hm(e.t)}</small></span></a>`;
   if(e.type==='req'){const q=e.q;return `<a class="ev" href="#/lk/req/${q.id}">${ic(q.kind==='visit'?(q.type==='video'?'video':'cal'):'doc')}<span>${reqTitle(q)}${q.kind==='visit'?' · '+q.dateTxt+(q.slot?', '+q.slot:''):''} · ${REQ_ST[q.status][0].toLowerCase()}</span></a>`}
   return '';
 }
@@ -1207,7 +1207,7 @@ function msgInfo(id){
 function callSheet(){
   const r=rel();
   sheet(`<h2 class="h2">Звонок</h2>${r.sizo?`<div class="info ${r.permit?'':'warn'}">${ic('info')}<span>В СИЗО звонки — только с разрешения следователя или суда. ${r.permit?'У '+esc(r.gen)+' разрешение есть.':'У '+esc(r.gen)+' разрешения пока нет — его может запросить адвокат или сам '+esc(r.first)+'.'}</span></div>`:''}<p class="muted" style="margin:0">Позвонить в учреждение нельзя — <b style="color:var(--ink)">${r.first} звонит вам сам</b> с карты для звонков. Разговор слушает учреждение.</p>
-  <a class="item bordered" href="#/lk/card"><div class="ic" style="background:var(--green-l);color:var(--green-d)">${ic('phone')}</div><div class="grow"><b>Карта для звонков · ${rub(S.card)}</b><small>хватит примерно на ${Math.floor(S.card/12)} мин</small></div>${ic('chev')}</a>
+  <a class="item bordered" href="#/lk/card"><div class="ic" style="background:var(--green-l);color:var(--green-d)">${ic('phone')}</div><div class="grow"><b>Ваши деньги на звонки · ${rub(S.card)}</b><small>хватит примерно на ${Math.floor(S.card/12)} мин разговора с вами</small></div>${ic('chev')}</a>
   <div class="legend"><span style="color:var(--green-d)">${ic('phone')}</span><span><b style="color:var(--ink)">Звонок</b> — живой разговор, голосом</span><span style="color:var(--purple)">${ic('video')}</span><span><b style="color:var(--ink)">Видеосвидание</b> — вживую с видео, по записи</span><span style="color:var(--muted)">${ic('mic')}</span><span><b style="color:var(--ink)">Голосовое</b> — записали сейчас, он послушает после проверки</span></div>
   <a class="btn" href="#/app">Принимать звонки — в приложении</a>`);
 }
@@ -1264,7 +1264,7 @@ function pgRel(){
   ${r.vt?`<span class="badge s-new">${ic('terminal')}Видеотерминал в отряде</span>`:`<button class="badge s-wait" data-act="whyvt" style="border:0">${ic('print')}Сообщения — на бумаге</button>`}
   <div class="quick"><a href="#/lk/chat">${ic('chat')}Написать</a><button data-act="callsheet">${ic('phone')}Звонок</button><button data-act="${r.vt?'vvisitsheet':'whyvt'}" class="${r.vt?'':'off'}">${ic('video')}Видео&shy;свидание</button></div></div>
   <div class="wrap">${consentCard(r)}<a class="item" href="#/lk/stream" style="background:linear-gradient(150deg,#5E32BE,#00A47A);color:#fff;border-radius:20px"><div class="ic" style="background:rgba(255,255,255,.2);color:#fff">${ic('heart')}</div><div class="grow"><b style="color:#fff">Забота каждый день</b><small style="color:#E6DCFF">${stream()?'лист от вас на каждый день':'каждый день — что-то от вас'}</small></div>${ic('chev')}</a><div class="list">
-  <a class="item" href="#/lk/card"><div class="ic" style="background:var(--green-l);color:var(--green-d)">${ic('phone')}</div><div class="grow"><b>Карта для звонков</b><small>${r.first} звонит с неё сам</small></div><b>${rub(S.card)}</b>${ic('chev')}</a>
+  <a class="item" href="#/lk/card"><div class="ic" style="background:var(--green-l);color:var(--green-d)">${ic('phone')}</div><div class="grow"><b>Звонки ${r.dat}</b><small>ваши — только на звонки вам</small></div><b>${rub(S.card)}</b>${ic('chev')}</a>
   <a class="item" href="#/lk/transfer"><div class="ic" style="background:var(--purple-l);color:var(--purple-d)">${ic('bank')}</div><div class="grow"><b>Перевести на его счёт</b><small>на магазин и передачи</small></div>${ic('chev')}</a>
   <a class="item" href="#/lk/visit"><div class="ic" style="background:var(--blue-l);color:#0052CC">${ic('cal')}</div><div class="grow"><b>Свидание</b><small>краткосрочное, длительное${r.vt?', видео':''}</small></div>${ic('chev')}</a>
   <a class="item" href="#/lk/apply"><div class="ic" style="background:var(--bg);color:var(--ink)">${ic('doc')}</div><div class="grow"><b>Заявление или справка</b><small>в учреждение, без поездки</small></div>${ic('chev')}</a></div>
@@ -1388,15 +1388,27 @@ function pgMoney(){
   return `<div class="page tabbed">${lkHdr('Счёт')}<div class="wrap"><div class="balance"><small>Мой счёт</small><div class="v">${rub(S.account)}</div><small>Для сообщений, переводов, звонков и видеосвиданий</small></div>
   <div><div class="h3" style="margin:6px 0 10px">Пополнить на</div>${amounts('account',[500,1000,3000])}</div>
   <button class="btn" data-act="pay" data-what="account">Пополнить на ${rub(amt.account)} через СБП</button>
-  <div class="list"><a class="item" href="#/lk/card"><div class="ic" style="background:var(--green-l);color:var(--green-d)">${ic('phone')}</div><div class="grow"><b>Карта для звонков</b><small>${r.first} звонит с неё сам</small></div><b>${rub(S.card)}</b>${ic('chev')}</a>
+  <div class="list"><a class="item" href="#/lk/card"><div class="ic" style="background:var(--green-l);color:var(--green-d)">${ic('phone')}</div><div class="grow"><b>Звонки ${r.dat}</b><small>ваши — только на звонки вам</small></div><b>${rub(S.card)}</b>${ic('chev')}</a>
   <a class="item" href="#/lk/transfer"><div class="ic" style="background:var(--purple-l);color:var(--purple-d)">${ic('bank')}</div><div class="grow"><b>Перевести ${r.dat}</b><small>на счёт в учреждении</small></div>${ic('chev')}</a></div>
   <div class="sec">История</div><div class="filters">${f.map(x=>`<button data-act="hf" data-f="${x[0]}" class="${hf===x[0]?'on':''}" aria-pressed="${hf===x[0]}">${x[1]}</button>`).join('')}</div>
   <div class="list" style="padding-bottom:4px">${html||'<div class="op faint">Здесь пока пусто</div>'}</div></div>${tabbar('/lk/profile')}</div>`;
 }
+/* Звонки для близкого. Пластиковых карт нет: у близкого один личный код и один
+   счёт, но деньги каждого родственника помечены. «Только на звонки мне» — с них
+   оплачиваются лишь разговоры с вами, близкий не потратит их на звонки другим.
+   «На звонки всем родным» — общие, он сам решает, кому звонить. При звонке сначала
+   тратятся деньги того, кому он звонит, потом общие. */
 function pgCard(){
-  const r=rel(), short=amt.card>S.account;
-  return `<div class="page white">${backHdr('Карта для звонков','/lk/money')}<div class="wrap loose"><div class="balance" style="background:var(--green-d)"><small>Карта для звонков ${r.dat}</small><div class="v">${rub(S.card)}</div><small>Хватит примерно на ${Math.floor(S.card/12)} мин</small></div>
-  <div><div class="h3" style="margin-bottom:10px">Сколько положить</div>${amounts('card',[300,500,1000])}</div><div class="faint">Эту карту видите и пополняете только вы. ${r.first} звонит с неё сам.</div></div>
+  const r=rel(), short=amt.card>S.account, mode=S.cardMode||'me';
+  return `<div class="page white">${backHdr('Звонки '+r.dat,'/lk/money')}<div class="wrap loose"><div class="balance" style="background:var(--green-d)"><small>Ваши деньги на звонки вам</small><div class="v">${rub(S.card)}</div><small>Хватит примерно на ${Math.floor(S.card/12)} мин разговора с вами</small></div>
+  ${S.cardAll?`<div class="item bordered"><div class="ic" style="background:var(--purple-l);color:var(--purple-d)">${ic('phone')}</div><div class="grow"><b>Вы положили на звонки всем родным: ${rub(S.cardAll)}</b><small>сколько осталось, видит только ${esc(r.first)}</small></div></div>`:''}
+  <div><div class="h3" style="margin-bottom:10px">Куда пойдут деньги</div>
+    <div class="list">
+      <button class="item bordered${mode==='me'?' on':''}" data-act="cardmode" data-v="me" style="text-align:left;width:100%;${mode==='me'?'border-color:var(--purple);background:#FBF8FF':''}"><div class="ic" style="background:var(--green-l);color:var(--green-d)">${ic('phone')}</div><div class="grow"><b>Только на звонки мне</b><small>${esc(r.first)} не потратит их на разговоры с другими</small></div>${mode==='me'?ic('check'):''}</button>
+      <button class="item bordered${mode==='all'?' on':''}" data-act="cardmode" data-v="all" style="text-align:left;width:100%;${mode==='all'?'border-color:var(--purple);background:#FBF8FF':''}"><div class="ic" style="background:var(--purple-l);color:var(--purple-d)">${ic('heart')}</div><div class="grow"><b>На звонки всем родным</b><small>${esc(r.first)} сам решит, кому позвонить</small></div>${mode==='all'?ic('check'):''}</button>
+    </div></div>
+  <div><div class="h3" style="margin-bottom:10px">Сколько положить</div>${amounts('card',[300,500,1000])}</div>
+  <div class="faint">${esc(r.first)} звонит одним личным кодом — карт нет. Когда он звонит вам, сначала тратятся ваши деньги, потом общие. Пополнить можно и без приложения: на zt.ru по номеру для пополнения — он есть на открытке, которую ${esc(r.first)} вложил в первое письмо.</div></div>
   <div class="stick"><div class="sum"><span class="muted">С моего счёта (${rub(S.account)})</span><b>${rub(amt.card)}</b></div>${short?'<a class="btn" href="#/lk/money">Сначала пополнить счёт</a>':`<button class="btn" data-act="pay" data-what="card">Пополнить на ${rub(amt.card)}</button>`}</div></div>`;
 }
 function pgTransfer(){
@@ -1615,14 +1627,14 @@ function closeSheet(){document.getElementById('sheet').innerHTML='';document.bod
 let pending=null;
 function confirmPay(what,sumTxt){
   pending=what; const r=rel();
-  sheet(`<h2 class="h2">Подтвердите оплату</h2><div class="sum"><span class="muted">${{card:'Карта для звонков',transfer:'Перевод '+r.dat,account:'Пополнение счёта'}[what]}</span><b>${sumTxt}</b></div>
+  sheet(`<h2 class="h2">Подтвердите оплату</h2><div class="sum"><span class="muted">${{card:S.cardMode==='all'?'Звонки всем родным':'Звонки только вам',transfer:'Перевод '+r.dat,account:'Пополнение счёта'}[what]}</span><b>${sumTxt}</b></div>
   <div class="field"><label for="pc">Код из СМС на ${esc(S.phone||me().phone)}</label><input class="inp code" id="pc" inputmode="numeric" maxlength="4" autocomplete="one-time-code" placeholder="····"></div>
   <div class="faint">Для демонстрации подойдёт любой код из 4 цифр.</div><button class="btn line" data-act="closesheet">Отмена</button>`);
   setTimeout(()=>{const i=document.getElementById('pc');if(i)i.focus()},250);
 }
 function doPay(){
   const w=pending,r=rel(),now=Date.now(); pending=null; closeSheet();
-  if(w==='card'){S.account-=amt.card;S.card+=amt.card;S.ops.push({pid:r.id,t:now,title:'Карта для звонков '+r.dat,s:'пополнение',a:-amt.card,k:'call',ev:'card',sum:amt.card});S.flash={t:'Карта пополнена',s:`На карте ${rub(S.card)}. ${r.first} может звонить — отметка появится в переписке.`}}
+  if(w==='card'){const all=S.cardMode==='all';S.account-=amt.card;if(all)S.cardAll=(S.cardAll||0)+amt.card;else S.card+=amt.card;S.ops.push({pid:r.id,t:now,title:(all?'Звонки всем родным · ':'Звонки вам · ')+r.dat,s:'пополнение',a:-amt.card,k:'call',ev:'card',sum:amt.card,all});S.flash={t:'Звонки пополнены',s:all?`${rub(amt.card)} — на звонки всем родным. ${r.first} сам решит, кому позвонить.`:`На звонки вам — ${rub(S.card)}, хватит примерно на ${Math.floor(S.card/12)} мин. ${r.first} может звонить.`}}
   if(w==='transfer'){const fee=Math.round(amt.transfer*COMMISSION);S.account-=amt.transfer+fee;S.ops.push({pid:r.id,t:now,title:'Перевод '+r.dat,s:'на счёт в учреждении · комиссия '+rub(fee),a:-(amt.transfer+fee),k:'transfer',ev:'transfer',sum:amt.transfer});S.flash={t:'Деньги отправлены',s:`Учреждение зачислит ${rub(amt.transfer)} на счёт ${r.gen} в течение 1–2 рабочих дней.`}}
   if(w==='account'){S.account+=amt.account;S.ops.push({pid:r.id,t:now,title:'Пополнение счёта',s:'СБП',a:amt.account,k:'in'});save();toast('Счёт пополнен: '+rub(S.account));rerender();return}
   save(); go('/lk/done');
@@ -1746,6 +1758,7 @@ document.addEventListener('click',e=>{
   else if(a==='whyvt'){whyVtSheet()}
   else if(a==='minfo'){msgInfo(t.dataset.id)}
   else if(a==='callsheet'){callSheet()}
+  else if(a==='cardmode'){S.cardMode=t.dataset.v;save();rerender()}
   else if(a==='vvisitsheet'){vvisitSheet()}
   else if(a==='attach'){attachSheet()}
   else if(a==='govideo'){closeSheet();go('/lk/video')}
