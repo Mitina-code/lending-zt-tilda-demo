@@ -1204,6 +1204,17 @@ function msgInfo(id){
   }
   sheet(html+'<button class="btn line" data-act="closesheet">Закрыть</button>');
 }
+/* Деньги «только на звонки мне», если связь через учреждение закончилась.
+   Возврат — по закону: по заявлению, тем же путём, за вычетом комиссии банка.
+   Сначала — то, что выгоднее: оставить до возвращения или перенести. */
+function moneyEndSheet(){
+  const r=rel();
+  sheet(`<h2 class="h2">Если связь закончится</h2><p class="muted" style="margin:0">Ваши деньги на звонки ${esc(r.dat)} не сгорают — ни при переводе в другое учреждение, ни при освобождении.</p>
+  <div class="list"><div class="item bordered"><div class="ic" style="background:var(--green-l);color:var(--green-d)">${ic('check')}</div><div class="grow"><b>Оставить</b><small>${esc(r.first)} вернётся к связи — деньги снова пойдут на звонки вам</small></div></div>
+  <div class="item bordered"><div class="ic" style="background:var(--purple-l);color:var(--purple-d)">${ic('heart')}</div><div class="grow"><b>Перенести</b><small>на звонки другому близкому или на «Заботу» — в одно касание</small></div></div></div>
+  <div class="faint">Вернуть на карту можно по заявлению после завершения связи: подтверждение через Госуслуги, на ту же карту, с которой вы платили, в течение 10 рабочих дней, за вычетом комиссии банка. Бонусные рубли не возвращаются.</div>
+  <button class="btn line" data-act="closesheet">Понятно</button>`);
+}
 function callSheet(){
   const r=rel();
   sheet(`<h2 class="h2">Звонок</h2>${r.sizo?`<div class="info ${r.permit?'':'warn'}">${ic('info')}<span>В СИЗО звонки — только с разрешения следователя или суда. ${r.permit?'У '+esc(r.gen)+' разрешение есть.':'У '+esc(r.gen)+' разрешения пока нет — его может запросить адвокат или сам '+esc(r.first)+'.'}</span></div>`:''}<p class="muted" style="margin:0">Позвонить в учреждение нельзя — <b style="color:var(--ink)">${r.first} звонит вам сам</b> с карты для звонков. Разговор слушает учреждение.</p>
@@ -1408,7 +1419,8 @@ function pgCard(){
       <button class="item bordered${mode==='all'?' on':''}" data-act="cardmode" data-v="all" style="text-align:left;width:100%;${mode==='all'?'border-color:var(--purple);background:#FBF8FF':''}"><div class="ic" style="background:var(--purple-l);color:var(--purple-d)">${ic('heart')}</div><div class="grow"><b>На звонки всем родным</b><small>${esc(r.first)} сам решит, кому позвонить</small></div>${mode==='all'?ic('check'):''}</button>
     </div></div>
   <div><div class="h3" style="margin-bottom:10px">Сколько положить</div>${amounts('card',[300,500,1000])}</div>
-  <div class="faint">${esc(r.first)} звонит одним личным кодом — карт нет. Когда он звонит вам, сначала тратятся ваши деньги, потом общие. Пополнить можно и без приложения: на zt.ru по номеру для пополнения — он есть на открытке, которую ${esc(r.first)} вложил в первое письмо.</div></div>
+  <button class="item bordered" data-act="moneyend" style="text-align:left;width:100%"><div class="ic" style="background:var(--bg);color:var(--ink)">${ic('shield')}</div><div class="grow"><b>Если связь закончится</b><small>ваши деньги не сгорают — что с ними можно сделать</small></div>${ic('chev')}</button>
+  <div class="faint">В приложении ZT Рядом звонки втрое дешевле — тех же денег хватит втрое дольше. ${esc(r.first)} звонит одним личным кодом — карт нет. Когда он звонит вам, сначала тратятся ваши деньги, потом общие. Пополнить можно и без приложения: на zt.ru по номеру для пополнения — он есть на открытке, которую ${esc(r.first)} вложил в первое письмо.</div></div>
   <div class="stick"><div class="sum"><span class="muted">С моего счёта (${rub(S.account)})</span><b>${rub(amt.card)}</b></div>${short?'<a class="btn" href="#/lk/money">Сначала пополнить счёт</a>':`<button class="btn" data-act="pay" data-what="card">Пополнить на ${rub(amt.card)}</button>`}</div></div>`;
 }
 function pgTransfer(){
@@ -1758,6 +1770,7 @@ document.addEventListener('click',e=>{
   else if(a==='whyvt'){whyVtSheet()}
   else if(a==='minfo'){msgInfo(t.dataset.id)}
   else if(a==='callsheet'){callSheet()}
+  else if(a==='moneyend'){moneyEndSheet()}
   else if(a==='cardmode'){S.cardMode=t.dataset.v;save();rerender()}
   else if(a==='vvisitsheet'){vvisitSheet()}
   else if(a==='attach'){attachSheet()}
